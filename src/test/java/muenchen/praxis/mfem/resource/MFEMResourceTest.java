@@ -64,7 +64,7 @@ public class MFEMResourceTest {
 	}
 	
 	@Test
-	public void postTest() throws Exception {
+	public void testPost() throws Exception {
 		Mockito.when(service.doPost(Mockito.any(Requirement.class))).thenReturn("");
 		List<Question> list = new ArrayList<Question>();
 		Question q = new Question("Was?");
