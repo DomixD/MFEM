@@ -64,7 +64,7 @@ public class MFEMResourceTest {
 	
 	@Test
 	public void postTest() throws Exception {
-		Mockito.when(service.doPost(Mockito.any(Requirement.class))).thenReturn("HALLO");
+		Mockito.when(service.doPost(Mockito.any(Requirement.class))).thenReturn("");
 		ArrayList<Question> list = new ArrayList<Question>(Arrays.asList(new Question()));
 		Requirement r = new Requirement("Anforderung", Priority.A, list);
 		RequestBuilder request = MockMvcRequestBuilders.post("/req").content(objToJson(r)).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON);
