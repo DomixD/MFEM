@@ -11,4 +11,9 @@ public class MFEMServiceImpl implements IMFEMService{
 		return "Irgendwas";
 	}
 
+	@Override
+	public String doPost(String name) {
+		return name.toUpperCase();
+	}
+
 }

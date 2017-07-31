@@ -1,8 +1,9 @@
 package muenchen.praxis.mfem.resource;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import muenchen.praxis.mfem.services.MFEMServiceImpl;
 
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -29,10 +30,22 @@ public class MFEMResourceTest {
 	
 	@Test
 	public void testTest() throws Exception {
+		
 		Mockito.when(service.testPrint()).thenReturn("Irgendwas");
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				"/test").accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		assertEquals(200, result.getResponse().getStatus());
+		
+	}
+	
+	@Test
+	public void postTest() throws Exception {
+		Mockito.when(service.doPost(Mockito.any(String.class))).thenReturn("HALLO");
+		JSONObject jo = new JSONObject();
+		jo.put("name", "hallo");
+		RequestBuilder request = MockMvcRequestBuilders.post("/user", jo).accept(MediaType.APPLICATION_JSON);
+		MvcResult result = mockMvc.perform(request).andReturn();
 		assertEquals(200, result.getResponse().getStatus());
 	}
 }
