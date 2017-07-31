@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import muenchen.praxis.mfem.entities.Priority;
 import muenchen.praxis.mfem.entities.Question;
@@ -65,8 +66,10 @@ public class MFEMResourceTest {
 	@Test
 	public void postTest() throws Exception {
 		Mockito.when(service.doPost(Mockito.any(Requirement.class))).thenReturn("");
-		ArrayList<Question> list = new ArrayList<Question>(Arrays.asList(new Question()));
-		Requirement r = new Requirement("Anforderung", Priority.A, list);
+		List<Question> list = new ArrayList<Question>();
+		Question q = new Question("Was?");
+		list.add(q);
+		Requirement r  = new Requirement("Anforderung", Priority.A, list);
 		RequestBuilder request = MockMvcRequestBuilders.post("/req").content(objToJson(r)).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(request).andReturn();
 		assertEquals(200, result.getResponse().getStatus());

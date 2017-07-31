@@ -26,9 +26,9 @@ public class MFEMResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/req", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-	public ResponseEntity<String> post(@RequestBody Requirement requirement) {
+	public ResponseEntity<Requirement> post(@RequestBody Requirement requirement) {
 		service.doPost(requirement);
-		return ResponseEntity.status(HttpStatus.OK).build();
+		return new ResponseEntity<Requirement>(requirement, HttpStatus.OK);
 	}
 	
 }

@@ -1,5 +1,14 @@
 package muenchen.praxis.mfem.entities;
 
-public class Question {
+import lombok.Data;
 
+@Data
+public class Question {
+    private String value;
+
+    public Question(String value) {
+        this.value = value;
+    }
+
+    public Question() {}
 }
