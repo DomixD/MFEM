@@ -14,4 +14,7 @@ public class Requirement {
 		this.prio = prio;
 		this.questionList = questionList;
 	}
+	
+	public Requirement() {}
+
 }
