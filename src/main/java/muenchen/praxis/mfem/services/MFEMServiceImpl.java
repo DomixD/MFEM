@@ -17,7 +17,7 @@ public class MFEMServiceImpl implements IMFEMService{
 	public String doPost(Requirement r) {
 		System.out.println("post hat geklappt :)!");
 		System.out.println(r.getContent());
-		System.out.println(r.getPrio());
+		System.out.println(r.getPrior());
 		System.out.println(r.getQuestionList());
 		System.out.println(r.toString());
 		return r.toString();
