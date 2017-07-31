@@ -1,6 +1,5 @@
 package muenchen.praxis.mfem.resource;
 
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 import muenchen.praxis.mfem.entities.Requirement;
@@ -27,9 +26,8 @@ public class MFEMResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/req", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-	public ResponseEntity<String> post(Requirement requirement) {
-		String result = service.doPost(requirement.toString());
-		System.out.println(result);
+	public ResponseEntity<String> post(@RequestBody Requirement requirement) {
+		service.doPost(requirement);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
