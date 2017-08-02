@@ -6,5 +6,7 @@ public interface IMFEMService {
 	
 	public String testPrint();
 	public String doPost(Requirement r);
+	public void saveReq (Requirement r);
+	public String getReq(int id);
 
 }

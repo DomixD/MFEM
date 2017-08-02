@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface IMFEMPersistence extends CrudRepository<Requirement, Integer> {
+public interface RepoRequirement extends CrudRepository<Requirement, Integer> {
 
     @Override
     Iterable<Requirement> findAll();

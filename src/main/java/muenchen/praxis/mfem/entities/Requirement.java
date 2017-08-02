@@ -15,7 +15,7 @@ public class Requirement implements Serializable{
 	private Priority prior;
 	private String content;
 
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.EAGER)
 	private List<Question> questionList;
 
 	public Requirement(String content, Priority prior, List<Question> questionList) {
