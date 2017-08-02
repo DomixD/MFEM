@@ -1,0 +1,23 @@
+# Logging
+logging:
+  ## MDC als Teil des Level-Eintrags
+  pattern.level : '%5p [${spring.application.name},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]'
+  level:
+    org.springframework: INFO
+    muenchen.praxis: INFO
+#logging.level.org.springframework.security: DEBUG
+#logging.level.de.muenchen: DEBUG
+
+
+spring:
+    profiles: local
+    #DB
+    datasource:
+        url: jdbc:h2:mem:data_ref;DB_CLOSE_DELAY=-1
+        username: sa
+        password:
+        driverClassName: org.h2.Driver
+        poolSize: 30
+    #JPA
+    jpa:
+        database: H2

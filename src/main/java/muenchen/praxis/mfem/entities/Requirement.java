@@ -14,6 +14,7 @@ public class Requirement implements Serializable{
 	private int id;
 	private Priority prior;
 	private String content;
+
 	@OneToMany
 	private List<Question> questionList;
 

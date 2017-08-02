@@ -21,8 +21,23 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<main.class>muenchen.praxis.mfem.MfemApplication</main.class>
+
 		<java.version>1.8</java.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency><!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>1.5.4.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 
 	<dependencies>
 		<dependency>
@@ -33,7 +48,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-hateoas</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

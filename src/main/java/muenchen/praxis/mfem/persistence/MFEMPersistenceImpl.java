@@ -1,4 +1,4 @@
-package muenchen.praxis.mfem.persistence;
+/*package muenchen.praxis.mfem.persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -51,4 +51,4 @@ public class MFEMPersistenceImpl implements IMFEMPersistence {
         List<T> list = entityManager.createQuery(queryString).getResultList();
         return list;
     }
-}
+}*/
