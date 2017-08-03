@@ -1,7 +1,9 @@
 package muenchen.praxis.mfem.services;
 
+import muenchen.praxis.mfem.entities.Question;
 import muenchen.praxis.mfem.entities.Requirement;
 
+import muenchen.praxis.mfem.persistence.RepoQuestion;
 import muenchen.praxis.mfem.persistence.RepoRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Service;
 public class MFEMServiceImpl implements IMFEMService{
 
 	@Autowired
-	RepoRequirement persistence;
+	RepoRequirement persistenceReq;
+	@Autowired
+	RepoQuestion persistenceQuest;
 
 	@Override
 	public String testPrint() {
@@ -30,13 +34,24 @@ public class MFEMServiceImpl implements IMFEMService{
 
 	@Override
 	public void saveReq(Requirement requirement) {
-		persistence.save(requirement);
+		persistenceReq.save(requirement);
 		System.out.println("saved");
 	}
 
 	@Override
 	public String getReq(int id) {
-		return persistence.findOne(id).toString();
+		return persistenceReq.findOne(id).toString();
+	}
+
+	@Override
+	public void saveQuest(Question q) {
+		persistenceQuest.save(q);
+		System.out.println("saved");
+	}
+
+	@Override
+	public String getQuest(int id) {
+		return persistenceQuest.findOne(id).toString();
 	}
 
 }

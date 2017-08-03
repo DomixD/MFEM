@@ -3,6 +3,7 @@ package muenchen.praxis.mfem.resource;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import muenchen.praxis.mfem.entities.Question;
 import muenchen.praxis.mfem.entities.Requirement;
 import muenchen.praxis.mfem.services.IMFEMService;
 
@@ -38,6 +39,17 @@ public class MFEMResource {
 	@RequestMapping(method = RequestMethod.GET, value = "/read/{id}", produces = MediaType.APPLICATION_JSON)
 	public String getReq(@PathVariable("id") int id) {
 		return service.getReq(id);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/saveQ", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	public ResponseEntity<Question> saveQuest(@RequestBody Question question) {
+		service.saveQuest(question);
+		return new ResponseEntity<Question>(question, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/readQ/{id}", produces = MediaType.APPLICATION_JSON)
+	public String getQuest(@PathVariable("id") int id) {
+		return service.getQuest(id);
 	}
 	
 }
