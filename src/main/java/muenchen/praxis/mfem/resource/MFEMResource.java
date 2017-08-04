@@ -1,8 +1,8 @@
 package muenchen.praxis.mfem.resource;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
+import muenchen.praxis.mfem.entities.Priority;
 import muenchen.praxis.mfem.entities.Question;
 import muenchen.praxis.mfem.entities.Requirement;
 import muenchen.praxis.mfem.services.IMFEMService;
@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class MFEMResource {
@@ -39,6 +41,11 @@ public class MFEMResource {
 	@RequestMapping(method = RequestMethod.GET, value = "/read/{id}", produces = MediaType.APPLICATION_JSON)
 	public String getReq(@PathVariable("id") int id) {
 		return service.getReq(id);
+	}
+
+	@RequestMapping(method =  RequestMethod.GET, value = "/getPrio/{prio}", produces = MediaType.APPLICATION_JSON)
+	public List<Requirement> findAllByPrior(@PathVariable("prio")Priority prio) {
+		return service.findAllByPrior(prio);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/saveQ", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
