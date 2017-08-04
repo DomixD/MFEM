@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
 public class MFEMResource {
-	
+/*
 	@Autowired
 	private IMFEMService service;
 
@@ -58,5 +58,5 @@ public class MFEMResource {
 	public String getQuest(@PathVariable("id") int id) {
 		return service.getQuest(id);
 	}
-	
+	*/
 }

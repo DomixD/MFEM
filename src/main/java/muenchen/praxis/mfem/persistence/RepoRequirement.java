@@ -2,13 +2,15 @@ package muenchen.praxis.mfem.persistence;
 import muenchen.praxis.mfem.entities.Priority;
 import muenchen.praxis.mfem.entities.Requirement;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 
-@Repository
+@RepositoryRestResource(path = "req")
 public interface RepoRequirement extends CrudRepository<Requirement, Integer> {
 
     @Override
