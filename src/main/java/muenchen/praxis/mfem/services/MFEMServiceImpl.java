@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,6 +64,14 @@ public class MFEMServiceImpl implements IMFEMService{
 	@Override
 	public String getQuest(int id) {
 		return persistenceQuest.findOne(id).toString();
+	}
+
+	@Override
+	public List allRequirements() {
+		Iterable<Requirement> it = persistenceReq.findAll();
+		List<Requirement> list = new ArrayList<>();
+		it.forEach(list::add);
+		return list;
 	}
 
 }

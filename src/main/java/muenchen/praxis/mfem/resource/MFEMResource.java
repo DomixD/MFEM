@@ -9,15 +9,20 @@ import muenchen.praxis.mfem.services.IMFEMService;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 import java.util.List;
 
-//@RestController
+@RestController
+@ExposesResourceFor(Requirement.class)
+@RequestMapping(value = "/")
 public class MFEMResource {
-/*
+
 	@Autowired
 	private IMFEMService service;
 
@@ -25,13 +30,13 @@ public class MFEMResource {
 	public String test() throws JSONException {
 		return service.testPrint();
 	}
-	
+/*
 	@RequestMapping(method = RequestMethod.POST, value = "/req", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public ResponseEntity<Requirement> post(@RequestBody Requirement requirement) {
 		service.doPost(requirement);
 		return new ResponseEntity<Requirement>(requirement, HttpStatus.OK);
 	}
-
+*/
 	@RequestMapping(method = RequestMethod.POST, value = "/save", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public ResponseEntity<Requirement> saveReq(@RequestBody Requirement requirement) {
 		service.saveReq(requirement);
@@ -58,5 +63,15 @@ public class MFEMResource {
 	public String getQuest(@PathVariable("id") int id) {
 		return service.getQuest(id);
 	}
-	*/
+
+	@RequestMapping(method = RequestMethod.GET)
+    public List<Requirement> getAllRequirements() {
+		List<Requirement> allRequirements = service.allRequirements();
+		for (Requirement requirement : allRequirements) {
+			Link selfLink = linkTo(MFEMResource.class).slash(requirement.getId()).withSelfRel();
+			requirement.add(selfLink);
+		}
+		return allRequirements;
+	}
+
 }

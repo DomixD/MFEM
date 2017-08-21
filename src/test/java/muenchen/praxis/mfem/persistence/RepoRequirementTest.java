@@ -54,12 +54,12 @@ public class RepoRequirementTest {
             System.out.println("FindAll: " + r.toString());
         }
     }
-
+/*
     @Test
     public void testFindOne() {
         Iterable<Requirement> it = persistence.findAll();
         int id = it.iterator().next().getId();
         System.out.println("FindOne: " + persistence.findOne(id).toString());
     }
-
+*/
 }

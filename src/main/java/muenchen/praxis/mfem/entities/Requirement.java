@@ -3,15 +3,17 @@ package muenchen.praxis.mfem.entities;
 import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-public class Requirement implements Serializable{
+public class Requirement extends ResourceSupport implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Link id;
 	private Priority prior;
 	private String content;
 
