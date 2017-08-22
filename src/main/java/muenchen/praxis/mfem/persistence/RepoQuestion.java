@@ -8,19 +8,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(path = "quest")
 public interface RepoQuestion extends CrudRepository<Question, Integer> {
 
-    @Override
-    Iterable<Question> findAll();
-
-    @Override
-    Question findOne(Integer id);
-
-    @Override
-    void delete(Integer id);
-
-    @Override
-    Question save(Question question);
-
-    @Override
-    boolean exists(Integer id);
-
 }

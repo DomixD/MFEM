@@ -63,7 +63,7 @@ public class MFEMResourceTest {
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		assertEquals(200, result.getResponse().getStatus());
 	}
-	
+	/*
 	@Test
 	public void testPost() throws Exception {
 		when(service.doPost(any(Requirement.class))).thenReturn(anyString());
@@ -104,7 +104,7 @@ public class MFEMResourceTest {
 		assertEquals("{\"id\":0,\"prior\":\"B\",\"content\":\"Anforderung2\",\"questionList\":[]}", result.getResponse().getContentAsString());
 
 	}
-/*
+
 	@Test
 	public void testGetReg() throws Exception {
 		when(service.getReq(0)).thenReturn(requirements[0].toString());

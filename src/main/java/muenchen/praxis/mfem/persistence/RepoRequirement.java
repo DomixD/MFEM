@@ -12,21 +12,6 @@ import java.util.List;
 @RepositoryRestResource(path = "req")
 public interface RepoRequirement extends CrudRepository<Requirement, Integer> {
 
-    @Override
-    Iterable<Requirement> findAll();
-
-    @Override
-    Requirement findOne (Integer id);
-
-    @Override
-    void delete(Integer id);
-
-    @Override
-    Requirement save(Requirement requirement);
-
-    @Override
-    boolean exists (Integer id);
-
     List<Requirement> findAllByPrior(@Param("priority") Priority priority);
 
 }
