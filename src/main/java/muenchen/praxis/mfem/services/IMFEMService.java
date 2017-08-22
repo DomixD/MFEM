@@ -12,7 +12,7 @@ public interface IMFEMService {
 	public String testPrint();
 	public String doPost(Requirement r);
 	public HttpStatus saveReq (Requirement r);
-	public String getReq(int id);
+	public Requirement getReq(int id);
 	public List<Requirement> findAllByPrior(Priority prior);
 	public List allRequirements();
 	public HttpStatus saveQuest (Question q);

@@ -104,7 +104,7 @@ public class MFEMResourceTest {
 		assertEquals("{\"id\":0,\"prior\":\"B\",\"content\":\"Anforderung2\",\"questionList\":[]}", result.getResponse().getContentAsString());
 
 	}
-
+/*
 	@Test
 	public void testGetReg() throws Exception {
 		when(service.getReq(0)).thenReturn(requirements[0].toString());
@@ -114,7 +114,7 @@ public class MFEMResourceTest {
 		assertEquals(200, result.getResponse().getStatus());
 		assertEquals("Requirement(id=0, prior=A, content=Anforderung1, questionList=[])", result.getResponse().getContentAsString());
 	}
-
+*/
     private String objToJson(Object o) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

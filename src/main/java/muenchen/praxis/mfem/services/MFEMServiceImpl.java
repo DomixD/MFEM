@@ -44,8 +44,8 @@ public class MFEMServiceImpl implements IMFEMService{
 	}
 
 	@Override
-	public String getReq(int id) {
-		return persistenceReq.findOne(id).toString();
+	public Requirement getReq(int id) {
+		return persistenceReq.findOne(id);
 	}
 
 	@Override
