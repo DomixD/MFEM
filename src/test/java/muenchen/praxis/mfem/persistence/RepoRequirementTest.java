@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest

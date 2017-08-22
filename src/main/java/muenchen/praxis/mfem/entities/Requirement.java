@@ -1,12 +1,12 @@
 package muenchen.praxis.mfem.entities;
 
-import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data

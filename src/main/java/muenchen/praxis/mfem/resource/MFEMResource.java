@@ -1,22 +1,20 @@
 package muenchen.praxis.mfem.resource;
 
-import javax.ws.rs.core.MediaType;
-
 import muenchen.praxis.mfem.entities.Priority;
 import muenchen.praxis.mfem.entities.Question;
 import muenchen.praxis.mfem.entities.Requirement;
 import muenchen.praxis.mfem.services.IMFEMService;
-
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
+import javax.ws.rs.core.MediaType;
 import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
 @ExposesResourceFor(Requirement.class)
@@ -26,10 +24,10 @@ public class MFEMResource {
 	@Autowired
 	private IMFEMService service;
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-	public String test() throws JSONException {
-		return service.testPrint();
-	}
+//	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+//	public String test() throws JSONException {
+//		return service.testPrint();
+//	}
 /*
 	@RequestMapping(method = RequestMethod.POST, value = "/req", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public ResponseEntity<Requirement> post(@RequestBody Requirement requirement) {

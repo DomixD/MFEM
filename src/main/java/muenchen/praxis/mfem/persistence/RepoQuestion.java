@@ -1,9 +1,8 @@
 package muenchen.praxis.mfem.persistence;
+
 import muenchen.praxis.mfem.entities.Question;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RestController;
 
 
 @RepositoryRestResource(path = "quest")
