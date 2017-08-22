@@ -13,6 +13,8 @@ import java.util.List;
 public class Requirement extends ResourceSupport implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int iD;
+	@Column(insertable = false, updatable = false)
 	private Link id;
 	private Priority prior;
 	private String content;

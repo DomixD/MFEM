@@ -52,10 +52,10 @@ public class RepoQuestionTest {
         }
     }
 
-    @Test
-    public void testFindOne() {
-        Iterable<Question> it = persistence.findAll();
-        int id = it.iterator().next().getId();
-        System.out.println("FindOne: " + persistence.findOne(id).toString());
-    }
+//    @Test
+//    public void testFindOne() {
+//        Iterable<Question> it = persistence.findAll();
+//        int id = it.iterator().next().getId();
+//        System.out.println("FindOne: " + persistence.findOne(id).toString());
+//    }
 }

@@ -66,6 +66,14 @@ public class MFEMServiceImpl implements IMFEMService{
 	}
 
 	@Override
+	public List allQuestions() {
+		Iterable<Question> it = persistenceQuest.findAll();
+		List<Question> list = new ArrayList<>();
+		it.forEach(list::add);
+		return list;
+	}
+
+	@Override
 	public List allRequirements() {
 		Iterable<Requirement> it = persistenceReq.findAll();
 		List<Requirement> list = new ArrayList<>();

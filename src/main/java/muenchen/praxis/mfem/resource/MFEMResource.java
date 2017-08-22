@@ -35,9 +35,11 @@ public class MFEMResource {
 		return new ResponseEntity<Requirement>(requirement, HttpStatus.OK);
 	}
 */
-	@RequestMapping(method = RequestMethod.POST, value = "/save", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	@RequestMapping(method = RequestMethod.POST, value = "/saveR", produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 	public ResponseEntity<Requirement> saveReq(@RequestBody Requirement requirement) {
 		service.saveReq(requirement);
+		Link selfLink = linkTo(MFEMResource.class).slash(requirement.getId()).withSelfRel();
+		requirement.add(selfLink);
 		return new ResponseEntity<Requirement>(requirement, HttpStatus.OK);
 	}
 
@@ -62,7 +64,7 @@ public class MFEMResource {
 		return service.getQuest(id);
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, value = "/allReq", produces = MediaType.APPLICATION_JSON)
     public List<Requirement> getAllRequirements() {
 		List<Requirement> allRequirements = service.allRequirements();
 		for (Requirement requirement : allRequirements) {
@@ -70,6 +72,16 @@ public class MFEMResource {
 			requirement.add(selfLink);
 		}
 		return allRequirements;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/allQuest", produces = MediaType.APPLICATION_JSON)
+	public List<Question> getAllQuestions() {
+		List<Question> allQuest = service.allQuestions();
+		for (Question question : allQuest) {
+			Link selfLink = linkTo(MFEMResource.class).slash(question.getId()).withSelfRel();
+			question.add(selfLink);
+		}
+		return allQuest;
 	}
 
 }

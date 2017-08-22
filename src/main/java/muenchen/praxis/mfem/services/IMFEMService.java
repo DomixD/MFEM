@@ -14,8 +14,9 @@ public interface IMFEMService {
 	public HttpStatus saveReq (Requirement r);
 	public String getReq(int id);
 	public List<Requirement> findAllByPrior(Priority prior);
+	public List allRequirements();
 	public HttpStatus saveQuest (Question q);
 	public String getQuest(int id);
-	public List allRequirements();
+	public List allQuestions();
 
 }
