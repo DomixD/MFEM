@@ -2,10 +2,7 @@ package muenchen.praxis.mfem.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -14,9 +11,16 @@ public class FrameworkEvaluation implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "FrameworkEvaluationID")
     private int id;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "FrameworkID")
     private Framework framework;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "AnswerID")
     private Answer answer;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "QuestionID")
     private Question question;
 
 }

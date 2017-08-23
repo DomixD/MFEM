@@ -11,6 +11,7 @@ public class Requirement implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "RequirementID")
 	private int id;
 	private String content;
 

@@ -12,6 +12,7 @@ public class Metric implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MetricID")
     private int id;
 
     private String description;
