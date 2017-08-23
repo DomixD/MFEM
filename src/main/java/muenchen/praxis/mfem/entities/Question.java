@@ -7,14 +7,17 @@ import java.io.Serializable;
 @Entity
 @Data
 public class Question implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String value;
+    private String question;
+    private Metric metric;
 
-    public Question(String value) {
-        this.value = value;
+    public Question(String question) {
+        this.question = question;
     }
 
     public Question() {}
+
 }

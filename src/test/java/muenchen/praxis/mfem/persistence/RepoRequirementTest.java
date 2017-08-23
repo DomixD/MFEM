@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @Transactional
 public class RepoRequirementTest {
-
+/*
     @Autowired
     private RepoRequirement persistence;
 
@@ -54,7 +54,7 @@ public class RepoRequirementTest {
             System.out.println("FindAll: " + r.toString());
         }
     }
-/*
+
     @Test
     public void testFindOne() {
         Iterable<Requirement> it = persistence.findAll();

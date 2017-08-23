@@ -12,6 +12,6 @@ import java.util.List;
 @RepositoryRestResource(path = "req")
 public interface RepoRequirement extends CrudRepository<Requirement, Integer> {
 
-    List<Requirement> findAllByPrior(@Param("priority") Priority priority);
+    //List<Requirement> findAllByPrior(@Param("priority") Priority priority);
 
 }

@@ -25,9 +25,10 @@ public class MFEMResource {
 		return service.testPrint();
 	}
 
+	/*
 	@RequestMapping(method =  RequestMethod.GET, value = "/getPrio/{prio}", produces = MediaType.APPLICATION_JSON)
 	public List<Requirement> findAllByPrior(@PathVariable("prio")Priority prio) {
 		return service.findAllByPrior(prio);
-	}
+	}*/
 
 }

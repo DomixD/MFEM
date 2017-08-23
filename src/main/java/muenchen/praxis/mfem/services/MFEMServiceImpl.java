@@ -22,10 +22,10 @@ public class MFEMServiceImpl implements IMFEMService{
 		return "Irgendwas";
 	}
 
-	@Override
+	/*@Override
 	public List<Requirement> findAllByPrior (Priority prior) {
 		return persistenceReq.findAllByPrior(prior);
-	}
+	}*/
 
 
 }

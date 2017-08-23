@@ -35,7 +35,7 @@ import static org.mockito.Mockito.*;
 @WebMvcTest(value = MFEMResource.class, secure = false)
 @WebAppConfiguration
 public class MFEMResourceTest {
-	
+	/*
 	@Autowired
 	private WebApplicationContext webAppContext;
 	private MockMvc mockMvc;
@@ -114,7 +114,7 @@ public class MFEMResourceTest {
 		assertEquals(200, result.getResponse().getStatus());
 		assertEquals("Requirement(id=0, prior=A, content=Anforderung1, questionList=[])", result.getResponse().getContentAsString());
 	}
-*/
+
     private String objToJson(Object o) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -126,5 +126,5 @@ public class MFEMResourceTest {
             e.printStackTrace();
         }
         return result;
-    }
+    }*/
 }
