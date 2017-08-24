@@ -5,12 +5,3 @@ var mfem = angular.module('demo', [])
             $scope.req = response.data._embedded.requirements;
         });
     });
-
-mfem.controller('Hello', function($scope) {
-    $scope.title1 = 'Anforderung';
-    $scope.title4 = 'Warn';
-    $scope.isDisabled = true;
-
-    $scope.googleUrl = 'http://google.com';
-
-});

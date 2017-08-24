@@ -9,12 +9,25 @@
 
 <body>
 <div ng-controller="Hello" id="example1">
-    <h1>Hallo</h1>
-    <p>The ID is {{req}}</p>
-    <p>The content is {{req.content}}</p>
-        <button class="button" style="vertical-align:middle"><span>Evaluation</span></button>
-        <button class="button" style="vertical-align:middle"><span>Framework hinzuf&uuml;gen</span></button>
-        <button class="button" style="vertical-align:middle"><span>Irgendwas anderes</span></button>
+    <h1>Microservice Framework Evaluation Method</h1>
+    <p>The content is: {{req[1].content}}</p>
+    <p>The content is: {{req[0].content}}</p>
+    <table>
+        <tr>
+            <td valign="top">        <p><button onclick="document.getElementById('demo').innerHTML=Date()" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
+                <p><button class="button" style="vertical-align:middle"><span>Framework hinzuf&uumlgen</span></button></p>
+                <p><button class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
+            <p><button class="button" style="vertical-align:middle"><span>Frage hinzuf&uumlgen</span></button></p></td>
+            <td width="5%"></td>
+            <td valign="top" style="font-family: Arial"> <br> Durch den Erfolg der Microservices entstehen immer mehr zugeh&oumlrige Frameworks. So
+                wird mit dieser Anwendung eine Bewertungsmethode gestellt, um die Microservice Frame-
+                works anhand einer gegebenen Architektur zu bewerten und miteinander zu vergleichen.
+                Sie wird dabei stark an die Bewertung von Softwarearchitekturen angelehnt, da ein Fra-
+                mework einen erheblichen Einfluss darauf hat.
+
+        </tr>
+    </table>
+        <p id="demo">Hier kommt das Datum:</p>
 </div>
 </body>
 </html>
