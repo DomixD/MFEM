@@ -21,8 +21,10 @@ public class MFEMResource {
 	private IMFEMService service;
 
 	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-	public String test() {
-		return service.testPrint();
+	public @ResponseBody String test() {
+		//return service.testPrint();
+		System.out.println("get");
+		return "{\"id\":1,\"content\":\"test\"}";
 	}
 
 	/*
