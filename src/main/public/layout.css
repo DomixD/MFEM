@@ -3,6 +3,14 @@ h1 {
     font-size: 3em;
     line-height: 0.5em;
     margin: 0.3em 0.3em 1em 0.3em;
+    color: hotpink;
+    text-shadow: rgba(0, 0, 0, 0.5) -1px 0, rgba(0, 0, 0, 0.3) 0 -1px, rgba(255, 255, 255, 0.5) 2px 2px, rgba(0, 0, 0, 0.3) -1px -2px;
+}
+h2 {
+    font-family: Rockwell, Georgia, "Arial", Times, serif;
+    font-size: 2em;
+    line-height: 0.5em;
+    margin: 0.3em 0.3em 1em 0.3em;
     color: darkblue;
     text-shadow: rgba(0, 0, 0, 0.5) -1px 0, rgba(0, 0, 0, 0.3) 0 -1px, rgba(255, 255, 255, 0.5) 2px 2px, rgba(0, 0, 0, 0.3) -1px -2px;
 }
@@ -45,6 +53,12 @@ h1 {
     opacity: 1;
     right: 0;
 }
+
+header {
+    background-color: white;
+    height: 151px;
+}
+
 
 #example1 {
     background-image: url(blume.png), url(hintergrund.jpg);
