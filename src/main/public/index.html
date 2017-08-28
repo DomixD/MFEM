@@ -1,67 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html ng-app="demo">
 <head>
     <title>MFEM</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="angular-route.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="layout.css">
-    <link rel="shortcut icon" href= />
 </head>
-<header> <img src="headerL.jpg" alt="SELFHTML - Die Energie des Verstehens">
+<header> <img src="headerL.jpg">
     </header>
 <body>
-<div ng-controller="Hello" id="example1">
+<div id="example1">
+
     <h1>Microservice Framework Evaluation Method</h1>
+    <p><a href="#/!">Main</a></p>
+
+    <div ng-controller="Hello">
     <p>The content is: {{req[1].content}}</p>
     <p>The content is: {{req[0].content}}</p>
+    </div>
     <table>
         <tr>
-            <td valign="top">        <p><button onclick="document.getElementById('demo').innerHTML=Date()" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
-                <p><button class="button" style="vertical-align:middle"><span>Framework hinzuf&uumlgen</span></button></p>
+            <td valign="top">
+                <p><button onclick="document.getElementById('demo').innerHTML=Date()" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
+                <p><button onclick="window.location.href='#!frame'" class="button" style="vertical-align:middle"><span>Framework hinzuf&uumlgen</span></button></p>
                 <p><button class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
             <p><button class="button" style="vertical-align:middle"><span>Frage hinzuf&uumlgen</span></button></p></td>
             <td width="5%"></td>
-            <td valign="top" style="font-family: Arial"> <p id="demo"> <br> Hier kommt das Datum:</p>
-                <br> Durch den Erfolg der Microservices entstehen immer mehr zugeh&oumlrige Frameworks. So
-                wird mit dieser Anwendung eine Bewertungsmethode gestellt, um die Microservice Frameworks anhand einer gegebenen Architektur zu bewerten und miteinander zu vergleichen.
-                Sie wird dabei stark an die Bewertung von Softwarearchitekturen angelehnt, da ein Framework einen erheblichen Einfluss darauf hat.
-
+            <td width="90%" valign="top" style="font-family: Arial"> <div ng-view></div></td>
         </tr>
     </table>
 
-
-    <table>
-        <h2>Neues Framework</h2>
-        <tr>
-            <td><label>Name des Frameworks: </label></td>
-            <td><input type="text" id="Name" name="Name"></td>
-        </tr>
-        <tr>
-            <td><label>Beschreibung des Frameworks: </label></td>
-            <td><input type="text" id="Beschr" name="Beschr"></td>
-        </tr>
-        <tr>
-            <td><label>Was man sonst so braucht: </label></td>
-            <td><input type="text" id="Sonstiges" name="Sonstiges"></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <td><p><button onclick="document.getElementById('demo').innerHTML=Date()" class="myButton" style="vertical-align:middle"><span>Anforderungen ausw&aumlhlen</span></button></p></td>
-            <td><p><button onclick="document.getElementById('demo').innerHTML=Date()" class="myButton" style="vertical-align:middle"><span>Anforderungen hinzuf&uumlgen</span></button></p></td>
-        </tr>
-    </table>
-    <script>
-        function show(id) {
-            if(document.getElementById) {
-                var mydiv = document.getElementById(id);
-                mydiv.style.display = (mydiv.style.display=='block'?'none':'block');
-            }
-        }
-    </script>
-    <a href="" onclick="javascript:show('divText'); return false">
-        Einblenden / Ausblenden</a>
-    <div style="display: none" id="divText">Text</div>
 </div>
 </body>
 </html>
