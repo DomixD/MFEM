@@ -7,6 +7,15 @@ mfem.config(function($routeProvider) {
         })
         .when("/frame", {
             templateUrl : "frame.html"
+        })
+        .when("/req", {
+            templateUrl : "req.html"
+        })
+        .when("/quest", {
+            templateUrl : "quest.html"
+        })
+        .when("/evaReq", {
+            templateUrl : "evaReq.html"
         });
 });
 

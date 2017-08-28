@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head>
+    <title>MFEM</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <!--script-- src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script-->
+    <script src="angular-route.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="layout.css">
+</head>
+<body>
+<div ng-controller="Hello">
+    <table>
+        <br>
+        <h2>Evaluation</h2>
+        <h3>Anforderung wählen:</h3>
+        <tr ng-repeat="x in req">
+            <td>
+                <select name="prio">
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                </select>
+            </td>
+            <td><label>{{x.content}}</label> </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td><p><button class="myButton" style="vertical-align:middle"><span>Weiter...</span></button></p></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

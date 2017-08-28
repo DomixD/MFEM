@@ -61,7 +61,7 @@ header {
 
 
 #example1 {
-    background-image: url(blume.png), url(hintergrund.jpg);
+    background-image: url(image/blume.png), url(image/hintergrund.jpg);
     background-position: right bottom, left top;
     background-repeat: no-repeat, repeat;
     padding: 15px;

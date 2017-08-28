@@ -7,7 +7,7 @@
     <script src="app.js"></script>
     <link rel="stylesheet" href="layout.css">
 </head>
-<header> <img src="headerL.jpg">
+<header> <img src="image/headerL.jpg">
     </header>
 <body>
 <div id="example1">
@@ -22,10 +22,10 @@
     <table>
         <tr>
             <td valign="top">
-                <p><button onclick="document.getElementById('demo').innerHTML=Date()" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
+                <p><button onclick="window.location.href='#!evaReq'" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
                 <p><button onclick="window.location.href='#!frame'" class="button" style="vertical-align:middle"><span>Framework hinzuf&uumlgen</span></button></p>
-                <p><button class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
-            <p><button class="button" style="vertical-align:middle"><span>Frage hinzuf&uumlgen</span></button></p></td>
+                <p><button onclick="window.location.href='#!req'" class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
+            <p><button onclick="window.location.href='#!quest'" class="button" style="vertical-align:middle"><span>Frage hinzuf&uumlgen</span></button></p></td>
             <td width="5%"></td>
             <td width="90%" valign="top" style="font-family: Arial"> <div ng-view></div></td>
         </tr>
