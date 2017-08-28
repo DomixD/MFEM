@@ -14,20 +14,12 @@
         <h2>Neue Anforderung</h2>
         <tr>
             <td><label>Anforderung: </label></td>
-            <td><input type="text" id="Name" name="Name"></td>
-        </tr>
-        <tr>
-            <td><label>Beschreibung: </label></td>
-            <td><input type="text" id="Beschr" name="Beschr"></td>
-        </tr>
-        <tr>
-            <td><label>Was man sonst so braucht: </label></td>
-            <td><input type="text" id="Sonstiges" name="Sonstiges"></td>
+            <td><input type="text" id="Name" name="Name" ng-model="content"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <td><p><button class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen</span></button></p></td>
+            <td><p><div ng-controller="Hello"><button ng-click="saveReq(content)" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen</span></button></div></p></td>
         </tr>
     </table>
 </body>

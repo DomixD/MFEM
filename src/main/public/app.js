@@ -24,4 +24,9 @@ mfem.controller('Hello', function($scope, $http) {
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
     });
+    $scope.saveReq=function (cont) {
+        data={content:cont}
+        $http.post('http://localhost:8080/req',data)
+    };
+
 });
