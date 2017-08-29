@@ -7,24 +7,30 @@
     <script src="app.js"></script>
     <link rel="stylesheet" href="layout.css">
 </head>
-<header id="home-button">
-    <img src="image/headerL.jpg">
-    </header>
+<!--<header id="home-button">-->
+    <!--<img src="image/headerL.jpg">-->
+    <!--</header>-->
 <body>
 <div id="example1">
-    <h1>Microservice Framework Evaluation Method</h1>
-    <p><a href="#/!">Startseite</a></p>
-    <table>
-        <tr>
-            <td valign="top">
-                <p><button onclick="window.location.href='#!evaReq'" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
-                <p><button onclick="window.location.href='#!frame'" class="button" style="vertical-align:middle"><span>Framework hinzuf&uumlgen</span></button></p>
-                <p><button onclick="window.location.href='#!req'" class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
+    <div class="container">
+        <div class="item">
+            <a href="#/!"><img height="60%" src="image/logoMFEM.jpg"></a>
+        </div>
+        <div class="item">
+            <h1>Microservice Framework Evaluation Method</h1>
+        </div>
+    </div>
+    <div class="containerBody">
+        <div class="item">
+            <p><button onclick="window.location.href='#!evaReq'" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
+            <p><button onclick="window.location.href='#!frame'" class="button" style="vertical-align:middle"><span>Framework hinzuf&uumlgen</span></button></p>
+            <p><button onclick="window.location.href='#!req'" class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
             <p><button onclick="window.location.href='#!quest'" class="button" style="vertical-align:middle"><span>Frage hinzuf&uumlgen</span></button></p></td>
-            <td width="5%"></td>
-            <td width="90%" valign="top" style="font-family: Arial"> <div ng-view></div></td>
-        </tr>
-    </table>
+        </div>
+        <div class="itemContent">
+           <div ng-view></div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -14,6 +14,33 @@ h2 {
     color: darkblue;
     text-shadow: rgba(0, 0, 0, 0.5) -1px 0, rgba(0, 0, 0, 0.3) 0 -1px, rgba(255, 255, 255, 0.5) 2px 2px, rgba(0, 0, 0, 0.3) -1px -2px;
 }
+
+.container {
+    display: block;
+}
+.item {
+    flex-basis: 100px;
+    flex-grow:1;
+    flex-shrink: 0;
+    margin: 10px;
+    margin-left: 20px;
+}
+.item:nth-child(1){
+    max-width: 150px;
+    margin-left: 30px;
+}
+.itemContent {
+    flex-basis: 100px;
+    flex-grow:1;
+    flex-shrink: 0;
+    max-width: 500px;
+    margin: 10px;
+    margin-left: 20px;
+}
+.containerBody{
+    display: flex;
+}
+
 home-button{
     background-image: url(image/logoMFEM.jpg);
     display: inline-block;
@@ -57,12 +84,6 @@ home-button{
     opacity: 1;
     right: 0;
 }
-
-header {
-    background-color: white;
-    height: 151px;
-}
-
 
 #example1 {
     background-image: url(image/blume.png), url(image/hintergrund.jpg);
