@@ -13,7 +13,8 @@ public class Framework implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FrameworkID")
     private int id;
-    private String description;
+    private String nameFW;
+    private String descriptionFW;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FrameworkEvaluationID")
     private FrameworkEvaluation frameworkEvaluation;

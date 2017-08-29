@@ -16,6 +16,18 @@ mfem.config(function($routeProvider) {
         })
         .when("/evaReq", {
             templateUrl : "evaReq.html"
+        })
+        .when("/checkReq", {
+            templateUrl : "checkReq.html"
+        })
+        .when("/questReq", {
+            templateUrl : "questReq.html"
+        })
+        .when("/checkReqQuest", {
+            templateUrl : "checkReqQuest.html"
+        })
+        .when("/checkQuest", {
+            templateUrl : "checkQuest.html"
         });
 });
 
