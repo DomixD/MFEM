@@ -1,6 +1,7 @@
 package muenchen.praxis.mfem.services;
 
 import muenchen.praxis.mfem.entities.Priority;
+import muenchen.praxis.mfem.entities.Question;
 import muenchen.praxis.mfem.entities.Requirement;
 import muenchen.praxis.mfem.persistence.RepoQuestion;
 import muenchen.praxis.mfem.persistence.RepoRequirement;
@@ -17,15 +18,11 @@ public class MFEMServiceImpl implements IMFEMService{
 	RepoQuestion persistenceQuest;
 
 	@Override
-	public String testPrint() {
-		System.out.println("get hat geklappt :)!");
-		return "Irgendwas";
+	public void addToQuestList(String content) {
+		//Über content auf Requirement kommen
+		//List<Question> list = requirement.getQuestionList();
+		//list.add(question);
+		//zurück speichern?
 	}
-
-	/*@Override
-	public List<Requirement> findAllByPrior (Priority prior) {
-		return persistenceReq.findAllByPrior(prior);
-	}*/
-
 
 }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
-
+<div ng-controller="Controller">
     <table>
         <br>
         <h2>Neue Frage</h2>
@@ -17,18 +17,16 @@
             <td><input type="text" id="Name" name="Name"></td>
         </tr>
         <tr>
-            <td><label>Beschreibung: </label></td>
-            <td><input type="text" id="Beschr" name="Beschr"></td>
-        </tr>
-        <tr>
             <td><label>Metrik: </label></td>
+            <td><select ng-model="metrics" ng-options="m.description for m in metrics"></select></td>
         </tr>
     </table>
     <table>
         <tr>
             <td><p><button class="myButton" onclick="window.location.href='#/!'" style="vertical-align:middle"><span>Vorgang abschließen</span></button></p></td>
-            <td><p><button class="myButton" onclick="window.location.href='#!questReq'" style="vertical-align:middle"><span>weitere Frage</span></button></p></td>
+            <td><p><button class="myButton" onclick="window.location.href='#!questReq'" style="vertical-align:middle"><span>weitere Frage >></span></button></p></td>
         </tr>
     </table>
+</div>
 </body>
 </html>
