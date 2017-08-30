@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
-<div ng-controller="Hello">
+<div ng-controller="Controller">
         <h3>Anforderung wählen:</h3>
         <div ng-repeat="x in req">
             <label><input type="checkbox" id="reqR" name="Requests" value="abc">{{x.content}}</label>
         </div>
-    <p><button class="myButton" onclick="window.location.href='#!checkQuest'" style="vertical-align:middle"><span>Weiter zu den Fragen</span></button></p>
+    <p><button class="myButton" onclick="window.location.href='#!checkQuest'" style="vertical-align:middle"><span>Weiter zu den Fragen >></span></button></p>
 </div>
 </body>
 </html>
