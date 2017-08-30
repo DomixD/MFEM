@@ -36,7 +36,7 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http) {
+mfem.controller('Controller', function($scope, $http, $q) {
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
@@ -60,28 +60,25 @@ mfem.controller('Controller', function($scope, $http) {
                 var result = inputs[i].value;
             }
         }
-        data={content:result};
-        $http.post('http://localhost:8080/questToReq',data)
     };
     $scope.saveMetric=function (description, a1, a2, a3) {
         var answer1;
         var answer2;
         var answer3;
-        data={content:a1,value:1.0};
-        $http.post('http://localhost:8080/answer',data).then(function(response){
-            answer1 = response.data;
+        data1={content:a1,value:1.0};
+        data2={content:a2,value:0.5};
+        data3={content:a3,value:0.0};
+        $http.post('http://localhost:8080/answer',data1).then(function(response){
+            answer1 = response.data._links.self.href;
+            $http.post('http://localhost:8080/answer',data2).then(function(response){
+                answer2 = response.data._links.self.href;
+                $http.post('http://localhost:8080/answer',data3).then(function(response){
+                    answer3 = response.data._links.self.href;
+                    data4={description:description,
+                        answerList: [answer1, answer2, answer3]};
+                    $http.post('http://localhost:8080/metric',data4);
+                });
+            });
         });
-        data={content:a2,value:0.5};
-        $http.post('http://localhost:8080/answer',data).then(function(response){
-            answer2 = response.data._links.self.href;
-        });
-        data={content:a3,value:0.0};
-        $http.post('http://localhost:8080/answer',data).then(function(response){
-            answer3 = response.data.content;
-        });
-        data={description:description,
-              answerList: [/*answer1, answer2, answer3,*/ "http://localhost:8080/answer/1"]};
-        /*data="{\"description\":\""+description+"\",\"answerList\":[\"http://localhost:8080/answer/1\"]}";*/
-        $http.post('http://localhost:8080/metric',data);
     };
 });

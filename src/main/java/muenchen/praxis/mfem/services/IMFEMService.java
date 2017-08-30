@@ -6,5 +6,4 @@ import muenchen.praxis.mfem.entities.Requirement;
 import java.util.List;
 
 public interface IMFEMService {
-	void addToQuestList(String content);
 }

@@ -18,15 +18,4 @@ public class MFEMResource {
 	@Autowired
 	private IMFEMService service;
 
-	/**
-	 * Question zu questionList in Requirement hinzufügen
-	 * @param requirement
-	 */
-	@RequestMapping(value = "/questToReq", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
-	public void questToReq(@RequestBody Requirement requirement) {
-		String content = requirement.getContent();
-		service.addToQuestList(content);
-		System.out.print("Funktioniert");
-	}
-
 }

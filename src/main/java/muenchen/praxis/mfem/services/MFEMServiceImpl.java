@@ -17,12 +17,4 @@ public class MFEMServiceImpl implements IMFEMService{
 	@Autowired
 	RepoQuestion persistenceQuest;
 
-	@Override
-	public void addToQuestList(String content) {
-		//Über content auf Requirement kommen
-		//List<Question> list = requirement.getQuestionList();
-		//list.add(question);
-		//zurück speichern?
-	}
-
 }
