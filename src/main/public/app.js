@@ -36,7 +36,10 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http, $q) {
+mfem.controller('Controller', function($scope, $http) {
+    var quest;
+    //var resultCheckReq = [];
+    $scope.resultCheckReq = [];
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
@@ -45,21 +48,47 @@ mfem.controller('Controller', function($scope, $http, $q) {
         $scope.metrics = response.data._embedded.metrics;
     });
     $scope.saveReq=function (cont) {
-        //data={content:cont};
-        var data = "{\"content\":\""+cont+"\"}";
+        data={content:cont};
         $http.post('http://localhost:8080/req',data);
     };
     $scope.saveQuest=function (question) {
-        data={question:question};
-        $http.post('http://localhost:8080/quest',data)
+        var e = document.getElementById("metrics");
+        var metric = e.options[e.selectedIndex].value;
+        data={question:question,
+              metric: metric};
+        $http.post('http://localhost:8080/quest',data).then(function(response){
+            quest = response.data._links.self.href;
+        });
     };
-    $scope.checkSelectedReq=function() {
+    $scope.checkReqSaveQuest=function() {
+        var result;
         var inputs = document.getElementsByName("Requirement");
         for (var i = 0; i < inputs.length; i++) {
             if(inputs[i].checked) {
-                var result = inputs[i].value;
+                result = inputs[i].value;
             }
         }
+        //TODO:Rene fragen
+    };
+    $scope.checkReqEvaFrame=function () {
+        var inputs = document.getElementsByName("reqR");
+        for (var i = 0; i < inputs.length; i++) {
+            if(inputs[i].checked) {
+                resultCheckReq += inputs[i].value;
+            }
+        }
+    };
+    $scope.showQuests=function () {
+        var quests = [];
+        var metricLinks = [];
+        for (var i = 0; i < resultCheckReq.length; i++) {
+            $http.get(resultCheckReq[i]+"/questionList").
+            then(function(response) {
+                quests += response.data._embedded.questions.question;
+                metricLinks += response.data._embedded.questions._links.metric.href;
+            });
+        }
+        $scope.questions = quests;
     };
     $scope.saveMetric=function (description, a1, a2, a3) {
         var answer1;
@@ -81,4 +110,9 @@ mfem.controller('Controller', function($scope, $http, $q) {
             });
         });
     };
+    $scope.saveFrame=function (name, description) {
+        data={nameFW:name,
+              descriptionFW:description};
+        $http.post('http://localhost:8080/frame',data);
+    }
 });

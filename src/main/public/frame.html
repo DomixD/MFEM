@@ -8,19 +8,20 @@
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
-
+<div ng-controller="Controller">
     <table>
         <br>
         <h2>Neues Framework</h2>
         <tr>
             <td><label>Name des Frameworks: </label></td>
-            <td><input type="text" id="Name" name="Name"></td>
+            <td><input type="text" id="Name" name="Name" ng-model="name"></td>
         </tr>
         <tr>
             <td><label>Beschreibung des Frameworks: </label></td>
-            <td><input type="text" id="Beschr" name="Beschr"></td>
+            <td><input type="text" id="Beschr" name="Beschr" ng-model="description"></td>
         </tr>
     </table>
-<p><button class="myButton" onclick="window.location.href='#!checkReq'" style="vertical-align:middle"><span>Anforderungen ausw&aumlhlen >></span></button></p>
+<p><button class="myButton" ng-click="saveFrame(name, description)" onclick="window.location.href='#!checkReq'" style="vertical-align:middle"><span>Anforderungen ausw&aumlhlen >></span></button></p>
+</div>
 </body>
 </html>
