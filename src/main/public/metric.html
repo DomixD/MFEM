@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
-<div ng-controller="Controller">
     <br>
     <h2>Neue Metrik</h2>
     <div class="containerBody">
@@ -19,13 +18,12 @@
             <label>Antwortmögl. 3: </label>
         </div>
         <div class="item">
-            <input ng-model="description" type="text" id="Name" name="Name"><br>
-            <input ng-model="a1" type="text" id="A1" name="Name"><br>
-            <input ng-model="a2" type="text" id="A2" name="Name"><br>
-            <input ng-model="a3" type="text" id="A3" name="Name"><br>
+            <input type="text" id="Name" name="Name" ng-model="description"><br>
+            <input type="text" id="A1" name="Name" ng-model="a1"><br>
+            <input type="text" id="A2" name="Name" ng-model="a2"><br>
+            <input type="text" id="A3" name="Name" ng-model="a3"><br>
         </div>
     </div>
-    <p><button class="myButton" onclick="window.location.href='#/!'" ng-click="saveMetric(description, a1, a2, a3)" style="vertical-align:middle"><span>Vorgang abschließen</span></button></p>
-</div>
+    <p><div ng-controller="Controller"><button class="myButton" onclick="window.location.href='#!main'" ng-click="saveMetric(description, a1, a2, a3)" style="vertical-align:middle"><span>Vorgang abschließen</span></button></div></p>
 </body>
 </html>
