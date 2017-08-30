@@ -27,6 +27,9 @@ mfem.config(function($routeProvider) {
         })
         .when("/checkQuest", {
             templateUrl : "checkQuest.html"
+        })
+        .when("/metric", {
+            templateUrl : "metric.html"
         });
 });
 
@@ -56,4 +59,8 @@ mfem.controller('Controller', function($scope, $http) {
         data={content:result};
         $http.post('http://localhost:8080/questToReq',data)
     };
+    $scope.saveMetric=function(description, a1, a2, a3) {
+        data={description:description}
+        $http.post('http://localhost:8080/metric', data)
+    }
 });

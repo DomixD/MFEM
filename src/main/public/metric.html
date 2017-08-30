@@ -8,22 +8,24 @@
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
+<div ng-controller="Controller">
     <br>
     <h2>Neue Metrik</h2>
-    <div class="container">
-        <div class="itemContent">
+    <div class="containerBody">
+        <div class="item">
             <label>Beschreibung: </label>
-            <label>Antwortmöglichkeit 1: </label>
-            <label>Antwortmöglichkeit 2: </label>
-            <label>Antwortmöglichkeit 3: </label>
+            <label>Antwortmögl. 1: </label>
+            <label>Antwortmögl. 2: </label>
+            <label>Antwortmögl. 3: </label>
         </div>
-        <div class="itemContent">
-            <input type="text" id="Name" name="Name"><br>
-            <input type="text" id="A1" name="Name"><br>
-            <input type="text" id="A2" name="Name"><br>
-            <input type="text" id="A3" name="Name"><br>
+        <div class="item">
+            <input ng-model="description" type="text" id="Name" name="Name"><br>
+            <input ng-model="a1" type="text" id="A1" name="Name"><br>
+            <input ng-model="a2" type="text" id="A2" name="Name"><br>
+            <input ng-model="a3" type="text" id="A3" name="Name"><br>
         </div>
     </div>
-    <p><button class="myButton" onclick="window.location.href='#/!'" style="vertical-align:middle"><span>Vorgang abschließen</span></button></p>
+    <p><button class="myButton" onclick="window.location.href='#/!'" ng-click="saveMetric(description, a1, a2, a3)" style="vertical-align:middle"><span>Vorgang abschließen</span></button></p>
+</div>
 </body>
 </html>
