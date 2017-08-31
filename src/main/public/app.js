@@ -37,9 +37,7 @@ mfem.config(function($routeProvider) {
 });
 
 mfem.controller('Controller', function($scope, $http) {
-    var quest;
-    //var resultCheckReq = [];
-    $scope.resultCheckReq = [];
+    var resultCheckReq = [];
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
@@ -54,27 +52,34 @@ mfem.controller('Controller', function($scope, $http) {
     $scope.saveQuest=function (question) {
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
+        var e2 = document.getElementById("reqs");
+        var req = e2.options[e2.selectedIndex].value;
+        //var content = e2.options[e2.selectedIndex].id;
         data={question:question,
               metric: metric};
         $http.post('http://localhost:8080/quest',data).then(function(response){
-            quest = response.data._links.self.href;
+            var quest = response.data._links.self.href;
+            $http.get(req+'/questionList').then(function (response) {
+                var responseQuest = response.data._embedded.questions;
+                var allQuests = [];
+                for (var i = 0; i < responseQuest.length; i++) {
+                    allQuests.push(responseQuest[i]._links.self.href);
+                }
+                allQuests.push(quest);
+                $http.get(req).then(function (response) {
+                    var content = response.data.content;
+                    data={content:content,
+                        questionList:allQuests};
+                    $http.patch(req, data);
+                });
+            });
         });
-    };
-    $scope.checkReqSaveQuest=function() {
-        var result;
-        var inputs = document.getElementsByName("Requirement");
-        for (var i = 0; i < inputs.length; i++) {
-            if(inputs[i].checked) {
-                result = inputs[i].value;
-            }
-        }
-        //TODO:Rene fragen
     };
     $scope.checkReqEvaFrame=function () {
         var inputs = document.getElementsByName("reqR");
         for (var i = 0; i < inputs.length; i++) {
             if(inputs[i].checked) {
-                resultCheckReq += inputs[i].value;
+                resultCheckReq.push(inputs[i].value);
             }
         }
     };
@@ -84,8 +89,8 @@ mfem.controller('Controller', function($scope, $http) {
         for (var i = 0; i < resultCheckReq.length; i++) {
             $http.get(resultCheckReq[i]+"/questionList").
             then(function(response) {
-                quests += response.data._embedded.questions.question;
-                metricLinks += response.data._embedded.questions._links.metric.href;
+                quests.push(response.data._embedded.questions.question);
+                metricLinks.push(response.data._embedded.questions._links.metric.href);
             });
         }
         $scope.questions = quests;
