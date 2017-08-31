@@ -13,7 +13,8 @@
         <br>
         <h2>Evaluation</h2>
         <h3>Anforderung priorisieren:</h3>
-        <tr ng-repeat="x in req">
+        <script>filter = sessionStorage.getItem('classiFrame')</script>
+        <tr ng-repeat="x in req  | filter : 2">
             <td>
                 <select name="prio">
                     <option>A</option>

@@ -39,11 +39,15 @@ mfem.config(function($routeProvider) {
         })
         .when("/classiQuest", {
             templateUrl : "classiQuest.html"
+        })
+        .when("/classiReq", {
+            templateUrl : "classiReq.html"
         });
 });
 
 mfem.controller('Controller', function($scope, $http) {
     var resultCheckReq = [];
+
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
@@ -54,16 +58,62 @@ mfem.controller('Controller', function($scope, $http) {
     $http.get('http://localhost:8080/classi').then(function(response){
         $scope.classis = response.data._embedded.classifications;
     });
+
+    //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
-        data={content:cont};
-        $http.post('http://localhost:8080/req',data);
+        var e = document.getElementById("classis");
+        var classi = e.options[e.selectedIndex].value;
+        data={content:cont,
+              classification:classi};
+        $http.post('http://localhost:8080/req',data).then(function (response){
+            var req = response.data._links.self.href;
+            sessionStorage.setItem('req', req);
+        });
     };
+
+    //Anforderung ohne extra Angabe der Klassifizierung hinzufügen
+    $scope.saveClassiReq=function (content) {
+        var classi = sessionStorage.getItem('classi');
+        data={content:content,
+            classification:classi};
+        $http.post('http://localhost:8080/req',data).then(function (response){
+            var req = response.data._links.self.href;
+            sessionStorage.setItem('req', req);
+        });
+    };
+
+    //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
+    $scope.saveClassiQuest=function (question) {
+        var e = document.getElementById("metrics");
+        var metric = e.options[e.selectedIndex].value;
+        data={question:question,
+            metric: metric};
+        $http.post('http://localhost:8080/quest',data).then(function(response){
+            var quest = response.data._links.self.href;
+            var req = sessionStorage.getItem('req');
+            $http.get(req+'/questionList').then(function (response) {
+                var responseQuest = response.data._embedded.questions;
+                var allQuests = [];
+                for (var i = 0; i < responseQuest.length; i++) {
+                    allQuests.push(responseQuest[i]._links.self.href);
+                }
+                allQuests.push(quest);
+                $http.get(req).then(function (response) {
+                    var content = response.data.content;
+                    data={content:content,
+                        questionList:allQuests};
+                    $http.patch(req, data);
+                });
+            });
+        });
+    };
+
+    //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question) {
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
         var e2 = document.getElementById("reqs");
         var req = e2.options[e2.selectedIndex].value;
-        //var content = e2.options[e2.selectedIndex].id;
         data={question:question,
               metric: metric};
         $http.post('http://localhost:8080/quest',data).then(function(response){
@@ -84,6 +134,8 @@ mfem.controller('Controller', function($scope, $http) {
             });
         });
     };
+
+    //Fragen zu ausgewählten Metriken anzeigen
     $scope.saveReqs=function () {
         var inputs = document.getElementsByName("reqR");
         for (var i = 0; i < inputs.length; i++) {
@@ -107,6 +159,8 @@ mfem.controller('Controller', function($scope, $http) {
         // }
         $scope.questio = resultCheckReq;
     };
+
+    //Metrik mit Antwortmöglichkeiten speichern
     $scope.saveMetric=function (description, a1, a2, a3) {
         var answer1;
         var answer2;
@@ -127,14 +181,23 @@ mfem.controller('Controller', function($scope, $http) {
             });
         });
     };
+
     $scope.saveFrame=function (name, description) {
+        var e = document.getElementById("classisFrame");
+        var classi = e.options[e.selectedIndex].value;
+        sessionStorage.setItem('classiFrame', classi);
         data={nameFW:name,
               descriptionFW:description};
         $http.post('http://localhost:8080/frame',data);
     };
+
+    //Klassifizierung speichern
     $scope.saveClassi=function (name, description) {
         data={name:name,
             description:description};
-        $http.post('http://localhost:8080/classi',data);
+        $http.post('http://localhost:8080/classi',data).then(function (response) {
+            var classi = response.data._links.self.href;
+            sessionStorage.setItem('classi', classi);
+        });
     };
 });
