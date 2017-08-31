@@ -75,25 +75,28 @@ mfem.controller('Controller', function($scope, $http) {
             });
         });
     };
-    $scope.checkReqEvaFrame=function () {
+    $scope.saveReqs=function () {
         var inputs = document.getElementsByName("reqR");
         for (var i = 0; i < inputs.length; i++) {
             if(inputs[i].checked) {
                 resultCheckReq.push(inputs[i].value);
             }
+            resultCheckReq.push("hallo");
         }
-    };
+    }
     $scope.showQuests=function () {
         var quests = [];
         var metricLinks = [];
-        for (var i = 0; i < resultCheckReq.length; i++) {
-            $http.get(resultCheckReq[i]+"/questionList").
+        // for (var i = 0; i < resultCheckReq.length; i++) {
+            $http.get(resultCheckReq[0]+"/questionList").
             then(function(response) {
-                quests.push(response.data._embedded.questions.question);
-                metricLinks.push(response.data._embedded.questions._links.metric.href);
+                var questList =(response.data._embedded.questions);
+                for(var j = 0; j < questList.length; j++){
+                    quests.push(questList[j].question)
+                }
             });
-        }
-        $scope.questions = quests;
+        // }
+        $scope.questio = resultCheckReq;
     };
     $scope.saveMetric=function (description, a1, a2, a3) {
         var answer1;

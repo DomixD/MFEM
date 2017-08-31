@@ -13,7 +13,7 @@
         <div ng-repeat="x in req">
             <label><input type="checkbox" id="reqR" name="Requests" value="x._links.self.href" checked>{{x.content}}</label>
         </div>
-    <p><button class="myButton" ng-click="showQuests()" onclick="window.location.href='#!checkQuest'" style="vertical-align:middle"><span>Weiter zu den Fragen >></span></button></p>
+    <p><button class="myButton" ng-click="saveReqs()" onclick="window.location.href='#!checkQuest'" style="vertical-align:middle"><span>Weiter zu den Fragen >></span></button></p>
 </div>
 </body>
 </html>
