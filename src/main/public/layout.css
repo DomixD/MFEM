@@ -3,7 +3,7 @@ h1 {
     font-size: 3em;
     line-height: 0.5em;
     margin: 0.3em 0.3em 1em 0.3em;
-    color: hotpink;
+    color: lightgray;
     text-shadow: rgba(0, 0, 0, 0.5) -1px 0, rgba(0, 0, 0, 0.3) 0 -1px, rgba(255, 255, 255, 0.5) 2px 2px, rgba(0, 0, 0, 0.3) -1px -2px;
 }
 h2 {
@@ -60,7 +60,7 @@ home-button{
 .button {
     display: inline-block;
     border-radius: 4px;
-    background-color: hotpink;
+    background-color: lightslategray;
     border: none;
     color: #FFFFFF;
     text-align: center;
@@ -98,7 +98,7 @@ home-button{
 }
 
 #example1 {
-    background-image: url(image/blume.png), url(image/hintergrund.jpg);
+    background-image: url(image/steine.png), url(image/hintergrund.jpg);
     background-position: right bottom, left top;
     background-repeat: no-repeat, repeat;
     padding: 10px;
