@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
-
+<div ng-controller="Controller">
     <table>
         <br>
         <h2>Neue Anforderung</h2>
@@ -16,11 +16,16 @@
             <td><label>Anforderung: </label></td>
             <td><input type="text" id="Name" name="Name" ng-model="content"></td>
         </tr>
+        <tr>
+            <td><label>Klassifizierung: </label></td>
+            <td><select id="classis" ng-model="classi" ng-options="c.name for c in classis track by c._links.self.href"></select></td>
+        </tr>
     </table>
     <table>
         <tr>
-            <td><p><div ng-controller="Controller"><button onclick="window.location.href='#!quest'" ng-click="saveReq(content)" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div></p></td>
+            <td><p><div ng-controller="Controller"><button onclick="window.location.href='#!classiQuest'" ng-click="saveReq(content)" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div></p></td>
         </tr>
     </table>
+</div>
 </body>
 </html>

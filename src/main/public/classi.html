@@ -11,21 +11,17 @@
 <div ng-controller="Controller">
     <table>
         <br>
-        <h2>Neues Framework</h2>
+        <h2>Neue Klassifizierung</h2>
         <tr>
-            <td><label>Name des Frameworks: </label></td>
+            <td><label>Name der Klassifizierung: </label></td>
             <td><input type="text" id="Name" name="Name" ng-model="name"></td>
         </tr>
         <tr>
-            <td><label>Beschreibung des Frameworks: </label></td>
+            <td><label>Beschreibung der Klassifizierung: </label></td>
             <td><input type="text" id="Beschr" name="Beschr" ng-model="description"></td>
         </tr>
-        <tr>
-            <td><label>Klassifizierung: </label></td>
-            <td><select id="classis" ng-model="classi" ng-options="c.name for c in classis track by c._links.self.href"></select></td>
-        </tr>
     </table>
-<p><button class="myButton" ng-click="saveFrame(name, description)" onclick="window.location.href='#!evaReq'" style="vertical-align:middle"><span>Anforderungen priorisieren >></span></button></p>
+    <p><button class="myButton" ng-click="saveClassi(name, description)" onclick="window.location.href='#!req'" style="vertical-align:middle"><span>Anforderungen hinzuf&uumlgen >></span></button></p>
 </div>
 </body>
 </html>

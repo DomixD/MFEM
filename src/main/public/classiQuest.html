@@ -20,13 +20,10 @@
             <td><label>Metrik: </label></td>
             <td><select id="metrics" ng-model="metric" ng-options="m.description for m in metrics track by m._links.self.href"></select></td>
         </tr>
-        <tr>
-            <td><label>Anforderung: </label></td>
-            <td><select id="reqs" ng-model="require" ng-options="r.content for r in req track by r._links.self.href"></select></td>
-        </tr>
     </table>
     <table>
         <tr>
+            <td><p><button class="myButton" ng-click="saveClassi(name, description)" onclick="window.location.href='#!req'" style="vertical-align:middle"><span>weitere Anforderung >></span></button></p></td>
             <td><p><button class="myButton" ng-click="saveQuest(question)" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>speichern</span></button></p></td>
         </tr>
     </table>

@@ -33,6 +33,12 @@ mfem.config(function($routeProvider) {
         })
         .when("/main", {
             templateUrl : "main.html"
+        })
+        .when("/classi", {
+            templateUrl : "classi.html"
+        })
+        .when("/classiQuest", {
+            templateUrl : "classiQuest.html"
         });
 });
 
@@ -44,6 +50,9 @@ mfem.controller('Controller', function($scope, $http) {
     });
     $http.get('http://localhost:8080/metric').then(function(response){
         $scope.metrics = response.data._embedded.metrics;
+    });
+    $http.get('http://localhost:8080/classi').then(function(response){
+        $scope.classis = response.data._embedded.classifications;
     });
     $scope.saveReq=function (cont) {
         data={content:cont};
@@ -83,7 +92,7 @@ mfem.controller('Controller', function($scope, $http) {
             }
             resultCheckReq.push("hallo");
         }
-    }
+    };
     $scope.showQuests=function () {
         var quests = [];
         var metricLinks = [];
@@ -122,5 +131,10 @@ mfem.controller('Controller', function($scope, $http) {
         data={nameFW:name,
               descriptionFW:description};
         $http.post('http://localhost:8080/frame',data);
-    }
+    };
+    $scope.saveClassi=function (name, description) {
+        data={name:name,
+            description:description};
+        $http.post('http://localhost:8080/classi',data);
+    };
 });
