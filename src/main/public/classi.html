@@ -9,19 +9,26 @@
 </head>
 <body>
 <div ng-controller="Controller">
-    <table>
         <br>
         <h2>Neue Klassifizierung</h2>
-        <tr>
-            <td><label>Name der Klassifizierung: </label></td>
-            <td><input type="text" id="Name" name="Name" ng-model="name"></td>
-        </tr>
-        <tr>
-            <td><label>Beschreibung der Klassifizierung: </label></td>
-            <td><input type="text" id="Beschr" name="Beschr" ng-model="description"></td>
-        </tr>
-    </table>
-    <p><button class="myButton" ng-click="saveClassi(name, description)" onclick="window.location.href='#!classiReq'" style="vertical-align:middle"><span>Anforderungen hinzuf&uumlgen >></span></button></p>
+
+    <div class="container1">
+        <form>
+            <ul class="flex-outer">
+                <li>
+                    <label>Name der Klassifizierung:</label>
+                    <input type="text" id="Name" name="Name" ng-model="name">
+                </li>
+                <li>
+                    <label>Beschreibung der Klassifizierung</label>
+                    <input type="text" id="Beschr" name="Beschr" ng-model="description">
+                </li>
+                <li>
+                    <p><button class="myButton" ng-click="saveClassi(name, description)" onclick="window.location.href='#!classiReq'" style="vertical-align:middle"><span>Anforderungen hinzuf&uumlgen >></span></button></p>
+                </li>
+            </ul>
+        </form>
+    </div>
 </div>
 </body>
 </html>

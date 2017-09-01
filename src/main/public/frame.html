@@ -9,23 +9,29 @@
 </head>
 <body>
 <div ng-controller="Controller">
-    <table>
         <br>
         <h2>Neues Framework</h2>
-        <tr>
-            <td><label>Name des Frameworks: </label></td>
-            <td><input type="text" id="Name" name="Name" ng-model="name"></td>
-        </tr>
-        <tr>
-            <td><label>Beschreibung des Frameworks: </label></td>
-            <td><input type="text" id="Beschr" name="Beschr" ng-model="description"></td>
-        </tr>
-        <tr>
-            <td><label>Klassifizierung: </label></td>
-            <td><select id="classisFrame" ng-model="classi" ng-options="c.name for c in classis track by c._links.self.href"></select></td>
-        </tr>
-    </table>
-<p><button class="myButton" ng-click="saveFrame(name, description)" onclick="window.location.href='#!evaReq'" style="vertical-align:middle"><span>Anforderungen priorisieren >></span></button></p>
+    <div class="container1">
+        <form>
+            <ul class="flex-outer">
+                <li>
+                    <label>Name des Frameworks:</label>
+                    <input type="text" id="Name" name="Name" ng-model="name">
+                </li>
+                <li>
+                    <label>Beschreibung des Frameworks:</label>
+                    <input type="text" id="Beschr" name="Beschr" ng-model="description">
+                </li>
+                <li>
+                    <label>Klassifizierung</label>
+                    <select id="classisFrame" ng-model="classi" ng-options="c.name for c in classis track by c._links.self.href"></select>
+                </li>
+                <li>
+                    <p><button class="myButton" ng-click="saveFrame(name, description)" onclick="window.location.href='#!evaReq'" style="vertical-align:middle"><span>Anforderungen priorisieren >></span></button></p>
+                </li>
+            </ul>
+        </form>
+    </div>
 </div>
 </body>
 </html>

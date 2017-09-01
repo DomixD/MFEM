@@ -10,20 +10,30 @@
 <body>
     <br>
     <h2>Neue Metrik</h2>
-    <div class="containerBody">
-        <div class="item">
-            <label>Beschreibung: </label>
-            <label>Antwortmögl. 1: </label>
-            <label>Antwortmögl. 2: </label>
-            <label>Antwortmögl. 3: </label>
-        </div>
-        <div class="item">
-            <input type="text" id="Name" name="Name" ng-model="description"><br>
-            <input type="text" id="A1" name="Name" ng-model="a1"><br>
-            <input type="text" id="A2" name="Name" ng-model="a2"><br>
-            <input type="text" id="A3" name="Name" ng-model="a3"><br>
-        </div>
+    <div class="container1">
+        <form>
+            <ul class="flex-outer">
+                <li>
+                    <label>Beschreibung</label>
+                    <input type="text" id="Name" name="Name" ng-model="description">
+                </li>
+                <li>
+                    <label>Antwort 1:</label>
+                    <input type="text" id="A1" name="Name" ng-model="a1">
+                </li>
+                <li>
+                    <label>Antwort 2:</label>
+                    <input type="text" id="A2" name="Name" ng-model="a2">
+                </li>
+                <li>
+                    <label>Antwort 3:</label>
+                    <input type="text" id="A3" name="Name" ng-model="a3">
+                </li>
+                <li>
+                    <p><div ng-controller="Controller"><button class="myButton" onclick="window.location.href='#!main'" ng-click="saveMetric(description, a1, a2, a3)" style="vertical-align:middle"><span>speichern</span></button></div></p>
+                </li>
+            </ul>
+        </form>
     </div>
-    <p><div ng-controller="Controller"><button class="myButton" onclick="window.location.href='#!main'" ng-click="saveMetric(description, a1, a2, a3)" style="vertical-align:middle"><span>speichern</span></button></div></p>
 </body>
 </html>
