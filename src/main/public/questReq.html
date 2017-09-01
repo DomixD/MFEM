@@ -16,15 +16,16 @@
             <ul class="flex-outer">
                 <li>
                     <label>Frage:</label>
-                    <input type="text" id="Name" name="Name">
+                    <input type="text" id="Name" name="Name" ng-model="question">
                 </li>
                 <li>
                     <label>Metrik:</label>
-                    <select id="metric" ng-model="metric" value="m._links.self.href" ng-options="m.description for m in metrics track by m._links.self.href"></select>
+                    <select id="metri" ng-model="metri" value="m._links.self.href" ng-options="m.description for m in metrics track by m._links.self.href"></select>
                 </li>
                 <li>
-                    <p><button class="myButton" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>Frage speichern</span></button></p>
-                    <p><button class="myButton" onclick="window.location.href='#!questReq';window.location.reload();" style="vertical-align:middle"><span>weitere Frage >></span></button></p>
+                    <p><button class="myButton" ng-click="saveReqQuest(question)" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>Frage speichern</span></button></p>
+                    <!--Fragen werden bei Klick nicht gespeichert>
+                    <!--p><button class="myButton" ng-click="saveReqQuest(question)" onclick="window.location.href='#!questReq';window.location.reload();" style="vertical-align:middle"><span>weitere Frage >></span></button></p-->
                 </li>
             </ul>
         </form>

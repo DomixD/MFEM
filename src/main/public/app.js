@@ -108,6 +108,32 @@ mfem.controller('Controller', function($scope, $http) {
         });
     };
 
+    //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
+    $scope.saveReqQuest=function (question) {
+        var e = document.getElementById("metri");
+        var metric = e.options[e.selectedIndex].value;
+        data={question:question,
+            metric: metric};
+        $http.post('http://localhost:8080/quest',data).then(function(response){
+            var quest = response.data._links.self.href;
+            var req = sessionStorage.getItem('req');
+            $http.get(req+'/questionList').then(function (response) {
+                var responseQuest = response.data._embedded.questions;
+                var allQuests = [];
+                for (var i = 0; i < responseQuest.length; i++) {
+                    allQuests.push(responseQuest[i]._links.self.href);
+                }
+                allQuests.push(quest);
+                $http.get(req).then(function (response) {
+                    var content = response.data.content;
+                    data={content:content,
+                        questionList:allQuests};
+                    $http.patch(req, data);
+                });
+            });
+        });
+    };
+
     //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question) {
         var e = document.getElementById("metrics");
