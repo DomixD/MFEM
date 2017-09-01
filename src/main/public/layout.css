@@ -201,7 +201,7 @@ home-button{
     margin: 0;
 }
 
-.flex-outer li input:not([type='checkbox']),
+.flex-outer li input:not([type='select']),
 .flex-outer li textarea {
     padding: 10px;
     border: none;
