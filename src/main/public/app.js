@@ -58,6 +58,30 @@ mfem.controller('Controller', function($scope, $http) {
     $http.get('http://localhost:8080/classi').then(function(response){
         $scope.classis = response.data._embedded.classifications;
     });
+    $http.get('http://localhost:8080/req').
+    then(function(response) {
+        var resultReqs =[];
+        var reqs = response.data._embedded.requirements;
+        var classis = [];
+        var getClassis = function (i) {
+            $http.get(reqs[i]._links.classification.href).then(function (response) {
+                classis.push(response.data._links.self.href);
+            })
+        };
+        for (var i = 0; i < reqs.length; i++) {
+            getClassis(i);
+        }
+        //Callback
+        for (var j = 0; j < reqs.length; j++) {
+            if(classis[j]==sessionStorage.getItem('classiFrame')) {
+                resultReqs.push('a'+classis[j] + ' '+j);
+            }
+            else {
+                resultReqs.push('b'+classis[j] + ' '+j);
+            }
+        }
+        $scope.classiReqs = resultReqs;
+    });
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
