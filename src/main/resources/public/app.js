@@ -58,6 +58,30 @@ mfem.controller('Controller', function($scope, $http) {
     $http.get('http://localhost:8080/classi').then(function(response){
         $scope.classis = response.data._embedded.classifications;
     });
+    $http.get('http://localhost:8080/req').
+    then(function(response) {
+        var resultReqs =[];
+        var reqs = response.data._embedded.requirements;
+        var classis = [];
+        var getClassis = function (i) {
+            $http.get(reqs[i]._links.classification.href).then(function (response) {
+                classis.push(response.data._links.self.href);
+            })
+        };
+        for (var i = 0; i < reqs.length; i++) {
+            getClassis(i);
+        }
+        //Callback
+        for (var j = 0; j < reqs.length; j++) {
+            if(classis[j]==sessionStorage.getItem('classiFrame')) {
+                resultReqs.push('a'+classis[j] + ' '+j);
+            }
+            else {
+                resultReqs.push('b'+classis[j] + ' '+j);
+            }
+        }
+        $scope.classiReqs = resultReqs;
+    });
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
@@ -85,6 +109,32 @@ mfem.controller('Controller', function($scope, $http) {
     //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
     $scope.saveClassiQuest=function (question) {
         var e = document.getElementById("metrics");
+        var metric = e.options[e.selectedIndex].value;
+        data={question:question,
+            metric: metric};
+        $http.post('http://localhost:8080/quest',data).then(function(response){
+            var quest = response.data._links.self.href;
+            var req = sessionStorage.getItem('req');
+            $http.get(req+'/questionList').then(function (response) {
+                var responseQuest = response.data._embedded.questions;
+                var allQuests = [];
+                for (var i = 0; i < responseQuest.length; i++) {
+                    allQuests.push(responseQuest[i]._links.self.href);
+                }
+                allQuests.push(quest);
+                $http.get(req).then(function (response) {
+                    var content = response.data.content;
+                    data={content:content,
+                        questionList:allQuests};
+                    $http.patch(req, data);
+                });
+            });
+        });
+    };
+
+    //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
+    $scope.saveReqQuest=function (question) {
+        var e = document.getElementById("metri");
         var metric = e.options[e.selectedIndex].value;
         data={question:question,
             metric: metric};

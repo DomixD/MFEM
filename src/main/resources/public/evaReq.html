@@ -15,13 +15,13 @@
     <div class="container1">
         <form>
             <ul class="flex-outer">
-                <li ng-repeat="x in req">
+                <li ng-repeat="x in classiReqs">
                     <select name="prio">
                         <option>A</option>
                         <option>B</option>
                         <option>C</option>
                     </select>
-                    <label>{{x.content}}</label>
+                    <label>{{x}}</label>
                 </li>
                 <li>
                     <p><button class="myButton" onclick="window.location.href='#!checkQuest';window.location.reload();" style="vertical-align:middle"><span>Weiter zu den Fragen >></span></button></p>
