@@ -25,6 +25,9 @@ public class FrameworkEvaluation implements Serializable{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "RequirementID")
     private Requirement requirement;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ClassificationID")
+    private Classification classification;
     private Priority priority;
 
 }

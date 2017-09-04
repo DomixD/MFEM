@@ -16,7 +16,7 @@
         <form>
             <ul class="flex-outer">
                 <li ng-repeat="x in classiReqs">
-                    <select name="prio">
+                    <select name="opts">
                         <option>A</option>
                         <option>B</option>
                         <option>C</option>
@@ -24,7 +24,7 @@
                     <label>{{x.content}}</label>
                 </li>
                 <li>
-                    <p><button class="myButton" onclick="window.location.href='#!checkQuest';window.location.reload();" style="vertical-align:middle"><span>Weiter zu den Fragen >></span></button></p>
+                    <p><button class="myButton" ng-click="saveReqPrio()" onclick="window.location.href='#!checkQuest';window.location.reload();" style="vertical-align:middle"><span>Weiter zu den Fragen >></span></button></p>
                 </li>
             </ul>
         </form>

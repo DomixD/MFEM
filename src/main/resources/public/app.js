@@ -45,8 +45,7 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http) {
-    var resultCheckReq = [];
+mfem.controller('Controller', function($scope, $http, $q) {
 
     $http.get('http://localhost:8080/req').
     then(function(response) {
@@ -61,6 +60,24 @@ mfem.controller('Controller', function($scope, $http) {
     $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
         $scope.classiReqs=response.data._embedded.requirements;
     });
+    $scope.show=function () {
+        var getQuestions=[];
+        var evaReqs = sessionStorage.getItem('evaReqs');
+        var temp = new Array();
+        temp = evaReqs.split(",");
+        evaReqs = temp;
+        for (var i = 0; i<evaReqs.length;i++) {
+            getQuestions.push($http.get(evaReqs[i]+'/questionList'));
+        }
+        $q.all(getQuestions).then(function(questionArray){
+            var questio = [];
+            for(var j = 0; j < questionArray.length;j++) {
+                questio.push(questionArray[j].data._embedded.questions);
+            }
+            $scope.questions = questio;
+        });
+    };
+
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
@@ -101,6 +118,7 @@ mfem.controller('Controller', function($scope, $http) {
                     allReqs.push(responseReq[i]._links.self.href);
                 }
                 allReqs.push(req);
+                sessionStorage.setItem('req',req);
                 $http.get(classi).then(function (response) {
                     var name = response.data.name;
                     var description = response.data.description;
@@ -220,7 +238,10 @@ mfem.controller('Controller', function($scope, $http) {
         sessionStorage.setItem('classiFrame', classi);
         data={nameFW:name,
               descriptionFW:description};
-        $http.post('http://localhost:8080/frame',data);
+        $http.post('http://localhost:8080/frame',data).then(function (response) {
+            var frame = response.data._links.self.href;
+            sessionStorage.setItem('frame', frame);
+        });
     };
 
     //Klassifizierung speichern
@@ -230,6 +251,36 @@ mfem.controller('Controller', function($scope, $http) {
         $http.post('http://localhost:8080/classi',data).then(function (response) {
             var classi = response.data._links.self.href;
             sessionStorage.setItem('classi', classi);
+        });
+    };
+
+    //Prioritäten zu Anforderungen speichern
+    $scope.saveReqPrio=function () {
+        var promiseArray = [];
+        var classi = sessionStorage.getItem('classiFrame');
+        $http.get(classi+'/requirementList').then(function(response) {
+            var classReqs = response.data._embedded.requirements;
+            var evaReqs = [];
+            for (var j = 0; j<classReqs.length;j++) {
+                evaReqs.push(classReqs[j]._links.self.href);
+            }
+            sessionStorage.setItem('evaReqs', evaReqs);
+            var e = document.getElementsByName("opts");
+            var frame=sessionStorage.getItem('frame');
+            for(var i = 0; i <classReqs.length;i++) {
+                var prio = e[i].options[e[i].selectedIndex].value;
+                var req =classReqs[i]._links.self.href;
+                data={
+                    framework: frame,
+                    requirement: req,
+                    classification: classi,
+                    priority:prio
+                };
+                promiseArray.push($http.post('http://localhost:8080/feva', data));
+            }
+            $q.all(promiseArray).then(function(dataArray){
+
+            });
         });
     };
 });

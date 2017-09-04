@@ -9,10 +9,14 @@
 </head>
 <body>
 <div ng-controller="Controller">
-        <h3>Hier sollten alle Fragen zu den gewählten Anforderungen kommen:</h3>
-    <p>{{questio}}</p>
-    <p><button class="myButton" ng-click="showQuests()" style="vertical-align:middle"><span>Fragen anzeigen</span></button></p>
+    <h3>Hier sollten alle Fragen zu den gewählten Anforderungen kommen:</h3>
+    <div ng-repeat="x in questions">
+        <div ng-repeat="y in x">
+            <span>{{y.question}}</span>
+        </div>
+    </div>
     <p><button class="myButton" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>Evaluation auswerten</span></button></p>
+    <p><button class="myButton" ng-click="show()" style="vertical-align:middle"><span>Fragen anzeigen</span></button></p>
 </div>
 </body>
 </html>
