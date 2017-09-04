@@ -16,9 +16,6 @@ public class Requirement implements Serializable{
 	private String content;
 	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
 	private List<Question> questionList;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ClassificationID")
-	private Classification classification;
 
 	public Requirement(String content, List<Question> questionList) {
 		this.content = content;

@@ -58,51 +58,58 @@ mfem.controller('Controller', function($scope, $http) {
     $http.get('http://localhost:8080/classi').then(function(response){
         $scope.classis = response.data._embedded.classifications;
     });
-    $http.get('http://localhost:8080/req').
-    then(function(response) {
-        var resultReqs =[];
-        var reqs = response.data._embedded.requirements;
-        var classis = [];
-        var getClassis = function (i) {
-            $http.get(reqs[i]._links.classification.href).then(function (response) {
-                classis.push(response.data._links.self.href);
-            })
-        };
-        for (var i = 0; i < reqs.length; i++) {
-            getClassis(i);
-        }
-        //Callback
-        for (var j = 0; j < reqs.length; j++) {
-            if(classis[j]==sessionStorage.getItem('classiFrame')) {
-                resultReqs.push('a'+classis[j] + ' '+j);
-            }
-            else {
-                resultReqs.push('b'+classis[j] + ' '+j);
-            }
-        }
-        $scope.classiReqs = resultReqs;
+    $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
+        $scope.classiReqs=response.data._embedded.requirements;
     });
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
         var e = document.getElementById("classis");
         var classi = e.options[e.selectedIndex].value;
-        data={content:cont,
-              classification:classi};
+        data={content:cont};
         $http.post('http://localhost:8080/req',data).then(function (response){
             var req = response.data._links.self.href;
-            sessionStorage.setItem('req', req);
+            $http.get(classi+'/requirementList').then(function (response) {
+                var responseReq = response.data._embedded.requirements;
+                var allReqs = [];
+                for (var i = 0; i < responseReq.length; i++) {
+                    allReqs.push(responseReq[i]._links.self.href);
+                }
+                allReqs.push(req);
+                $http.get(classi).then(function (response) {
+                    var name = response.data.name;
+                    var description = response.data.description;
+                    data={name:name,
+                        description:description,
+                        requirementList:allReqs};
+                    $http.patch(classi, data);
+                });
+            });
         });
     };
 
     //Anforderung ohne extra Angabe der Klassifizierung hinzufügen
     $scope.saveClassiReq=function (content) {
-        var classi = sessionStorage.getItem('classi');
-        data={content:content,
-            classification:classi};
+        data={content:content};
         $http.post('http://localhost:8080/req',data).then(function (response){
             var req = response.data._links.self.href;
-            sessionStorage.setItem('req', req);
+            var classi = sessionStorage.getItem('classi');
+            $http.get(classi+'/requirementList').then(function (response) {
+                var responseReq = response.data._embedded.requirements;
+                var allReqs = [];
+                for (var i = 0; i < responseReq.length; i++) {
+                    allReqs.push(responseReq[i]._links.self.href);
+                }
+                allReqs.push(req);
+                $http.get(classi).then(function (response) {
+                    var name = response.data.name;
+                    var description = response.data.description;
+                    data={name:name,
+                        description:description,
+                        requirementList:allReqs};
+                    $http.patch(classi, data);
+                });
+            });
         });
     };
 
@@ -183,31 +190,6 @@ mfem.controller('Controller', function($scope, $http) {
                 });
             });
         });
-    };
-
-    //Fragen zu ausgewählten Metriken anzeigen
-    $scope.saveReqs=function () {
-        var inputs = document.getElementsByName("reqR");
-        for (var i = 0; i < inputs.length; i++) {
-            if(inputs[i].checked) {
-                resultCheckReq.push(inputs[i].value);
-            }
-            resultCheckReq.push("hallo");
-        }
-    };
-    $scope.showQuests=function () {
-        var quests = [];
-        var metricLinks = [];
-        // for (var i = 0; i < resultCheckReq.length; i++) {
-            $http.get(resultCheckReq[0]+"/questionList").
-            then(function(response) {
-                var questList =(response.data._embedded.questions);
-                for(var j = 0; j < questList.length; j++){
-                    quests.push(questList[j].question)
-                }
-            });
-        // }
-        $scope.questio = resultCheckReq;
     };
 
     //Metrik mit Antwortmöglichkeiten speichern
