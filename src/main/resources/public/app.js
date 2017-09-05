@@ -71,10 +71,50 @@ mfem.controller('Controller', function($scope, $http, $q) {
         }
         $q.all(getQuestions).then(function(questionArray){
             var questio = [];
+            var metricLinks = [];
+            var innerQuestio = [];
             for(var j = 0; j < questionArray.length;j++) {
                 questio.push(questionArray[j].data._embedded.questions);
             }
-            $scope.questions = questio;
+            var questio2 = [];
+            for (var k = 0; k<questio.length;k++) {
+                innerQuestio = questio[k];
+                for (var l = 0; l < innerQuestio.length; l++) {
+                    metricLinks.push(innerQuestio[l]._links.metric.href);
+                    questio2.push(innerQuestio[l]);
+                }
+            }
+            $scope.questions = questio2;
+            var getMetrics = [];
+            for (var m = 0; m<metricLinks.length;m++) {
+                getMetrics.push($http.get(metricLinks[m]));
+            }
+            $q.all(getMetrics).then(function (metricArray) {
+               var answerList = [];
+               for (var n = 0; n<metricArray.length;n++) {
+                   answerList.push(metricArray[n].data._links.answerList.href);
+               }
+               var getAnswers = [];
+               for (var o = 0; o<answerList.length;o++) {
+                   getAnswers.push($http.get(answerList[o]));
+               }
+               $q.all(getAnswers).then(function (answerArray) {
+                   var answ = [];
+                   var innerAnswer = [];
+                   for (var p = 0;p < answerArray.length; p++) {
+                       answ.push(answerArray[p].data._embedded.answers);
+                   }
+                   $scope.answers = answ;
+                   var res = [];
+                   for (var s = 0; s<questio2.length;s++) {
+                       var t = [];
+                       t.push(questio2[s]);
+                       t.push(answ[s]);
+                       res.push(t);
+                   }
+                   $scope.result=res;
+               });
+            });
         });
     };
 
@@ -93,6 +133,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
                     allReqs.push(responseReq[i]._links.self.href);
                 }
                 allReqs.push(req);
+                sessionStorage.setItem('req',req);
                 $http.get(classi).then(function (response) {
                     var name = response.data.name;
                     var description = response.data.description;
