@@ -11,8 +11,11 @@
 <div ng-controller="Controller">
     <h3>Hier sollten alle Fragen zu den gewählten Anforderungen kommen:</h3>
     <div ng-repeat="x in questions">
-        <div ng-repeat="y in x">
-            <span>{{y.question}}</span>
+            <span>{{x.question}}</span>
+    </div>
+    <div ng-repeat="j in answers">
+        <div ng-repeat="k in j">
+            <span>{{k.content}}</span>
         </div>
     </div>
     <p><button class="myButton" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>Evaluation auswerten</span></button></p>
