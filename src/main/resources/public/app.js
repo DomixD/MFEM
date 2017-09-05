@@ -105,12 +105,6 @@ mfem.controller('Controller', function($scope, $http, $q) {
                        answ.push(answerArray[p].data._embedded.answers);
                    }
                    $scope.answers = answ;
-                   //Anpassung Datenstruktur
-                   /*
-                   var res = new Map();
-                   for (var s = 0; s<questio2.length; s++) {
-                       res.set(questio2[s], answ[s]);
-                   }*/
                    var res = [];
                    for (var s = 0; s<questio2.length;s++) {
                        var t = [];
