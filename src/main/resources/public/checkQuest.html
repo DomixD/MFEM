@@ -10,12 +10,13 @@
 <body>
 <div ng-controller="Controller">
     <h3>Hier sollten alle Fragen zu den gewählten Anforderungen kommen:</h3>
-    <div ng-repeat="x in questions">
-            <span>{{x.question}}</span>
-    </div>
-    <div ng-repeat="j in answers">
-        <div ng-repeat="k in j">
-            <span>{{k.content}}</span>
+    <div ng-repeat="x in result">
+        <span>
+            {{x[0].question}}
+        </span>
+        <div ng-repeat="y in x[1]">
+            <input type="radio" id="y._links.self.href" name="y._links.self.href" value="y._links.self.href">
+            <label for="y._links.self.href"> {{y.content}}</label><br>
         </div>
     </div>
     <p><button class="myButton" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>Evaluation auswerten</span></button></p>
