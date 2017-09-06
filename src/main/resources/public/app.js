@@ -118,6 +118,12 @@ mfem.controller('Controller', function($scope, $http, $q) {
         });
     };
 
+    $scope.evaluation=function () {
+        var e = document.getElementsByName("selectAns");
+        for(var i = 0; i <result.length;i++) {
+            var prio = e[i].options[e[i].selectedIndex].value;
+        }
+    }
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
