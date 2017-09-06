@@ -16,6 +16,9 @@ public class Question implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MetricID")
     private Metric metric;
+    @ManyToOne
+    private Requirement require;
+
 
     public Question(String question) {
         this.question = question;

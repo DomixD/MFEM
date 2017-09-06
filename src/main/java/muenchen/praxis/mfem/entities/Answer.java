@@ -15,5 +15,7 @@ public class Answer implements Serializable {
     private int id;
     private String content;
     private double value;
+    @ManyToOne
+    private Metric metri;
 
 }

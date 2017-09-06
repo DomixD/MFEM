@@ -14,8 +14,10 @@ public class Requirement implements Serializable{
 	@Column(name = "RequirementID")
 	private int id;
 	private String content;
-	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
+	@OneToMany(mappedBy = "require", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
 	private List<Question> questionList;
+	@ManyToOne
+	private Classification classi;
 
 	public Requirement(String content, List<Question> questionList) {
 		this.content = content;

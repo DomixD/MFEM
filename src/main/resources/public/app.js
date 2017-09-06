@@ -47,6 +47,10 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q) {
 
+    $http.get('http://localhost:8080/getReqs/1').then(function (response) {
+
+    });
+
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
@@ -123,7 +127,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
         for(var i = 0; i <result.length;i++) {
             var prio = e[i].options[e[i].selectedIndex].value;
         }
-    }
+    };
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
@@ -259,23 +263,15 @@ mfem.controller('Controller', function($scope, $http, $q) {
 
     //Metrik mit Antwortmöglichkeiten speichern
     $scope.saveMetric=function (description, a1, a2, a3) {
-        var answer1;
-        var answer2;
-        var answer3;
-        data1={content:a1,value:1.0};
-        data2={content:a2,value:0.5};
-        data3={content:a3,value:0.0};
-        $http.post('http://localhost:8080/answer',data1).then(function(response){
-            answer1 = response.data._links.self.href;
-            $http.post('http://localhost:8080/answer',data2).then(function(response){
-                answer2 = response.data._links.self.href;
-                $http.post('http://localhost:8080/answer',data3).then(function(response){
-                    answer3 = response.data._links.self.href;
-                    data4={description:description,
-                        answerList: [answer1, answer2, answer3]};
-                    $http.post('http://localhost:8080/metric',data4);
-                });
-            });
+        data4={description:description};
+        $http.post('http://localhost:8080/metric',data4).then(function (response) {
+            var metric = response.data._links.self.href;
+            data1 = {content: a1, value: 1.0, metri: metric};
+            data2 = {content: a2, value: 0.5, metri: metric};
+            data3 = {content: a3, value: 0.0, metri: metric};
+            $http.post('http://localhost:8080/answer', data1);
+            $http.post('http://localhost:8080/answer', data2);
+            $http.post('http://localhost:8080/answer', data3);
         });
     };
 
@@ -305,6 +301,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
     $scope.saveReqPrio=function () {
         var promiseArray = [];
         var classi = sessionStorage.getItem('classiFrame');
+        var frame=sessionStorage.getItem('frame');
         $http.get(classi+'/requirementList').then(function(response) {
             var classReqs = response.data._embedded.requirements;
             var evaReqs = [];
@@ -313,7 +310,6 @@ mfem.controller('Controller', function($scope, $http, $q) {
             }
             sessionStorage.setItem('evaReqs', evaReqs);
             var e = document.getElementsByName("opts");
-            var frame=sessionStorage.getItem('frame');
             for(var i = 0; i <classReqs.length;i++) {
                 var prio = e[i].options[e[i].selectedIndex].value;
                 var req =classReqs[i]._links.self.href;

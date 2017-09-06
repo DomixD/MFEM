@@ -15,8 +15,5 @@ public class Framework implements Serializable {
     private int id;
     private String nameFW;
     private String descriptionFW;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "FrameworkEvaluationID")
-    private FrameworkEvaluation frameworkEvaluation;
 
 }
