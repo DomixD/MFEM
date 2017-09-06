@@ -47,10 +47,6 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q) {
 
-    $http.get('http://localhost:8080/getReqs/1').then(function (response) {
-
-    });
-
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
