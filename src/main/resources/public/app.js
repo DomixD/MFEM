@@ -60,6 +60,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
     $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
         $scope.classiReqs=response.data._embedded.requirements;
     });
+    var questi = [];
     $scope.show=function () {
         var getQuestions=[];
         var evaReqs = sessionStorage.getItem('evaReqs');
@@ -100,7 +101,6 @@ mfem.controller('Controller', function($scope, $http, $q) {
                }
                $q.all(getAnswers).then(function (answerArray) {
                    var answ = [];
-                   var innerAnswer = [];
                    for (var p = 0;p < answerArray.length; p++) {
                        answ.push(answerArray[p].data._embedded.answers);
                    }
@@ -113,6 +113,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
                        res.push(t);
                    }
                    $scope.result=res;
+                   questi = res;
                });
             });
         });
@@ -121,8 +122,25 @@ mfem.controller('Controller', function($scope, $http, $q) {
     $scope.evaluation=function () {
         var e = document.getElementsByName("selectAns");
         var chosenAnswers = [];
-        for(var i = 0; i <result.length;i++) {
+        var frameID = sessionStorage.getItem("frame");
+        frameID = frameID.substring(frameID.length-1);
+        for(var i = 0; i <questi.length;i++) {
             chosenAnswers.push(e[i].options[e[i].selectedIndex].value);
+        }
+        for(var k = 0; k<chosenAnswers.length; k++) {
+            $http.get(questi[k][0]+'/require').then(function (response) {
+                var req = response.data._links.self.href;
+                var reqID = req.substring(req.length-1);
+                $http.get('http://localhost:8080/getEvaID/'+frameID+'/'+reqID).then(function (response) {
+                    var evaID = response.data;
+                    data={
+                        frameworkEvaluation:'http://localhost:8080/feva/'+evaID,
+                        question:questi[k][0],
+                        answer:chosenAnswers[k]
+                    }
+                    $http.post('http://localhost:8080/result', data);
+                });
+            });
         }
     };
 

@@ -6,4 +6,7 @@ import muenchen.praxis.mfem.entities.Requirement;
 import java.util.List;
 
 public interface IMFEMService {
+
+    public int getEvaID (int frameID, int reqID);
+
 }
