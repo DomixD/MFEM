@@ -120,6 +120,9 @@ mfem.controller('Controller', function($scope, $http, $q) {
     };
 
     $scope.evaluation=function () {
+        var getRequire = [];
+        var promiseArray = [];
+        var getEvaID = [];
         var e = document.getElementsByName("selectAns");
         var chosenAnswers = [];
         var frameID = sessionStorage.getItem("frame");
@@ -127,21 +130,32 @@ mfem.controller('Controller', function($scope, $http, $q) {
         for(var i = 0; i <questi.length;i++) {
             chosenAnswers.push(e[i].options[e[i].selectedIndex].value);
         }
+        var answerIndex = [];
+        var questLink = [];
         for(var k = 0; k<chosenAnswers.length; k++) {
-            $http.get(questi[k][0]+'/require').then(function (response) {
-                var req = response.data._links.self.href;
-                var reqID = req.substring(req.length-1);
-                $http.get('http://localhost:8080/getEvaID/'+frameID+'/'+reqID).then(function (response) {
-                    var evaID = response.data;
-                    data={
-                        frameworkEvaluation:'http://localhost:8080/feva/'+evaID,
-                        question:questi[k][0],
-                        answer:chosenAnswers[k]
-                    }
-                    $http.post('http://localhost:8080/result', data);
-                });
-            });
+            questLink.push(questi[k][0]._links.self.href);
+            answerIndex.push(k);
+            getRequire.push($http.get(questi[k][0]._links.self.href+'/require'))
         }
+        $q.all(getRequire).then(function (responseArray) {
+            for (var l = 0; l < responseArray.length; l++) {
+                var req = responseArray[l].data._links.self.href;
+                var reqID = req.substring(req.length - 1);
+                getEvaID.push($http.get('http://localhost:8080/getEvaID/'+frameID+'/'+reqID));
+            }
+            $q.all(getEvaID).then(function (responseArray2) {
+                for (var m = 0; m < responseArray2.length; m++) {
+                    var evaID = responseArray2[m].data;
+                    data = {
+                        frameworkEvaluation: 'http://localhost:8080/feva/' + evaID,
+                        answer: chosenAnswers[answerIndex[m]],
+                        question: questLink[m]
+                    };
+                    promiseArray.push($http.post('http://localhost:8080/result', data));
+                }
+            });
+        });
+        $q.all(promiseArray);
     };
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
