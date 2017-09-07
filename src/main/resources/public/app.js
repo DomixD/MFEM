@@ -223,16 +223,21 @@ mfem.controller('Controller', function($scope, $http, $q) {
         var promiseArray = [];
         var classi = sessionStorage.getItem('classiFrame');
         var frame=sessionStorage.getItem('frame');
+        var e = document.getElementsByName("opts");
+        var prio = null;
+        var prioList = [];
+        for (var k = 0; k<e.length; k++){
+            prioList.push(e[k].options[e[k].selectedIndex].value);
+        }
         $http.get(classi+'/requirementList').then(function(response) {
             var classReqs = response.data._embedded.requirements;
             var evaReqs = [];
-            for (var j = 0; j<classReqs.length;j++) {
+            for (var j = 0; j<classReqs.length; j++) {
                 evaReqs.push(classReqs[j]._links.self.href);
             }
             sessionStorage.setItem('evaReqs', evaReqs);
-            var e = document.getElementsByName("opts");
-            for(var i = 0; i <classReqs.length;i++) {
-                var prio = e[i].options[e[i].selectedIndex].value;
+            for(var i = 0; i <classReqs.length; i++) {
+                prio = prioList[i];
                 var req =classReqs[i]._links.self.href;
                 data={
                     framework: frame,
