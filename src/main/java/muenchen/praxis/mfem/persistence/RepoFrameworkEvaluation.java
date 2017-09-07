@@ -1,5 +1,6 @@
 package muenchen.praxis.mfem.persistence;
 
+import muenchen.praxis.mfem.entities.Classification;
 import muenchen.praxis.mfem.entities.Framework;
 import muenchen.praxis.mfem.entities.FrameworkEvaluation;
 import muenchen.praxis.mfem.entities.Requirement;
@@ -14,5 +15,7 @@ import java.util.List;
 public interface RepoFrameworkEvaluation extends CrudRepository<FrameworkEvaluation, Integer> {
 
     FrameworkEvaluation findByFrameworkInAndRequirementIn(Framework framework, Requirement requirement);
+
+    List<FrameworkEvaluation> findByFrameworkInAndClassificationIn(Framework framework, Classification classification);
 
 }
