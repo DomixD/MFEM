@@ -42,11 +42,16 @@ mfem.config(function($routeProvider) {
         })
         .when("/classiReq", {
             templateUrl : "classiReq.html"
+        })
+        .when("/result", {
+            templateUrl : "result.html"
         });
 });
 
 mfem.controller('Controller', function($scope, $http, $q) {
 
+    var frameworkID = 1;
+    var classificationID = 1;
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
@@ -60,7 +65,12 @@ mfem.controller('Controller', function($scope, $http, $q) {
     $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
         $scope.classiReqs=response.data._embedded.requirements;
     });
+
+    $http.get("http://localhost:8080/getResult/" + frameworkID + "/" + classificationID).then(function (response) {
+        $scope.resultEva = response.data;
+    });
     var questi = [];
+
     $scope.show=function () {
         var getQuestions=[];
         var evaReqs = sessionStorage.getItem('evaReqs');
@@ -127,6 +137,10 @@ mfem.controller('Controller', function($scope, $http, $q) {
         var chosenAnswers = [];
         var frameID = sessionStorage.getItem("frame");
         frameID = frameID.substring(frameID.length-1);
+        frameworkID= frameID;
+        var classiID = sessionStorage.getItem("classiFrame");
+        classiID = classiID.substring(classiID.length-1);
+        classificationID = classiID;
         for(var i = 0; i <questi.length;i++) {
             chosenAnswers.push(e[i].options[e[i].selectedIndex].value);
         }
@@ -156,6 +170,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
             });
         });
         $q.all(promiseArray);
+
     };
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
