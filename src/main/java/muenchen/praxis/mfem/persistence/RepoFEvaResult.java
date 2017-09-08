@@ -12,5 +12,5 @@ import java.util.List;
 @RepositoryRestResource(path = "result")
 public interface RepoFEvaResult extends CrudRepository<FEvaResult, Integer> {
 
-    FEvaResult findByFrameworkEvaluation(FrameworkEvaluation frameworkEvaluation);
+    List<FEvaResult> findByFrameworkEvaluation(FrameworkEvaluation frameworkEvaluation);
 }

@@ -30,7 +30,7 @@ public class MFEMResource {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getResult/{frameId}/{classiId}", produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getResult (@PathVariable("frameId") int frameId, @PathVariable("classiId") int classiId) {
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Double>(new Double(service.getResult(frameId, classiId)), HttpStatus.OK);
 	}
 
 }

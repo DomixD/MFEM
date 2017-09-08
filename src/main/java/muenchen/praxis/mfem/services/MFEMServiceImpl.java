@@ -31,15 +31,28 @@ public class MFEMServiceImpl implements IMFEMService{
 	}
 
 	@Override
-	public int getResult(int frameID, int classiID) {
+	public double getResult(int frameID, int classiID) {
+		double soll = 0.0;
+		double ist = 0.0;
 		Framework frame = repoFramework.findOne(frameID);
 		Classification classi = repoClassification.findOne(classiID);
 		List<FrameworkEvaluation> feva = frameworkEvaluation.findByFrameworkInAndClassificationIn(frame, classi);
 		List<FEvaResult> results = new ArrayList<>();
 		for(FrameworkEvaluation f:feva){
-			results.add(repoFEvaResult.findByFrameworkEvaluation(frameworkEvaluation.findOne(f.getId())));
+			List<FEvaResult> list = repoFEvaResult.findByFrameworkEvaluation(f);
+			for (FEvaResult re : list) {
+				results.add(re);
+			}
 		}
-		return 0;
+		for(FrameworkEvaluation f:feva) {
+			double sollQuest = f.getPriority().getValue()/f.getRequirement().getQuestionList().size();
+			soll += f.getPriority().getValue();
+			List<FEvaResult> list = repoFEvaResult.findByFrameworkEvaluation(f);
+			for (FEvaResult re : list) {
+				ist += sollQuest*re.getAnswer().getValue();
+			}
+		}
+		return ist/soll;
 	}
 
 

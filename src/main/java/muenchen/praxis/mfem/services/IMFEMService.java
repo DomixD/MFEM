@@ -11,6 +11,6 @@ public interface IMFEMService {
 
     public int getEvaID (int frameID, int reqID);
 
-    public int getResult (int frameID, int classiID);
+    public double getResult (int frameID, int classiID);
 
 }
