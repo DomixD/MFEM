@@ -50,8 +50,6 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q) {
 
-    var frameworkID = 1;
-    var classificationID = 1;
     $http.get('http://localhost:8080/req').
     then(function(response) {
         $scope.req = response.data._embedded.requirements;
@@ -68,7 +66,11 @@ mfem.controller('Controller', function($scope, $http, $q) {
     var questi = [];
 
     $scope.getResult=function () {
-        $http.get("http://localhost:8080/getRes/" + frameworkID + "/" + classificationID).then(function (response) {
+        var frameID = sessionStorage.getItem("frame");
+        frameID = frameID.substring(frameID.length-1);
+        var classiID = sessionStorage.getItem("classiFrame");
+        classiID = classiID.substring(classiID.length-1);
+        $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
             $scope.resultEva = response.data;
         });
     };
@@ -139,10 +141,6 @@ mfem.controller('Controller', function($scope, $http, $q) {
         var chosenAnswers = [];
         var frameID = sessionStorage.getItem("frame");
         frameID = frameID.substring(frameID.length-1);
-        frameworkID= frameID;
-        var classiID = sessionStorage.getItem("classiFrame");
-        classiID = classiID.substring(classiID.length-1);
-        classificationID = classiID;
         for(var i = 0; i <questi.length;i++) {
             chosenAnswers.push(e[i].options[e[i].selectedIndex].value);
         }

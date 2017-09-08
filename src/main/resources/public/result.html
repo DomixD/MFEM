@@ -9,15 +9,16 @@
 </head>
 <body>
 <div ng-controller="Controller">
-    <div ng-init="getResult()">
+    <!--div ng-init="getResult()"-->
     <h3>Ergebnis der durchgeführten Evaluation:</h3>
     <ul class="flex-outer">
         <li>
             <label>Ergebnis: {{resultEva}}</label>
         </li>
     </ul>
+    <p><button class="myButton" ng-click="getResult()" style="vertical-align:middle"><span>Evaluation auswerten</span></button></p>
 
 </div>
-</div>
+<!--/div-->
 </body>
 </html>

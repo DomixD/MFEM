@@ -39,8 +39,6 @@ public class MFEMServiceImpl implements IMFEMService{
 		List<FEvaResult> results = new ArrayList<>();
 		for(FrameworkEvaluation f:feva){
 			List<FEvaResult> list = repoFEvaResult.findByFrameworkEvaluation(f);
-			System.out.println("################list-size: "+list.size() + "\n####################resulu-size: "+list.size());
-			System.out.println("################findOne: " + repoFEvaResult.findOne(1));
 			for (FEvaResult re : list) {
 				results.add(re);
 			}
@@ -53,7 +51,8 @@ public class MFEMServiceImpl implements IMFEMService{
 				ist += sollQuest*re.getAnswer().getValue();
 			}
 		}
-		System.out.print("##############IST: "+ ist + "\n###########################SOLL: "+soll);
+		System.out.println("#######################SOLL: "+soll);
+		System.out.println("#######################IST: "+ist);
 		return ist/soll;
 	}
 
