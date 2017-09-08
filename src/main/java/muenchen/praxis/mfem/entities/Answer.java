@@ -1,11 +1,13 @@
 package muenchen.praxis.mfem.entities;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@ToString(exclude = "metri")
 @Entity
 public class Answer implements Serializable {
 

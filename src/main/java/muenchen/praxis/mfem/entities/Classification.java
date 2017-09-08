@@ -1,11 +1,13 @@
 package muenchen.praxis.mfem.entities;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@ToString(exclude = "requirementList")
 @Entity
 public class Classification {
 

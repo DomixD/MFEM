@@ -28,7 +28,7 @@ public class MFEMResource {
 		return new ResponseEntity<Integer>(new Integer(service.getEvaID(frameId, reqId)), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getResult/{frameId}/{classiId}", produces = MediaType.APPLICATION_JSON)
+	@RequestMapping(method = RequestMethod.GET, value = "/getRes/{frameId}/{classiId}", produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getResult (@PathVariable("frameId") int frameId, @PathVariable("classiId") int classiId) {
 		return new ResponseEntity<Double>(new Double(service.getResult(frameId, classiId)), HttpStatus.OK);
 	}

@@ -65,11 +65,13 @@ mfem.controller('Controller', function($scope, $http, $q) {
     $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
         $scope.classiReqs=response.data._embedded.requirements;
     });
-
-    $http.get("http://localhost:8080/getResult/" + frameworkID + "/" + classificationID).then(function (response) {
-        $scope.resultEva = response.data;
-    });
     var questi = [];
+
+    $scope.getResult=function () {
+        $http.get("http://localhost:8080/getRes/" + frameworkID + "/" + classificationID).then(function (response) {
+            $scope.resultEva = response.data;
+        });
+    };
 
     $scope.show=function () {
         var getQuestions=[];
@@ -169,7 +171,9 @@ mfem.controller('Controller', function($scope, $http, $q) {
                 }
             });
         });
-        $q.all(promiseArray);
+        $q.all(promiseArray).then(function (resArray) {
+
+        });
 
     };
 

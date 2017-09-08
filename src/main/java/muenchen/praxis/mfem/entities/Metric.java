@@ -1,12 +1,14 @@
 package muenchen.praxis.mfem.entities;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Data
+@ToString(exclude = "answerList")
 @Entity
 public class Metric implements Serializable {
 

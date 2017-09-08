@@ -3,10 +3,11 @@ package muenchen.praxis.mfem.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity
-public class FEvaResult {
+public class FEvaResult implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FEvaResultID")
