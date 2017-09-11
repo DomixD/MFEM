@@ -23,6 +23,8 @@ public class Requirement implements Serializable{
 	private Classification classi;
 	@ManyToOne
 	private Category category;
+	private Priority priority;
+
 
 	public Requirement(String content, List<Question> questionList) {
 		this.content = content;
