@@ -21,16 +21,16 @@ public class RepoQuestionTest {
     @Autowired
     private RepoQuestion persistence;
 
-    private static Question[] questions = {
-            new Question("Frage1"),
-            new Question("Frage2"),
-    };
+//    private static Question[] questions = {
+//            new Question("Frage1"),
+//            new Question("Frage2"),
+//    };
 
-    @Before
-    public void setUp() {
-        persistence.save(questions[0]);
-        persistence.save(questions[1]);
-    }
+//    @Before
+//    public void setUp() {
+//        persistence.save(questions[0]);
+//        persistence.save(questions[1]);
+//    }
 
     @Test
     public void testSave() {

@@ -1,6 +1,8 @@
 package muenchen.praxis.mfem.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.io.Serializable;
 @Entity
 @Data
 @ToString(exclude = "require")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question implements Serializable {
 
     @Id
@@ -23,10 +27,10 @@ public class Question implements Serializable {
     private Requirement require;
 
 
-    public Question(String question) {
-        this.question = question;
-    }
-
-    public Question() {}
+//    public Question(String question) {
+//        this.question = question;
+//    }
+////
+//    public Question() {}
 
 }
