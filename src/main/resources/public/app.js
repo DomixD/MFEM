@@ -149,26 +149,30 @@ mfem.controller('Controller', function($scope, $http, $q) {
         for(var k = 0; k<chosenAnswers.length; k++) {
             questLink.push(questi[k][0]._links.self.href);
             answerIndex.push(k);
-            getRequire.push($http.get(questi[k][0]._links.self.href+'/require'))
+            //getRequire.push($http.get(questi[k][0]._links.self.href+'/require'))
         }
+        /*
         $q.all(getRequire).then(function (responseArray) {
             for (var l = 0; l < responseArray.length; l++) {
                 var req = responseArray[l].data._links.self.href;
                 var reqID = req.substring(req.length - 1);
                 getEvaID.push($http.get('http://localhost:8080/getEvaID/'+frameID+'/'+reqID));
             }
-            $q.all(getEvaID).then(function (responseArray2) {
-                for (var m = 0; m < responseArray2.length; m++) {
-                    var evaID = responseArray2[m].data;
+            $q.all(getEvaID).then(function (responseArray2) {*/
+        //var feva = sessionStorage.getItem('feva');
+
+                for (var m = 0; m < questLink.length; m++) {
+                    //var evaID = responseArray2[m].data;
+                    var feva = sessionStorage.getItem('feva');
                     data = {
-                        frameworkEvaluation: 'http://localhost:8080/feva/' + evaID,
+                        frameworkEvaluation: feva,
                         answer: chosenAnswers[answerIndex[m]],
                         question: questLink[m]
                     };
                     promiseArray.push($http.post('http://localhost:8080/result', data));
                 }
-            });
-        });
+            //});
+        //});
         $q.all(promiseArray).then(function (resArray) {
 
         });
@@ -179,8 +183,11 @@ mfem.controller('Controller', function($scope, $http, $q) {
     $scope.saveReq=function (cont) {
         var e = document.getElementById("classis");
         var classi = e.options[e.selectedIndex].value;
+        var e2 = document.getElementById("prio");
+        var prio = e2.options[e2.selectedIndex].value;
         data={content:cont,
-        classi:classi};
+        classi:classi,
+        priority:prio};
         $http.post('http://localhost:8080/req',data).then(function (response) {
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);
@@ -190,7 +197,9 @@ mfem.controller('Controller', function($scope, $http, $q) {
     //Anforderung ohne extra Angabe der Klassifizierung hinzufügen
     $scope.saveClassiReq=function (content) {
         var classi = sessionStorage.getItem('classi');
-        data={content:content,classi:classi};
+        var e2 = document.getElementById("prio");
+        var prio = e2.options[e2.selectedIndex].value;
+        data={content:content,classi:classi,priority:prio};
         $http.post('http://localhost:8080/req',data).then(function (response) {
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);
@@ -253,7 +262,12 @@ mfem.controller('Controller', function($scope, $http, $q) {
               descriptionFW:description};
         $http.post('http://localhost:8080/frame',data).then(function (response) {
             var frame = response.data._links.self.href;
-            sessionStorage.setItem('frame', frame);
+            sessionStorage.setItem('frame',frame);
+            data={framework:frame, classification: classi};
+            $http.post('http://localhost:8080/feva', data).then(function (response) {
+                var feva = response.data._links.self.href;
+                sessionStorage.setItem('feva', feva);
+            });
         });
     };
 

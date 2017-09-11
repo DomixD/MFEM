@@ -21,6 +21,7 @@ public class Requirement implements Serializable{
 	private List<Question> questionList;
 	@ManyToOne
 	private Classification classi;
+	private Priority priority;
 
 	public Requirement(String content, List<Question> questionList) {
 		this.content = content;

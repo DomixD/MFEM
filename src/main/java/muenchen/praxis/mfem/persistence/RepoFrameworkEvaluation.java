@@ -14,8 +14,6 @@ import java.util.List;
 @RepositoryRestResource(path = "feva")
 public interface RepoFrameworkEvaluation extends CrudRepository<FrameworkEvaluation, Integer> {
 
-    FrameworkEvaluation findByFrameworkInAndRequirementIn(Framework framework, Requirement requirement);
-
-    List<FrameworkEvaluation> findByFrameworkInAndClassificationIn(Framework framework, Classification classification);
+    FrameworkEvaluation findByFrameworkInAndClassificationIn(Framework framework, Classification classification);
 
 }
