@@ -18,7 +18,7 @@ public class Category implements Serializable {
     private int id;
     private String category;
     @OneToMany(mappedBy = "category", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
-    private List<Requirement> requirementListList;
+    private List<Requirement> requirementList;
 
     public Category() {
 

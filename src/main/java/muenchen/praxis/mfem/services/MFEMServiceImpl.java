@@ -1,13 +1,10 @@
 package muenchen.praxis.mfem.services;
 
-import com.sun.org.apache.regexp.internal.RE;
 import muenchen.praxis.mfem.entities.*;
 import muenchen.praxis.mfem.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,19 +15,9 @@ public class MFEMServiceImpl implements IMFEMService{
 	@Autowired
 	RepoFramework repoFramework;
 	@Autowired
-	RepoRequirement repoRequirement;
-	@Autowired
 	RepoClassification repoClassification;
 	@Autowired
 	RepoFEvaResult repoFEvaResult;
-
-	@Override
-	public int getEvaID(int frameID, int reqID) {
-		Framework frame = repoFramework.findOne(frameID);
-		Requirement req = repoRequirement.findOne(reqID);
-		//return frameworkEvaluation.findByFrameworkInAndRequirementIn(frame, req).getId();
-		return 0;
-	}
 
 	@Override
 	public double getResult(int frameID, int classiID) {
