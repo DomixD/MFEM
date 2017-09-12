@@ -48,7 +48,7 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http, $q) {
+mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
 
     $http.get('http://localhost:8080/req').
     then(function(response) {
@@ -67,17 +67,6 @@ mfem.controller('Controller', function($scope, $http, $q) {
         $scope.classiReqs=response.data._embedded.requirements;
     });
     var questi = [];
-
-    //Ergebnis ausgeben
-    $scope.getResult=function () {
-        var frameID = sessionStorage.getItem("frame");
-        frameID = frameID.substring(frameID.length-1);
-        var classiID = sessionStorage.getItem("classiFrame");
-        classiID = classiID.substring(classiID.length-1);
-        $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
-            $scope.resultEva = response.data;
-        });
-    };
 
     //Fragen mit den zugehörigen Antwortmöglichkeiten anzeigen
     $scope.show=function () {
@@ -166,7 +155,13 @@ mfem.controller('Controller', function($scope, $http, $q) {
                     promiseArray.push($http.post('http://localhost:8080/result', data));
                 }
         $q.all(promiseArray).then(function (resArray) {
-
+            var frameID = sessionStorage.getItem("frame");
+            frameID = frameID.substring(frameID.length-1);
+            var classiID = sessionStorage.getItem("classiFrame");
+            classiID = classiID.substring(classiID.length-1);
+            $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
+                $rootScope.resultEva = response.data;
+            });
         });
     };
 
