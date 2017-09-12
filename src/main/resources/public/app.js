@@ -13,17 +13,8 @@ mfem.config(function($routeProvider) {
         .when("/quest", {
             templateUrl : "quest.html"
         })
-        .when("/evaReq", {
-            templateUrl : "evaReq.html"
-        })
-        .when("/checkReq", {
-            templateUrl : "checkReq.html"
-        })
         .when("/questReq", {
             templateUrl : "questReq.html"
-        })
-        .when("/checkReqQuest", {
-            templateUrl : "checkReqQuest.html"
         })
         .when("/checkQuest", {
             templateUrl : "checkQuest.html"
@@ -50,22 +41,30 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
 
-    $http.get('http://localhost:8080/req').
-    then(function(response) {
-        $scope.req = response.data._embedded.requirements;
-    });
-    $http.get('http://localhost:8080/metric').then(function(response){
-        $scope.metrics = response.data._embedded.metrics;
-    });
-    $http.get('http://localhost:8080/classi').then(function(response){
-        $scope.classis = response.data._embedded.classifications;
-    });
-    $http.get('http://localhost:8080/cat').then(function(response){
-        $scope.catego = response.data._embedded.categories;
-    });
-    $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
-        $scope.classiReqs=response.data._embedded.requirements;
-    });
+    $scope.getReqs=function () {
+        $http.get('http://localhost:8080/req').then(function(response) {
+            $scope.req = response.data._embedded.requirements;
+        });
+    };
+
+    $scope.getMetrics=function () {
+        $http.get('http://localhost:8080/metric').then(function(response){
+            $scope.metrics = response.data._embedded.metrics;
+        });
+    };
+
+    $scope.getClassis=function () {
+        $http.get('http://localhost:8080/classi').then(function(response){
+            $scope.classis = response.data._embedded.classifications;
+        });
+    };
+
+    $scope.getCats=function () {
+        $http.get('http://localhost:8080/cat').then(function(response){
+            $scope.catego = response.data._embedded.categories;
+        });
+    };
+
     var questi = [];
 
     //Fragen mit den zugehörigen Antwortmöglichkeiten anzeigen
@@ -161,6 +160,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
             classiID = classiID.substring(classiID.length-1);
             $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
                 $rootScope.resultEva = response.data;
+                sessionStorage.clear();
             });
         });
     };
