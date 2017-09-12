@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @RestController
 @ExposesResourceFor(Requirement.class)
@@ -22,7 +23,7 @@ public class MFEMResource {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getRes/{frameId}/{classiId}", produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getResult (@PathVariable("frameId") int frameId, @PathVariable("classiId") int classiId) {
-		return new ResponseEntity<Double>(new Double(service.getResult(frameId, classiId)), HttpStatus.OK);
+		return new ResponseEntity<List<Double>>((service.getResult(frameId, classiId)), HttpStatus.OK);
 	}
 
 }

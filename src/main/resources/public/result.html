@@ -13,8 +13,14 @@
     <h3>Ergebnis der durchgeführten Evaluation:</h3>
     <ul class="flex-outer">
         <li>
-            <label>Ergebnis: {{resultEva}}</label>
+            <label>{{catego[0].category}}: {{resultEva[0]}}</label>
+            <label>{{catego[1].category}}: {{resultEva[1]}}</label>
+            <label>{{catego[2].category}}: {{resultEva[2]}}</label>
+            <label>{{catego[3].category}}: {{resultEva[3]}}</label>
+            <label>{{catego[4].category}}: {{resultEva[4]}}</label>
+            <label>{{catego[5].category}}: {{resultEva[5]}}</label>
         </li>
+
     </ul>
     <p><button class="myButton" ng-click="getResult()" style="vertical-align:middle"><span>Evaluation auswerten</span></button></p>
 
