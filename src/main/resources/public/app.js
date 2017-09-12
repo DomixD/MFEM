@@ -210,9 +210,9 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         if(view=='main'){
             sessionStorage.clear();
         }
+        document.getElementById("frage").value = "";
         $location.path(view);
         };
-
 
 
     // //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
