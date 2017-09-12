@@ -272,4 +272,18 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
             sessionStorage.setItem('classi', classi);
         });
     };
+
+    //Funktionen für Antwortmöglichkeiten hinzufügen bzw. löschen
+    $scope.choices = [{id: '1'}, {id: '2'}];
+
+    $scope.addNewChoice = function() {
+        var newItemNo = $scope.choices.length+1;
+        $scope.choices.push({'id':newItemNo});
+    };
+
+    $scope.removeChoice = function() {
+        var lastItem = $scope.choices.length-1;
+        $scope.choices.splice(lastItem);
+    };
+
 });
