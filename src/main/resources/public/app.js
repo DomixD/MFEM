@@ -48,7 +48,7 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http, $q) {
+mfem.controller('Controller', function($scope, $http, $q, $location) {
 
     $http.get('http://localhost:8080/req').
     then(function(response) {
@@ -195,7 +195,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
     };
 
     //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    $scope.saveClassiQuest=function (question) {
+    $scope.saveClassiQuest=function (question,view) {
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
         var req = sessionStorage.getItem('req');
@@ -203,18 +203,24 @@ mfem.controller('Controller', function($scope, $http, $q) {
             require:req,
             metric: metric};
         $http.post('http://localhost:8080/quest',data);
-    };
+        if(view=='main'){
+            sessionStorage.clear();
+        }
+        $location.path(view);
+        };
 
-    //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    $scope.saveReqQuest=function (question) {
-        var e = document.getElementById("metri");
-        var metric = e.options[e.selectedIndex].value;
-        var req = sessionStorage.getItem('req');
-        data={question:question,
-            require:req,
-            metric: metric};
-        $http.post('http://localhost:8080/quest',data);
-    };
+
+
+    // //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
+    // $scope.saveReqQuest=function (question) {
+    //     var e = document.getElementById("metri");
+    //     var metric = e.options[e.selectedIndex].value;
+    //     var req = sessionStorage.getItem('req');
+    //     data={question:question,
+    //         require:req,
+    //         metric: metric};
+    //     $http.post('http://localhost:8080/quest',data);
+    // };
 
     //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question) {
