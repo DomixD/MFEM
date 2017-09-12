@@ -9,6 +9,7 @@
 </head>
 <body>
 <div ng-controller="Controller">
+    <div ng-init="getCats()">
     <h3>Ergebnis der durchgeführten Evaluation:</h3>
     <ul class="flex-outer">
         <li>
@@ -20,6 +21,7 @@
             <label>{{catego[5].category}}: {{resultEva[5]}}</label>
         </li>
     </ul>
+</div>
 </div>
 </body>
 </html>

@@ -13,17 +13,8 @@ mfem.config(function($routeProvider) {
         .when("/quest", {
             templateUrl : "quest.html"
         })
-        .when("/evaReq", {
-            templateUrl : "evaReq.html"
-        })
-        .when("/checkReq", {
-            templateUrl : "checkReq.html"
-        })
         .when("/questReq", {
             templateUrl : "questReq.html"
-        })
-        .when("/checkReqQuest", {
-            templateUrl : "checkReqQuest.html"
         })
         .when("/checkQuest", {
             templateUrl : "checkQuest.html"
@@ -48,24 +39,33 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
 
-    $http.get('http://localhost:8080/req').
-    then(function(response) {
-        $scope.req = response.data._embedded.requirements;
-    });
-    $http.get('http://localhost:8080/metric').then(function(response){
-        $scope.metrics = response.data._embedded.metrics;
-    });
-    $http.get('http://localhost:8080/classi').then(function(response){
-        $scope.classis = response.data._embedded.classifications;
-    });
-    $http.get('http://localhost:8080/cat').then(function(response){
-        $scope.catego = response.data._embedded.categories;
-    });
-    $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
-        $scope.classiReqs=response.data._embedded.requirements;
-    });
+mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
+
+    $scope.getReqs=function () {
+        $http.get('http://localhost:8080/req').then(function(response) {
+            $scope.req = response.data._embedded.requirements;
+        });
+    };
+
+    $scope.getMetrics=function () {
+        $http.get('http://localhost:8080/metric').then(function(response){
+            $scope.metrics = response.data._embedded.metrics;
+        });
+    };
+
+    $scope.getClassis=function () {
+        $http.get('http://localhost:8080/classi').then(function(response){
+            $scope.classis = response.data._embedded.classifications;
+        });
+    };
+
+    $scope.getCats=function () {
+        $http.get('http://localhost:8080/cat').then(function(response){
+            $scope.catego = response.data._embedded.categories;
+        });
+    };
+
     var questi = [];
 
     //Fragen mit den zugehörigen Antwortmöglichkeiten anzeigen
@@ -161,6 +161,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
             classiID = classiID.substring(classiID.length-1);
             $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
                 $rootScope.resultEva = response.data;
+                sessionStorage.clear();
             });
         });
     };
@@ -198,7 +199,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
     };
 
     //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    $scope.saveClassiQuest=function (question) {
+    $scope.saveClassiQuest=function (question,view) {
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
         var req = sessionStorage.getItem('req');
@@ -206,18 +207,24 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope) {
             require:req,
             metric: metric};
         $http.post('http://localhost:8080/quest',data);
-    };
+        if(view=='main'){
+            sessionStorage.clear();
+        }
+        $location.path(view);
+        };
 
-    //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    $scope.saveReqQuest=function (question) {
-        var e = document.getElementById("metri");
-        var metric = e.options[e.selectedIndex].value;
-        var req = sessionStorage.getItem('req');
-        data={question:question,
-            require:req,
-            metric: metric};
-        $http.post('http://localhost:8080/quest',data);
-    };
+
+
+    // //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
+    // $scope.saveReqQuest=function (question) {
+    //     var e = document.getElementById("metri");
+    //     var metric = e.options[e.selectedIndex].value;
+    //     var req = sessionStorage.getItem('req');
+    //     data={question:question,
+    //         require:req,
+    //         metric: metric};
+    //     $http.post('http://localhost:8080/quest',data);
+    // };
 
     //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question) {

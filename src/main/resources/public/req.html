@@ -9,6 +9,7 @@
 </head>
 <body>
 <div ng-controller="Controller">
+    <div ng-init="getClassis();getCats()">
         <br>
         <h2>Neue Anforderung</h2>
 
@@ -37,6 +38,7 @@
                 </li>
                 <li>
                     <div ng-controller="Controller"><button onclick="window.location.href='#!questReq'" ng-click="saveReq(content)" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div>
+                    <!--<div ng-controller="Controller"><button onclick="window.location.href='#!classiQuest'" ng-click="saveReq(content)" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div>-->
                 </li>
             </ul>
         </form>
