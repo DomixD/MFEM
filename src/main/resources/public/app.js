@@ -13,17 +13,8 @@ mfem.config(function($routeProvider) {
         .when("/quest", {
             templateUrl : "quest.html"
         })
-        .when("/evaReq", {
-            templateUrl : "evaReq.html"
-        })
-        .when("/checkReq", {
-            templateUrl : "checkReq.html"
-        })
         .when("/questReq", {
             templateUrl : "questReq.html"
-        })
-        .when("/checkReqQuest", {
-            templateUrl : "checkReqQuest.html"
         })
         .when("/checkQuest", {
             templateUrl : "checkQuest.html"
@@ -48,33 +39,34 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http, $q, $location) {
 
-    $http.get('http://localhost:8080/req').
-    then(function(response) {
-        $scope.req = response.data._embedded.requirements;
-    });
-    $http.get('http://localhost:8080/metric').then(function(response){
-        $scope.metrics = response.data._embedded.metrics;
-    });
-    $http.get('http://localhost:8080/classi').then(function(response){
-        $scope.classis = response.data._embedded.classifications;
-    });
-    $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
-        $scope.classiReqs=response.data._embedded.requirements;
-    });
-    var questi = [];
+mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
 
-    //Ergebnis ausgeben
-    $scope.getResult=function () {
-        var frameID = sessionStorage.getItem("frame");
-        frameID = frameID.substring(frameID.length-1);
-        var classiID = sessionStorage.getItem("classiFrame");
-        classiID = classiID.substring(classiID.length-1);
-        $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
-            $scope.resultEva = response.data;
+    $scope.getReqs=function () {
+        $http.get('http://localhost:8080/req').then(function(response) {
+            $scope.req = response.data._embedded.requirements;
         });
     };
+
+    $scope.getMetrics=function () {
+        $http.get('http://localhost:8080/metric').then(function(response){
+            $scope.metrics = response.data._embedded.metrics;
+        });
+    };
+
+    $scope.getClassis=function () {
+        $http.get('http://localhost:8080/classi').then(function(response){
+            $scope.classis = response.data._embedded.classifications;
+        });
+    };
+
+    $scope.getCats=function () {
+        $http.get('http://localhost:8080/cat').then(function(response){
+            $scope.catego = response.data._embedded.categories;
+        });
+    };
+
+    var questi = [];
 
     //Fragen mit den zugehörigen Antwortmöglichkeiten anzeigen
     $scope.show=function () {
@@ -163,7 +155,14 @@ mfem.controller('Controller', function($scope, $http, $q, $location) {
                     promiseArray.push($http.post('http://localhost:8080/result', data));
                 }
         $q.all(promiseArray).then(function (resArray) {
-
+            var frameID = sessionStorage.getItem("frame");
+            frameID = frameID.substring(frameID.length-1);
+            var classiID = sessionStorage.getItem("classiFrame");
+            classiID = classiID.substring(classiID.length-1);
+            $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
+                $rootScope.resultEva = response.data;
+                sessionStorage.clear();
+            });
         });
     };
 
@@ -173,8 +172,11 @@ mfem.controller('Controller', function($scope, $http, $q, $location) {
         var classi = e.options[e.selectedIndex].value;
         var e2 = document.getElementById("prio");
         var prio = e2.options[e2.selectedIndex].value;
+        var e3 = document.getElementById("category");
+        var cat = e3.options[e3.selectedIndex].value;
         data={content:cont,
         classi:classi,
+        category:cat,
         priority:prio};
         $http.post('http://localhost:8080/req',data).then(function (response) {
             var req = response.data._links.self.href;
@@ -187,7 +189,9 @@ mfem.controller('Controller', function($scope, $http, $q, $location) {
         var classi = sessionStorage.getItem('classi');
         var e2 = document.getElementById("prio");
         var prio = e2.options[e2.selectedIndex].value;
-        data={content:content,classi:classi,priority:prio};
+        var e3 = document.getElementById("category");
+        var cat = e3.options[e3.selectedIndex].value;
+        data={content:content,classi:classi, category:cat ,priority:prio};
         $http.post('http://localhost:8080/req',data).then(function (response) {
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);

@@ -1,7 +1,9 @@
 package muenchen.praxis.mfem.services;
 
+import java.util.List;
+
 public interface IMFEMService {
 
-    double getResult (int frameID, int classiID);
+    List<Double> getResult (int frameID, int classiID);
 
 }

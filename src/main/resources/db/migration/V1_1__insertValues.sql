@@ -1,3 +1,10 @@
+-- Kategorien hinzufügen
+insert into category (categoryid, category) values (1, 'Funktionalität');
+insert into category (categoryid, category) values (2, 'Performance');
+insert into category (categoryid, category) values (3, 'Benutzbarkeit');
+insert into category (categoryid, category) values (4, 'Sicherheit');
+insert into category (categoryid, category) values (5, 'Wartbarkeit');
+insert into category (categoryid, category) values (6, 'Zukunftssicherheit');
 
 -- Neue Metrik hinzufügen
 insert into metric (metricid, description) VALUES (1, 'Metrik1');
@@ -31,26 +38,26 @@ insert into classification (classificationid, description, name) values (2, 'Kla
 insert into classification (classificationid, description, name) values (3, 'KlassDes3', 'KlassName3');
 
 -- Anforderung hinzufügen
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (1, 'Anforderung1.1', 1, 1, 2);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (2, 'Anforderung1.2', 1, 2, 2);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (3, 'Anforderung1.3', 1, 3, 1);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (4, 'Anforderung1.4', 1, 4, 1);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (5, 'Anforderung1.5', 1, 5, 0);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (6, 'Anforderung1.6', 1, 6, 0);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (1, 'Anforderung1.1', 1, 1, 2);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (2, 'Anforderung1.2', 1, 2, 2);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (3, 'Anforderung1.3', 1, 3, 1);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (4, 'Anforderung1.4', 1, 4, 1);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (5, 'Anforderung1.5', 1, 5, 0);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (6, 'Anforderung1.6', 1, 6, 0);
 
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (7, 'Anforderung2.1', 2, 1, 2);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (9, 'Anforderung2.2', 2, 2, 2);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (8, 'Anforderung2.3', 2, 3, 1);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (10, 'Anforderung2.4', 2, 4, 1);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (11, 'Anforderung2.5', 2, 5, 0);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (12, 'Anforderung2.6', 2, 6, 0);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (7, 'Anforderung2.1', 2, 1, 2);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (9, 'Anforderung2.2', 2, 2, 2);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (8, 'Anforderung2.3', 2, 3, 1);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (10, 'Anforderung2.4', 2, 4, 1);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (11, 'Anforderung2.5', 2, 5, 0);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (12, 'Anforderung2.6', 2, 6, 0);
 
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (13, 'Anforderung3.1', 3, 1, 2);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (14, 'Anforderung3.2', 3, 2, 2);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (15, 'Anforderung3.3', 3, 3, 1);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (16, 'Anforderung3.4', 3, 4, 1);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (17, 'Anforderung3.5', 3, 5, 0);
-insert into requirement (requirementid, content, classi_classificationid, categoryid, priority) values (18, 'Anforderung3.6', 3, 6, 0);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (13, 'Anforderung3.1', 3, 1, 2);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (14, 'Anforderung3.2', 3, 2, 2);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (15, 'Anforderung3.3', 3, 3, 1);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (16, 'Anforderung3.4', 3, 4, 1);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (17, 'Anforderung3.5', 3, 5, 0);
+insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (18, 'Anforderung3.6', 3, 6, 0);
 
 -- Neue Frage hinzufügen
 insert into question (questionid, question, metricid, require_requirementid) values (1, 'Frage1.1.1', 1, 1);
@@ -99,12 +106,3 @@ insert into question (questionid, question, metricid, require_requirementid) val
 insert into question (questionid, question, metricid, require_requirementid) values (26, 'Frage3.5.1', 1, 17);
 
 insert into question (questionid, question, metricid, require_requirementid) values (27, 'Frage3.6.1', 1, 18);
-
-
--- Kategorien hinzufügen
-insert into category (categoryid, category) values (1, 'Funktionalität');
-insert into category (categoryid, category) values (2, 'Performance');
-insert into category (categoryid, category) values (3, 'Benutzbarkeit');
-insert into category (categoryid, category) values (4, 'Sicherheit');
-insert into category (categoryid, category) values (5, 'Wartbarkeit');
-insert into category (categoryid, category) values (6, 'Zukunftssicherheit');
