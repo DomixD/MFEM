@@ -9,6 +9,7 @@
 </head>
 <body>
 <div ng-controller="Controller">
+    <div ng-init="getClassis();getCats()">
         <br>
         <h2>Neue Anforderung</h2>
 
@@ -24,7 +25,20 @@
                     <select id="classis" ng-model="classi" ng-options="c.name for c in classis track by c._links.self.href"></select>
                 </li>
                 <li>
+                    <label>Priorität:</label>
+                    <select id="prio" name="prio">
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                    </select>
+                </li>
+                <li>
+                    <label>Kategorie:</label>
+                    <select id="category" ng-model="cate" ng-options="cat.category for cat in catego track by cat._links.self.href"> </select>
+                </li>
+                <li>
                     <div ng-controller="Controller"><button onclick="window.location.href='#!questReq'" ng-click="saveReq(content)" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div>
+                    <!--<div ng-controller="Controller"><button onclick="window.location.href='#!classiQuest'" ng-click="saveReq(content)" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div>-->
                 </li>
             </ul>
         </form>

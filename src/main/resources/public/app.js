@@ -13,17 +13,8 @@ mfem.config(function($routeProvider) {
         .when("/quest", {
             templateUrl : "quest.html"
         })
-        .when("/evaReq", {
-            templateUrl : "evaReq.html"
-        })
-        .when("/checkReq", {
-            templateUrl : "checkReq.html"
-        })
         .when("/questReq", {
             templateUrl : "questReq.html"
-        })
-        .when("/checkReqQuest", {
-            templateUrl : "checkReqQuest.html"
         })
         .when("/checkQuest", {
             templateUrl : "checkQuest.html"
@@ -48,91 +39,95 @@ mfem.config(function($routeProvider) {
         });
 });
 
-mfem.controller('Controller', function($scope, $http, $q) {
 
-    $http.get('http://localhost:8080/req').
-    then(function(response) {
-        $scope.req = response.data._embedded.requirements;
-    });
-    $http.get('http://localhost:8080/metric').then(function(response){
-        $scope.metrics = response.data._embedded.metrics;
-    });
-    $http.get('http://localhost:8080/classi').then(function(response){
-        $scope.classis = response.data._embedded.classifications;
-    });
-    $http.get(sessionStorage.getItem('classiFrame')+'/requirementList').then(function(response) {
-        $scope.classiReqs=response.data._embedded.requirements;
-    });
-    var questi = [];
+mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
 
-    $scope.getResult=function () {
-        var frameID = sessionStorage.getItem("frame");
-        frameID = frameID.substring(frameID.length-1);
-        var classiID = sessionStorage.getItem("classiFrame");
-        classiID = classiID.substring(classiID.length-1);
-        $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
-            $scope.resultEva = response.data;
+    $scope.getReqs=function () {
+        $http.get('http://localhost:8080/req').then(function(response) {
+            $scope.req = response.data._embedded.requirements;
         });
     };
 
+    $scope.getMetrics=function () {
+        $http.get('http://localhost:8080/metric').then(function(response){
+            $scope.metrics = response.data._embedded.metrics;
+        });
+    };
+
+    $scope.getClassis=function () {
+        $http.get('http://localhost:8080/classi').then(function(response){
+            $scope.classis = response.data._embedded.classifications;
+        });
+    };
+
+    $scope.getCats=function () {
+        $http.get('http://localhost:8080/cat').then(function(response){
+            $scope.catego = response.data._embedded.categories;
+        });
+    };
+
+    var questi = [];
+
+    //Fragen mit den zugehörigen Antwortmöglichkeiten anzeigen
     $scope.show=function () {
         var getQuestions=[];
-        var evaReqs = sessionStorage.getItem('evaReqs');
-        var temp = new Array();
-        temp = evaReqs.split(",");
-        evaReqs = temp;
-        for (var i = 0; i<evaReqs.length;i++) {
-            getQuestions.push($http.get(evaReqs[i]+'/questionList'));
-        }
-        $q.all(getQuestions).then(function(questionArray){
-            var questio = [];
-            var metricLinks = [];
-            var innerQuestio = [];
-            for(var j = 0; j < questionArray.length;j++) {
-                questio.push(questionArray[j].data._embedded.questions);
+        var classi = sessionStorage.getItem('classiFrame');
+        $http.get(classi+'/requirementList').then(function (response) {
+           var evaReqs = response.data._embedded.requirements;
+            for (var i = 0; i<evaReqs.length;i++) {
+                getQuestions.push($http.get(evaReqs[i]._links.questionList.href));
             }
-            var questio2 = [];
-            for (var k = 0; k<questio.length;k++) {
-                innerQuestio = questio[k];
-                for (var l = 0; l < innerQuestio.length; l++) {
-                    metricLinks.push(innerQuestio[l]._links.metric.href);
-                    questio2.push(innerQuestio[l]);
+            $q.all(getQuestions).then(function(questionArray){
+                var questio = [];
+                var metricLinks = [];
+                var innerQuestio = [];
+                for(var j = 0; j < questionArray.length;j++) {
+                    questio.push(questionArray[j].data._embedded.questions);
                 }
-            }
-            $scope.questions = questio2;
-            var getMetrics = [];
-            for (var m = 0; m<metricLinks.length;m++) {
-                getMetrics.push($http.get(metricLinks[m]));
-            }
-            $q.all(getMetrics).then(function (metricArray) {
-               var answerList = [];
-               for (var n = 0; n<metricArray.length;n++) {
-                   answerList.push(metricArray[n].data._links.answerList.href);
-               }
-               var getAnswers = [];
-               for (var o = 0; o<answerList.length;o++) {
-                   getAnswers.push($http.get(answerList[o]));
-               }
-               $q.all(getAnswers).then(function (answerArray) {
-                   var answ = [];
-                   for (var p = 0;p < answerArray.length; p++) {
-                       answ.push(answerArray[p].data._embedded.answers);
-                   }
-                   $scope.answers = answ;
-                   var res = [];
-                   for (var s = 0; s<questio2.length;s++) {
-                       var t = [];
-                       t.push(questio2[s]);
-                       t.push(answ[s]);
-                       res.push(t);
-                   }
-                   $scope.result=res;
-                   questi = res;
-               });
+                var questio2 = [];
+                for (var k = 0; k<questio.length;k++) {
+                    innerQuestio = questio[k];
+                    for (var l = 0; l < innerQuestio.length; l++) {
+                        metricLinks.push(innerQuestio[l]._links.metric.href);
+                        questio2.push(innerQuestio[l]);
+                    }
+                }
+                $scope.questions = questio2;
+                var getMetrics = [];
+                for (var m = 0; m<metricLinks.length;m++) {
+                    getMetrics.push($http.get(metricLinks[m]));
+                }
+                $q.all(getMetrics).then(function (metricArray) {
+                    var answerList = [];
+                    for (var n = 0; n<metricArray.length;n++) {
+                        answerList.push(metricArray[n].data._links.answerList.href);
+                    }
+                    var getAnswers = [];
+                    for (var o = 0; o<answerList.length;o++) {
+                        getAnswers.push($http.get(answerList[o]));
+                    }
+                    $q.all(getAnswers).then(function (answerArray) {
+                        var answ = [];
+                        for (var p = 0;p < answerArray.length; p++) {
+                            answ.push(answerArray[p].data._embedded.answers);
+                        }
+                        $scope.answers = answ;
+                        var res = [];
+                        for (var s = 0; s<questio2.length;s++) {
+                            var t = [];
+                            t.push(questio2[s]);
+                            t.push(answ[s]);
+                            res.push(t);
+                        }
+                        $scope.result=res;
+                        questi = res;
+                    });
+                });
             });
         });
     };
 
+    //Ergebnis der Evaluation berechnen
     $scope.evaluation=function () {
         var getRequire = [];
         var promiseArray = [];
@@ -149,38 +144,40 @@ mfem.controller('Controller', function($scope, $http, $q) {
         for(var k = 0; k<chosenAnswers.length; k++) {
             questLink.push(questi[k][0]._links.self.href);
             answerIndex.push(k);
-            getRequire.push($http.get(questi[k][0]._links.self.href+'/require'))
         }
-        $q.all(getRequire).then(function (responseArray) {
-            for (var l = 0; l < responseArray.length; l++) {
-                var req = responseArray[l].data._links.self.href;
-                var reqID = req.substring(req.length - 1);
-                getEvaID.push($http.get('http://localhost:8080/getEvaID/'+frameID+'/'+reqID));
-            }
-            $q.all(getEvaID).then(function (responseArray2) {
-                for (var m = 0; m < responseArray2.length; m++) {
-                    var evaID = responseArray2[m].data;
+                for (var m = 0; m < questLink.length; m++) {
+                    var feva = sessionStorage.getItem('feva');
                     data = {
-                        frameworkEvaluation: 'http://localhost:8080/feva/' + evaID,
+                        frameworkEvaluation: feva,
                         answer: chosenAnswers[answerIndex[m]],
                         question: questLink[m]
                     };
                     promiseArray.push($http.post('http://localhost:8080/result', data));
                 }
+        $q.all(promiseArray).then(function (resArray) {
+            var frameID = sessionStorage.getItem("frame");
+            frameID = frameID.substring(frameID.length-1);
+            var classiID = sessionStorage.getItem("classiFrame");
+            classiID = classiID.substring(classiID.length-1);
+            $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
+                $rootScope.resultEva = response.data;
+                sessionStorage.clear();
             });
         });
-        $q.all(promiseArray).then(function (resArray) {
-
-        });
-
     };
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont) {
         var e = document.getElementById("classis");
         var classi = e.options[e.selectedIndex].value;
+        var e2 = document.getElementById("prio");
+        var prio = e2.options[e2.selectedIndex].value;
+        var e3 = document.getElementById("category");
+        var cat = e3.options[e3.selectedIndex].value;
         data={content:cont,
-        classi:classi};
+        classi:classi,
+        category:cat,
+        priority:prio};
         $http.post('http://localhost:8080/req',data).then(function (response) {
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);
@@ -190,7 +187,11 @@ mfem.controller('Controller', function($scope, $http, $q) {
     //Anforderung ohne extra Angabe der Klassifizierung hinzufügen
     $scope.saveClassiReq=function (content) {
         var classi = sessionStorage.getItem('classi');
-        data={content:content,classi:classi};
+        var e2 = document.getElementById("prio");
+        var prio = e2.options[e2.selectedIndex].value;
+        var e3 = document.getElementById("category");
+        var cat = e3.options[e3.selectedIndex].value;
+        data={content:content,classi:classi, category:cat ,priority:prio};
         $http.post('http://localhost:8080/req',data).then(function (response) {
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);
@@ -198,7 +199,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
     };
 
     //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    $scope.saveClassiQuest=function (question) {
+    $scope.saveClassiQuest=function (question,view) {
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
         var req = sessionStorage.getItem('req');
@@ -206,18 +207,24 @@ mfem.controller('Controller', function($scope, $http, $q) {
             require:req,
             metric: metric};
         $http.post('http://localhost:8080/quest',data);
-    };
+        if(view=='main'){
+            sessionStorage.clear();
+        }
+        document.getElementById("frage").value = "";
+        $location.path(view);
+        };
 
-    //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    $scope.saveReqQuest=function (question) {
-        var e = document.getElementById("metri");
-        var metric = e.options[e.selectedIndex].value;
-        var req = sessionStorage.getItem('req');
-        data={question:question,
-            require:req,
-            metric: metric};
-        $http.post('http://localhost:8080/quest',data);
-    };
+
+    // //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
+    // $scope.saveReqQuest=function (question) {
+    //     var e = document.getElementById("metri");
+    //     var metric = e.options[e.selectedIndex].value;
+    //     var req = sessionStorage.getItem('req');
+    //     data={question:question,
+    //         require:req,
+    //         metric: metric};
+    //     $http.post('http://localhost:8080/quest',data);
+    // };
 
     //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question) {
@@ -245,6 +252,7 @@ mfem.controller('Controller', function($scope, $http, $q) {
         });
     };
 
+    //Framework speichern und die ausgewählte Klassifizierung mit dem Framework in FrameworkEvaluation speichern
     $scope.saveFrame=function (name, description) {
         var e = document.getElementById("classisFrame");
         var classi = e.options[e.selectedIndex].value;
@@ -253,7 +261,12 @@ mfem.controller('Controller', function($scope, $http, $q) {
               descriptionFW:description};
         $http.post('http://localhost:8080/frame',data).then(function (response) {
             var frame = response.data._links.self.href;
-            sessionStorage.setItem('frame', frame);
+            sessionStorage.setItem('frame',frame);
+            data={framework:frame, classification: classi};
+            $http.post('http://localhost:8080/feva', data).then(function (response) {
+                var feva = response.data._links.self.href;
+                sessionStorage.setItem('feva', feva);
+            });
         });
     };
 
@@ -264,41 +277,6 @@ mfem.controller('Controller', function($scope, $http, $q) {
         $http.post('http://localhost:8080/classi',data).then(function (response) {
             var classi = response.data._links.self.href;
             sessionStorage.setItem('classi', classi);
-        });
-    };
-
-    //Prioritäten zu Anforderungen speichern
-    $scope.saveReqPrio=function () {
-        var promiseArray = [];
-        var classi = sessionStorage.getItem('classiFrame');
-        var frame=sessionStorage.getItem('frame');
-        var e = document.getElementsByName("opts");
-        var prio = null;
-        var prioList = [];
-        for (var k = 0; k<e.length; k++){
-            prioList.push(e[k].options[e[k].selectedIndex].value);
-        }
-        $http.get(classi+'/requirementList').then(function(response) {
-            var classReqs = response.data._embedded.requirements;
-            var evaReqs = [];
-            for (var j = 0; j<classReqs.length; j++) {
-                evaReqs.push(classReqs[j]._links.self.href);
-            }
-            sessionStorage.setItem('evaReqs', evaReqs);
-            for(var i = 0; i <classReqs.length; i++) {
-                prio = prioList[i];
-                var req =classReqs[i]._links.self.href;
-                data={
-                    framework: frame,
-                    requirement: req,
-                    classification: classi,
-                    priority:prio
-                };
-                promiseArray.push($http.post('http://localhost:8080/feva', data));
-            }
-            $q.all(promiseArray).then(function(dataArray){
-
-            });
         });
     };
 });

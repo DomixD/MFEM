@@ -9,6 +9,7 @@
 </head>
 <body>
 <div ng-controller="Controller">
+    <div ng-init="getClassis()">
         <br>
         <h2>Neues Framework</h2>
     <div class="container1">
@@ -27,11 +28,12 @@
                     <select id="classisFrame" ng-model="classi" ng-options="c.name for c in classis track by c._links.self.href"></select>
                 </li>
                 <li>
-                    <p><button class="myButton" ng-click="saveFrame(name, description)" onclick="window.location.href='#!evaReq'" style="vertical-align:middle"><span>Anforderungen priorisieren >></span></button></p>
+                    <p><button class="myButton" ng-click="saveFrame(name, description)" onclick="window.location.href='#!checkQuest'" style="vertical-align:middle"><span>Weiter zu den Fragen >></span></button></p>
                 </li>
             </ul>
         </form>
     </div>
+</div>
 </div>
 </body>
 </html>

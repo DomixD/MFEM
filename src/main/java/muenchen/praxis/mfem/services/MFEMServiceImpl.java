@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -16,44 +17,48 @@ public class MFEMServiceImpl implements IMFEMService{
 	@Autowired
 	RepoFramework repoFramework;
 	@Autowired
-	RepoRequirement repoRequirement;
-	@Autowired
 	RepoClassification repoClassification;
 	@Autowired
 	RepoFEvaResult repoFEvaResult;
+	@Autowired
+	RepoCategory repoCategory;
 
 	@Override
-	public int getEvaID(int frameID, int reqID) {
-		Framework frame = repoFramework.findOne(frameID);
-		Requirement req = repoRequirement.findOne(reqID);
-		return frameworkEvaluation.findByFrameworkInAndRequirementIn(frame, req).getId();
-	}
-
-	@Override
-	public double getResult(int frameID, int classiID) {
+	public List<Double> getResult(int frameID, int classiID) {
+		List<Double> result = new ArrayList<>();
 		double soll = 0.0;
 		double ist = 0.0;
+		Iterable<Category> cat = repoCategory.findAll();
+		Iterator<Category> it = cat.iterator();
+
 		Framework frame = repoFramework.findOne(frameID);
 		Classification classi = repoClassification.findOne(classiID);
-		List<FrameworkEvaluation> feva = frameworkEvaluation.findByFrameworkInAndClassificationIn(frame, classi);
-		List<FEvaResult> results = new ArrayList<>();
-		for(FrameworkEvaluation f:feva){
-			List<FEvaResult> list = repoFEvaResult.findByFrameworkEvaluation(f);
-			for (FEvaResult re : list) {
-				results.add(re);
+		FrameworkEvaluation feva = frameworkEvaluation.findByFrameworkInAndClassificationIn(frame, classi);
+		List<FEvaResult> list = repoFEvaResult.findByFrameworkEvaluation(feva);
+
+		while (it.hasNext()) {
+			Category c = it.next();
+			List<Requirement> reqs = c.getRequirementList();
+			for(int i = 0; i<reqs.size(); i++) {
+				Requirement r = reqs.get(i);
+				if(r.getClassi().getId() == classiID){
+					List<Question> questionList = r.getQuestionList();
+					double sollQuest = r.getPriority().getValue()/questionList.size();
+					soll += r.getPriority().getValue();
+					for(Question q : questionList) {
+						for(FEvaResult res : list) {
+							if (q.getId() == res.getQuestion().getId()) {
+								ist += sollQuest*res.getAnswer().getValue();
+							}
+						}
+					}
+				}
 			}
+			result.add(ist/soll);
+			soll = 0;
+			ist = 0;
 		}
-		for(FrameworkEvaluation f:feva) {
-			double sollQuest = f.getPriority().getValue()/f.getRequirement().getQuestionList().size();
-			soll += f.getPriority().getValue();
-			List<FEvaResult> list = repoFEvaResult.findByFrameworkEvaluation(f);
-			for (FEvaResult re : list) {
-				ist += sollQuest*re.getAnswer().getValue();
-			}
-		}
-		System.out.println("#######################SOLL: "+soll);
-		System.out.println("#######################IST: "+ist);
-		return ist/soll;
+		return result;
 	}
 
 

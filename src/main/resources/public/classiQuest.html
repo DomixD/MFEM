@@ -9,6 +9,7 @@
 </head>
 <body>
 <div ng-controller="Controller">
+    <div ng-init="getMetrics()">
         <br>
         <h2>Neue Frage</h2>
 
@@ -17,21 +18,19 @@
             <ul class="flex-outer">
                 <li>
                     <label>Frage:</label>
-                    <input type="text" id="Frage" name="Frage" ng-model="question">
+                    <input type="text" id="frage" name="frage" ng-model="question">
                 </li>
                 <li>
                     <label>Metrik:</label>
                     <select id="metrics" ng-model="metric" ng-options="m.description for m in metrics track by m._links.self.href"></select>
                 </li>
-                <li>
-                    <!--button class="myButton" ng-click="saveClassiQuest(question)" onclick="window.location.href='#!classiReq'" style="vertical-align:middle"><span>weitere Anforderung >></span></button-->
-                    <button class="myButton" ng-click="saveClassiQuest(question)" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>Frage speichern</span></button>
-                </li>
+                <p><button class="myButton" ng-click="saveClassiQuest(question,'classiQuest')" style="vertical-align:middle"><span>weitere Frage >></span></button></p>
+                <p><button class="myButton" ng-click="saveClassiQuest(question,'main')" style="vertical-align:middle"><span>Frage speichern</span></button></p>
+                <p><button class="myButton" ng-click="saveClassiQuest(question,'classiReq')" style="vertical-align:middle"><span>weitere Anforderung >></span></button></p>
             </ul>
-            <!--Fragen werden bei Klick nicht gespeichert>
-<!--td><p><button class="myButton" ng-click="saveClassiQuest(question)" onclick="window.location.href='#!classiQuest'" style="vertical-align:middle"><span>weitere Frage >></span></button></p></td-->
         </form>
     </div>
+</div>
 </div>
 </body>
 </html>
