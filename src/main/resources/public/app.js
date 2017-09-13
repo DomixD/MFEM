@@ -129,13 +129,9 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
 
     //Ergebnis der Evaluation berechnen
     $scope.evaluation=function () {
-        var getRequire = [];
         var promiseArray = [];
-        var getEvaID = [];
         var e = document.getElementsByName("selectAns");
         var chosenAnswers = [];
-        var frameID = sessionStorage.getItem("frame");
-        frameID = frameID.substring(frameID.length-1);
         for(var i = 0; i <questi.length;i++) {
             chosenAnswers.push(e[i].options[e[i].selectedIndex].value);
         }
@@ -212,19 +208,6 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         }
         $location.path(view);
         };
-
-
-
-    // //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    // $scope.saveReqQuest=function (question) {
-    //     var e = document.getElementById("metri");
-    //     var metric = e.options[e.selectedIndex].value;
-    //     var req = sessionStorage.getItem('req');
-    //     data={question:question,
-    //         require:req,
-    //         metric: metric};
-    //     $http.post('http://localhost:8080/quest',data);
-    // };
 
     //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question) {
