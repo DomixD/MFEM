@@ -42,23 +42,9 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
 
-    $scope.getResult=function () {
+    $scope.getFramework=function () {
         $http.get(sessionStorage.getItem('frame')).then(function (response) {
             $scope.framework = response.data.nameFW;
-            var frameID = sessionStorage.getItem("frame");
-            frameID = frameID.substring(frameID.length-1);
-            var classiID = sessionStorage.getItem("classiFrame");
-            classiID = classiID.substring(classiID.length-1);
-            $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
-                /*var temp = response.data;
-                var tempList=[];
-                for (var i = 0; i < temp.length; i++) {
-                    tempList.push(Number(temp[i]))
-                }
-                $rootScope.resultEva =  tempList;*/
-                $rootScope.resultEva=response.data;
-                //sessionStorage.clear();
-            });
         });
     };
 
@@ -177,6 +163,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             classiID = classiID.substring(classiID.length-1);
             $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
                 $rootScope.resultEva = response.data;
+                sessionStorage.setItem('result',response.data);
                 //sessionStorage.clear();
             });
         });
