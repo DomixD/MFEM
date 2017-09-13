@@ -42,6 +42,12 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
 
+    $scope.getFramework=function () {
+        $http.get(sessionStorage.getItem('frame')).then(function (response) {
+            $scope.framework = response.data.nameFW;
+        });
+    };
+
     $scope.getReqs=function () {
         $http.get('http://localhost:8080/req').then(function(response) {
             $scope.req = response.data._embedded.requirements;
@@ -129,13 +135,9 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
 
     //Ergebnis der Evaluation berechnen
     $scope.evaluation=function () {
-        var getRequire = [];
         var promiseArray = [];
-        var getEvaID = [];
         var e = document.getElementsByName("selectAns");
         var chosenAnswers = [];
-        var frameID = sessionStorage.getItem("frame");
-        frameID = frameID.substring(frameID.length-1);
         for(var i = 0; i <questi.length;i++) {
             chosenAnswers.push(e[i].options[e[i].selectedIndex].value);
         }
@@ -161,7 +163,8 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             classiID = classiID.substring(classiID.length-1);
             $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
                 $rootScope.resultEva = response.data;
-                sessionStorage.clear();
+                sessionStorage.setItem('result',response.data);
+                //sessionStorage.clear();
             });
         });
     };
@@ -213,18 +216,6 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         document.getElementById("frage").value = "";
         $location.path(view);
         };
-
-
-    // //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    // $scope.saveReqQuest=function (question) {
-    //     var e = document.getElementById("metri");
-    //     var metric = e.options[e.selectedIndex].value;
-    //     var req = sessionStorage.getItem('req');
-    //     data={question:question,
-    //         require:req,
-    //         metric: metric};
-    //     $http.post('http://localhost:8080/quest',data);
-    // };
 
     //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question) {

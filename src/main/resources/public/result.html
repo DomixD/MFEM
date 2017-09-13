@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="demo">
 <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>MFEM</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="angular-route.js"></script>
@@ -10,18 +11,19 @@
 <body>
 <div ng-controller="Controller">
     <div ng-init="getCats()">
-    <h3>Ergebnis der durchgeführten Evaluation:</h3>
-    <ul class="flex-outer">
-        <li>
-            <label>{{catego[0].category}}: {{resultEva[0]}}</label>
-            <label>{{catego[1].category}}: {{resultEva[1]}}</label>
-            <label>{{catego[2].category}}: {{resultEva[2]}}</label>
-            <label>{{catego[3].category}}: {{resultEva[3]}}</label>
-            <label>{{catego[4].category}}: {{resultEva[4]}}</label>
-            <label>{{catego[5].category}}: {{resultEva[5]}}</label>
-        </li>
-    </ul>
-</div>
+        <h3>Ergebnis der durchgeführten Evaluation:</h3>
+        <ul class="flex-outer">
+            <li>
+                <label>{{catego[0].category}}: {{resultEva[0]}}</label>
+                <label>{{catego[1].category}}: {{resultEva[1]}}</label>
+                <label>{{catego[2].category}}: {{resultEva[2]}}</label>
+                <label>{{catego[3].category}}: {{resultEva[3]}}</label>
+                <label>{{catego[4].category}}: {{resultEva[4]}}</label>
+                <label>{{catego[5].category}}: {{resultEva[5]}}</label>
+            </li>
+        </ul>
+        <p><button class="myButton" onclick="window.open('diagram.html', 'newwindow', 'width=1200,height=800'); return false;" style="vertical-align:middle"><span>Diagramm anzeigen</span></button></p>
+    </div>
 </div>
 </body>
 </html>
