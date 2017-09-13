@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import muenchen.praxis.mfem.entities.Priority;
 import muenchen.praxis.mfem.entities.Question;
 import muenchen.praxis.mfem.entities.Requirement;
+import muenchen.praxis.mfem.services.IMFEMService;
 import muenchen.praxis.mfem.services.MFEMServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,23 +33,19 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = MFEMResource.class, secure = false)
-@WebAppConfiguration
+@WebMvcTest(MFEMResource.class)
 public class MFEMResourceTest {
 
     @Autowired
-    private WebApplicationContext webAppContext;
     private MockMvc mockMvc;
 
     @MockBean
-    private MFEMServiceImpl service;
+    private IMFEMService service;
 
     private List<Double> resultsList = new ArrayList<>();
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
         resultsList.add(1.2);
         resultsList.add(0.8);
         resultsList.add(1.5);
@@ -59,7 +56,6 @@ public class MFEMResourceTest {
         when(service.getResult(1, 1)).thenReturn(resultsList);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/getRes/1/1").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        System.out.println("Länge:  " + resultsList.size());
         assertEquals(200, result.getResponse().getStatus());
         assertEquals("[1.2,0.8,1.5]", result.getResponse().getContentAsString());
     }

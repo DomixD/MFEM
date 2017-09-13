@@ -13,15 +13,15 @@ import java.util.List;
 public class MFEMServiceImpl implements IMFEMService{
 
 	@Autowired
-	RepoFrameworkEvaluation frameworkEvaluation;
+	private RepoFrameworkEvaluation frameworkEvaluation;
 	@Autowired
-	RepoFramework repoFramework;
+	private RepoFramework repoFramework;
 	@Autowired
-	RepoClassification repoClassification;
+	private RepoClassification repoClassification;
 	@Autowired
-	RepoFEvaResult repoFEvaResult;
+	private RepoFEvaResult repoFEvaResult;
 	@Autowired
-	RepoCategory repoCategory;
+	private RepoCategory repoCategory;
 
 	@Override
 	public List<Double> getResult(int frameID, int classiID) {
