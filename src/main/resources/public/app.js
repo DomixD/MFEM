@@ -50,12 +50,13 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             var classiID = sessionStorage.getItem("classiFrame");
             classiID = classiID.substring(classiID.length-1);
             $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
-                var temp = response.data;
+                /*var temp = response.data;
                 var tempList=[];
                 for (var i = 0; i < temp.length; i++) {
                     tempList.push(Number(temp[i]))
                 }
-                $rootScope.resultEva =  tempList;
+                $rootScope.resultEva =  tempList;*/
+                $rootScope.resultEva=response.data;
                 //sessionStorage.clear();
             });
         });
