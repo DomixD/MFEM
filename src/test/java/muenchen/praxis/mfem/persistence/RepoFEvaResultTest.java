@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
@@ -16,71 +17,48 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@ActiveProfiles("local")
 public class RepoFEvaResultTest {
 
-
-    @Autowired
-    private RepoQuestion repoQuestion;
-    @Autowired
-    private RepoAnswer repoAnswer;
-    @Autowired
-    private RepoFrameworkEvaluation repoFrameworkEvaluation;
     @Autowired
     private RepoFEvaResult repoFEvaResult;
     @Autowired
-    private RepoMetric repoMetric;
+    private RepoFrameworkEvaluation repoFrameworkEvaluation;
     @Autowired
     private RepoFramework repoFramework;
     @Autowired
     private RepoClassification repoClassification;
+    @Autowired
+    private RepoQuestion repoQuestion;
+    @Autowired
+    private RepoAnswer repoAnswer;
 
+    private Framework framework = new Framework(1, "Framework1", "Beschreibung1");
+    private Classification classification;
+    private FrameworkEvaluation feva;
+    private Question question;
+    private Answer answer;
+    private FEvaResult fevaResult;
 
     @Before
     public void setUp() {
-
-        List<Answer> answerList = new ArrayList<>();
-
-        //Metric
-        Metric metric = new Metric(1,"Test-Metrik1",answerList);
-        repoMetric.save(metric);
-
-        //Answer
-        Answer answer = new Answer(1,"Test-Antwort1",1.0, metric);
-        repoAnswer.save(answer);
-        answerList.add(answer);
-
-        //Question
-        Question question = new Question(1,"Test-Frage1",metric,null);
-        repoQuestion.save(question);
-
-        Framework framework = new Framework(1,"Framework1","Beschreibung");
         repoFramework.save(framework);
+        classification = repoClassification.findOne(1);
+        feva = new FrameworkEvaluation(1, framework, classification);
+        repoFrameworkEvaluation.save(feva);
 
-        Classification classification = new Classification();
-        repoClassification.save(classification);
-
-        //FrameworkEvaluation
-        //FrameworkEvaluation feva = new FrameworkEvaluation(1,framework,classification);
-        //repoFrameworkEvaluation.save(feva);
-
+        question = repoQuestion.findOne(1);
+        answer = repoAnswer.findOne(1);
     }
 
-    @Test
-    public void test() {
-        System.out.println("##################################################");
-
-        System.out.println(repoQuestion.findOne(1));
-        System.out.println(repoMetric.findOne(1));
-        System.out.println(repoAnswer.findOne(1));
-        System.out.println(repoFrameworkEvaluation.findOne(1));
-    }
 
     @Test
     public void testfindByFrameworkEvaluation() {
-//        assertNull(repoFEvaResult.findAll());
-//        assertNull(repoFEvaResult.findByFrameworkEvaluation(feva));
-//        repoFEvaResult.save(fevaResult);
-//        assertEquals(feva, repoFEvaResult.findByFrameworkEvaluation(feva));
+        assertEquals(0, repoFEvaResult.findByFrameworkEvaluation(feva).size());
+        fevaResult = new FEvaResult(1, feva, question, answer);
+        repoFEvaResult.save(fevaResult);
+        assertEquals(1, repoFEvaResult.findByFrameworkEvaluation(feva).size());
+        assertEquals(fevaResult.toString(), repoFEvaResult.findByFrameworkEvaluation(feva).get(0).toString());
     }
 
 }

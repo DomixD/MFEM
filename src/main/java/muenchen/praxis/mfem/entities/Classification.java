@@ -21,7 +21,7 @@ public class Classification {
     private int id;
     private String name;
     private String description;
-    @OneToMany(mappedBy="classi", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
+    @OneToMany(mappedBy="classi", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Requirement> requirementList;
 
 }

@@ -23,7 +23,7 @@ public class Metric implements Serializable {
 
     private String description;
 
-    @OneToMany(mappedBy = "metri", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "metri", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Answer> answerList;
 
 }

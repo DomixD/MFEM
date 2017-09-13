@@ -26,11 +26,4 @@ public class Question implements Serializable {
     @ManyToOne
     private Requirement require;
 
-
-//    public Question(String question) {
-//        this.question = question;
-//    }
-////
-//    public Question() {}
-
 }
