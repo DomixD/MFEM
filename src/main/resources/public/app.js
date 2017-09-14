@@ -72,8 +72,10 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
     $scope.show=function () {
         var getQuestions=[];
         var classi = sessionStorage.getItem('classiFrame');
+        //Alle Anforderungen zur gegebenen Klassifizierung
         $http.get(classi+'/requirementList').then(function (response) {
            var evaReqs = response.data._embedded.requirements;
+            //zu jeder Anforderung den Link zur Fragenliste holen
             for (var i = 0; i<evaReqs.length;i++) {
                 getQuestions.push($http.get(evaReqs[i]._links.questionList.href));
             }
@@ -81,13 +83,16 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
                 var questio = [];
                 var metricLinks = [];
                 var innerQuestio = [];
+                //eine Liste mit allen Fragenlisten(eine Frageliste gehört zu einer Anforderung)
                 for(var j = 0; j < questionArray.length;j++) {
                     questio.push(questionArray[j].data._embedded.questions);
                 }
                 var questio2 = [];
+                //Liste mit allen Fragen einzeln (keine Listen in einer Liste mehr)
                 for (var k = 0; k<questio.length;k++) {
                     innerQuestio = questio[k];
                     for (var l = 0; l < innerQuestio.length; l++) {
+                        //Metriken zu jeder einzelnen Frage
                         metricLinks.push(innerQuestio[l]._links.metric.href);
                         questio2.push(innerQuestio[l]);
                     }
@@ -239,16 +244,24 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
     };
 
     //Metrik mit Antwortmöglichkeiten speichern
-    $scope.saveMetric=function (description, a1, a2, a3) {
+    $scope.saveMetric=function (description) {
+        var ans = document.getElementsByName("answers");
+        var answers = [];
+        var promiseArray = [];
+        for(var i = 0; i<ans.length; i++) {
+            answers.push(ans[i].value)
+        }
         data4={description:description};
         $http.post('http://localhost:8080/metric',data4).then(function (response) {
+            var factor = 1/(answers.length-1);
+            var xy = 1+factor;
             var metric = response.data._links.self.href;
-            data1 = {content: a1, value: 1.0, metri: metric};
-            data2 = {content: a2, value: 0.5, metri: metric};
-            data3 = {content: a3, value: 0.0, metri: metric};
-            $http.post('http://localhost:8080/answer', data1);
-            $http.post('http://localhost:8080/answer', data2);
-            $http.post('http://localhost:8080/answer', data3);
+            for(var j = 0; j<answers.length; j++) {
+                xy= xy-factor;
+                data ={content: answers[j], value: xy, metric: metric};
+                promiseArray.push($http.post('http://localhost:8080/answer', data));
+            }
+            $q.all(promiseArray);
         });
     };
 
@@ -286,11 +299,13 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
     $scope.addNewChoice = function() {
         var newItemNo = $scope.choices.length+1;
         $scope.choices.push({'id':newItemNo});
+        sessionStorage.setItem('ansNum', newItemNo);
     };
 
     $scope.removeChoice = function() {
         var lastItem = $scope.choices.length-1;
         $scope.choices.splice(lastItem);
+        sessionStorage.setItem('ansNum', lastItem);
     };
 
 });

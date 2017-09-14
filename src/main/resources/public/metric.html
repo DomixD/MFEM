@@ -20,16 +20,13 @@
                 </li>
                 <fieldset  data-ng-repeat="choice in choices">
                     <label>Antwortmöglichkeit {{choice.id}}: </label>
-                    <input type="text" ng-model="choice.name" name="">
+                    <input type="text" ng-model="choice.name" id = "{{choice.id}}" name="answers">
                     <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
                 </fieldset>
                 <button class="addfields" ng-click="addNewChoice()">Add fields</button>
 
-                <!--<div id="choicesDisplay">-->
-                    <!--{{ choices }}-->
-                <!--</div>-->
                 <li>
-                    <p><div ng-controller="Controller"><button class="myButton" onclick="window.location.href='#!main'" ng-click="saveMetric(description, a1, a2, a3)" style="vertical-align:middle"><span>speichern</span></button></div></p>
+                    <p><div ng-controller="Controller"><button class="myButton" onclick="window.location.href='#!main'" ng-click="saveMetric(description)" style="vertical-align:middle"><span>speichern</span></button></div></p>
                 </li>
             </ul>
         </form>
