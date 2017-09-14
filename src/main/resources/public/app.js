@@ -218,10 +218,10 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             require:req,
             metric: metric};
         $http.post('http://localhost:8080/quest',data);
+        document.getElementById("frage").value = "";
         if(view=='main'){
             sessionStorage.clear();
         }
-        document.getElementById("frage").value = "";
         $location.path(view);
         };
 
@@ -235,6 +235,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
               require:req,
               metric: metric};
         $http.post('http://localhost:8080/quest',data);
+        sessionStorage.clear();
         $location.path(view);
     };
 
@@ -258,6 +259,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             }
             $q.all(promiseArray);
         });
+        sessionStorage.clear();
         $location.path(view);
     };
 
