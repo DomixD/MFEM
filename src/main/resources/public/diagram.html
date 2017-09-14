@@ -14,7 +14,7 @@
 <div id="example1">
     <h1>Microservice Framework Evaluation Method</h1>
         <div ng-controller="Controller">
-            <div ng-init="getCats();getFramework();window.location.reload();">
+            <div ng-init="getCats();getFramework();getFrames();window.location.reload();">
          <div class="containerRadar">
                 <div class="itemRadar">
                     <div id="radar">
@@ -24,10 +24,12 @@
                 </div>
                 <div class="itemRadar">
                     <p>Frameworks vergleichen: </p>
-                    <label>
-                        <input type="checkbox" name="zutat" value="sardellen">
-                        Framework
-                    </label>
+                    <div ng-repeat="frame in frameworks">
+                        <label>
+                            <input type="checkbox" name="zutat" value="sardellen">
+                            {{frame.nameFW}}
+                        </label>
+                    </div>
                 </div>
                 <script>
                     //Diagramm

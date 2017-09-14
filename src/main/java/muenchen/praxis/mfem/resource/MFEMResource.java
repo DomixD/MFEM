@@ -26,4 +26,9 @@ public class MFEMResource {
 		return new ResponseEntity<List<Double>>((service.getResult(frameId, classiId)), HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/getFrames/{classiId}", produces = MediaType.APPLICATION_JSON)
+	public ResponseEntity<?> getFrames (@PathVariable("classiId") int classiId) {
+		return new ResponseEntity<List<Integer>>(service.getFrames(classiId),HttpStatus.OK);
+	}
+
 }
