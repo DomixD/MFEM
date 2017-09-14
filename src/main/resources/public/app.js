@@ -258,7 +258,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             var metric = response.data._links.self.href;
             for(var j = 0; j<answers.length; j++) {
                 xy= xy-factor;
-                data ={content: answers[j], value: xy, metric: metric};
+                data ={content: answers[j], value: xy, metri: metric};
                 promiseArray.push($http.post('http://localhost:8080/answer', data));
             }
             $q.all(promiseArray);

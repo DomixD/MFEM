@@ -60,14 +60,14 @@ insert into requirement (requirementid, content, classi_classificationid, catego
 insert into requirement (requirementid, content, classi_classificationid, category_categoryid, priority) values (18, 'Anforderung3.6', 3, 6, 0);
 
 -- Neue Frage hinzufügen
-insert into question (questionid, question, metricid, require_requirementid) values (1, 'Frage1.1.1', 1, 1);
+insert into question (questionid, question, metricid, require_requirementid) values (1, 'Frage1.1.1', 2, 1);
 insert into question (questionid, question, metricid, require_requirementid) values (2, 'Frage1.1.2', 1, 1);
 
 insert into question (questionid, question, metricid, require_requirementid) values (3, 'Frage1.2.1', 1, 2);
 insert into question (questionid, question, metricid, require_requirementid) values (4, 'Frage1.2.2', 1, 2);
-insert into question (questionid, question, metricid, require_requirementid) values (5, 'Frage1.2.3', 1, 2);
+insert into question (questionid, question, metricid, require_requirementid) values (5, 'Frage1.2.3', 4, 2);
 
-insert into question (questionid, question, metricid, require_requirementid) values (6, 'Frage1.3.1', 1, 3);
+insert into question (questionid, question, metricid, require_requirementid) values (6, 'Frage1.3.1', 3, 3);
 
 insert into question (questionid, question, metricid, require_requirementid) values (7, 'Frage1.4.1', 1, 4);
 
