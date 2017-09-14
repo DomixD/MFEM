@@ -9,8 +9,6 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class FrameworkEvaluation implements Serializable{
 
     @Id

@@ -9,8 +9,6 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class FEvaResult implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

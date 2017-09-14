@@ -12,8 +12,6 @@ import java.util.List;
 @Entity
 @Data
 @ToString(exclude = "requirementList")
-@AllArgsConstructor
-@NoArgsConstructor
 public class Category implements Serializable {
 
     @Id

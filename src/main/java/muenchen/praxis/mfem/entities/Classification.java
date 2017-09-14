@@ -11,8 +11,6 @@ import java.util.List;
 @Data
 @ToString(exclude = "requirementList")
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Classification {
 
     @Id

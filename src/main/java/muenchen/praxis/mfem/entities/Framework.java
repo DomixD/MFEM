@@ -9,8 +9,6 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Framework implements Serializable {
 
     @Id

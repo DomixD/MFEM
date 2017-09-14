@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MFEMServiceImplTest {
-
+/*
     private IMFEMService service;
 
     @MockBean
@@ -82,5 +82,5 @@ public class MFEMServiceImplTest {
         System.out.println(cat);
         //System.out.println(service.getResult(1,1));
         //assertEquals(0, service.getResult(1, 1));
-    }
+    }*/
 }
