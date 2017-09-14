@@ -13,7 +13,7 @@ import java.util.List;
 public class MFEMServiceImpl implements IMFEMService{
 
 	@Autowired
-	private RepoFrameworkEvaluation frameworkEvaluation;
+	private RepoFrameworkEvaluation repoframeworkEvaluation;
 	@Autowired
 	private RepoFramework repoFramework;
 	@Autowired
@@ -33,7 +33,7 @@ public class MFEMServiceImpl implements IMFEMService{
 
 		Framework frame = repoFramework.findOne(frameID);
 		Classification classi = repoClassification.findOne(classiID);
-		FrameworkEvaluation feva = frameworkEvaluation.findByFrameworkInAndClassificationIn(frame, classi);
+		FrameworkEvaluation feva = repoframeworkEvaluation.findByFrameworkInAndClassificationIn(frame, classi);
 		List<FEvaResult> list = repoFEvaResult.findByFrameworkEvaluation(feva);
 
 		while (it.hasNext()) {
