@@ -12,8 +12,6 @@ import java.util.List;
 @Data
 @ToString(exclude = "answerList")
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Metric implements Serializable {
 
     @Id

@@ -11,8 +11,6 @@ import java.io.Serializable;
 @Data
 @ToString(exclude = "metri")
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Answer implements Serializable {
 
     @Id

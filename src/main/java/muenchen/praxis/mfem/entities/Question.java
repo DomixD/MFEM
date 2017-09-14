@@ -11,8 +11,6 @@ import java.io.Serializable;
 @Entity
 @Data
 @ToString(exclude = "require")
-@AllArgsConstructor
-@NoArgsConstructor
 public class Question implements Serializable {
 
     @Id
