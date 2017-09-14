@@ -1,6 +1,8 @@
 package muenchen.praxis.mfem.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 @Data
 @ToString(exclude = "questionList")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Requirement implements Serializable{
 
 	@Id
@@ -17,20 +21,12 @@ public class Requirement implements Serializable{
 	@Column(name = "RequirementID")
 	private int id;
 	private String content;
-	@OneToMany(mappedBy = "require", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
+	@OneToMany(mappedBy = "require", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
 	private List<Question> questionList;
 	@ManyToOne
 	private Classification classi;
 	@ManyToOne
 	private Category category;
 	private Priority priority;
-
-
-	public Requirement(String content, List<Question> questionList) {
-		this.content = content;
-		this.questionList = questionList;
-	}
-	
-	public Requirement() {}
 
 }

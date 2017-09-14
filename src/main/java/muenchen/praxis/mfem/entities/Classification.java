@@ -1,6 +1,8 @@
 package muenchen.praxis.mfem.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.List;
 @Data
 @ToString(exclude = "requirementList")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Classification {
 
     @Id
@@ -17,7 +21,7 @@ public class Classification {
     private int id;
     private String name;
     private String description;
-    @OneToMany(mappedBy="classi", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH })
+    @OneToMany(mappedBy="classi", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Requirement> requirementList;
 
 }
