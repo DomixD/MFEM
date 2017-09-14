@@ -1,6 +1,8 @@
 package muenchen.praxis.mfem.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.List;
 @Data
 @ToString(exclude = "answerList")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Metric implements Serializable {
 
     @Id
@@ -19,7 +23,7 @@ public class Metric implements Serializable {
 
     private String description;
 
-    @OneToMany(mappedBy = "metri", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH }, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "metri", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Answer> answerList;
 
 }

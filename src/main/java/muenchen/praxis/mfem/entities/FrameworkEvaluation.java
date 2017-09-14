@@ -1,12 +1,16 @@
 package muenchen.praxis.mfem.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class FrameworkEvaluation implements Serializable{
 
     @Id
