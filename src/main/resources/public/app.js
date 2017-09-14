@@ -42,10 +42,31 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
 
+    $scope.compare=function () {
+        var promiseArray = [];
+        var toCheck = document.getElementsByName('framework');
+        var toCalculate = [];
+        for(var i = 0; i < toCheck.length; i++) {
+            if (toCheck[i].checked) {
+                toCalculate.push(toCheck[i]);
+            }
+        }
+        for(var j = 0; j < toCalculate.length; j++) {
+            var frameID = toCalculate[j].value;
+            frameID = frameID.substring(frameID.length-1);
+            var classiID = sessionStorage.getItem("classiFrame");
+            classiID = classiID.substring(classiID.length-1);
+            promiseArray.push($http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID));
+        }
+        $q.all(promiseArray).then(function (responseArray) {
+           $scope.test = responseArray;
+        });
+    };
+
     $scope.getFrames=function () {
-        var frameID = sessionStorage.getItem("classiFrame");
-        frameID = frameID.substring(frameID.length-1);
-        $http.get('http://localhost:8080/getFrames/'+frameID).then(function (response) {
+        var classiID = sessionStorage.getItem("classiFrame");
+        classiID = classiID.substring(classiID.length-1);
+        $http.get('http://localhost:8080/getFrames/'+classiID).then(function (response) {
             var frames = response.data;
             var promiseArray = [];
             for (var i = 0; i < frames.length; i++) {

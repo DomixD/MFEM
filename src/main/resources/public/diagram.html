@@ -26,10 +26,13 @@
                     <p>Frameworks vergleichen: </p>
                     <div ng-repeat="frame in frameworks">
                         <label>
-                            <input type="checkbox" name="zutat" value="sardellen">
+                            <input type="checkbox" id="frame"  name="framework" value="{{frame._links.self.href}}">
                             {{frame.nameFW}}
                         </label>
                     </div>
+                    <br>
+                    <button class="myButton" ng-click="compare()" style="vertical-align:middle"><span>Vergleichen</span></button>
+                    <p>test: {{test}}</p>
                 </div>
                 <script>
                     //Diagramm
