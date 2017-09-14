@@ -211,3 +211,28 @@ home-button{
 .flex-inner li {
     width: 100px;
 }
+
+fieldset{
+    padding: 16px;
+    border: 0px solid ;
+}
+.addfields{
+    margin: 10px 0;
+}
+
+.remove{
+    background: #C76868;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 21px;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 9px;
+    vertical-align: top;
+    line-height: 100%;
+}
+input[type="text"],
+select{
+    padding:5px;
+}

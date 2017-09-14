@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="layout.css">
 </head>
 <body>
+<div ng-controller="Controller">
     <br>
     <h2>Neue Metrik</h2>
     <div class="container1">
@@ -17,23 +18,19 @@
                     <label>Beschreibung</label>
                     <input type="text" id="Name" name="Name" ng-model="description">
                 </li>
+                <fieldset  data-ng-repeat="choice in choices">
+                    <label>Antwortmöglichkeit {{choice.id}}: </label>
+                    <input type="text" ng-model="choice.name" id = "{{choice.id}}" name="answers">
+                    <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+                </fieldset>
+                <button class="addfields" ng-click="addNewChoice()">weitere Antwortmöglichkeit</button>
+
                 <li>
-                    <label>Antwort 1:</label>
-                    <input type="text" id="A1" name="Name" ng-model="a1">
-                </li>
-                <li>
-                    <label>Antwort 2:</label>
-                    <input type="text" id="A2" name="Name" ng-model="a2">
-                </li>
-                <li>
-                    <label>Antwort 3:</label>
-                    <input type="text" id="A3" name="Name" ng-model="a3">
-                </li>
-                <li>
-                    <p><div ng-controller="Controller"><button class="myButton" onclick="window.location.href='#!main'" ng-click="saveMetric(description, a1, a2, a3)" style="vertical-align:middle"><span>speichern</span></button></div></p>
+                    <p><div ng-controller="Controller"><button class="myButton" onclick="window.location.href='#!main'" ng-click="saveMetric(description)" style="vertical-align:middle"><span>speichern</span></button></div></p>
                 </li>
             </ul>
         </form>
     </div>
+</div>
 </body>
 </html>
