@@ -139,7 +139,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
     };
 
     //Ergebnis der Evaluation berechnen
-    $scope.evaluation=function () {
+    $scope.evaluation=function (view) {
         var promiseArray = [];
         var e = document.getElementsByName("selectAns");
         var chosenAnswers = [];
@@ -172,10 +172,11 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
                 //sessionStorage.clear();
             });
         });
+        $location.path(view);
     };
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
-    $scope.saveReq=function (cont) {
+    $scope.saveReq=function (cont, view) {
         var e = document.getElementById("classis");
         var classi = e.options[e.selectedIndex].value;
         var e2 = document.getElementById("prio");
@@ -190,10 +191,11 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);
         });
+        $location.path(view);
     };
 
     //Anforderung ohne extra Angabe der Klassifizierung hinzufügen
-    $scope.saveClassiReq=function (content) {
+    $scope.saveClassiReq=function (content, view) {
         var classi = sessionStorage.getItem('classi');
         var e2 = document.getElementById("prio");
         var prio = e2.options[e2.selectedIndex].value;
@@ -204,6 +206,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);
         });
+        $location.path(view);
     };
 
     //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
@@ -223,7 +226,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         };
 
     //Frage mit zugehöriger Metrik und Anforderung speichern
-    $scope.saveQuest=function (question) {
+    $scope.saveQuest=function (question, view) {
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
         var e2 = document.getElementById("reqs");
@@ -232,10 +235,11 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
               require:req,
               metric: metric};
         $http.post('http://localhost:8080/quest',data);
+        $location.path(view);
     };
 
     //Metrik mit Antwortmöglichkeiten speichern
-    $scope.saveMetric=function (description) {
+    $scope.saveMetric=function (description, view) {
         var ans = document.getElementsByName("answers");
         var answers = [];
         var promiseArray = [];
@@ -254,10 +258,11 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             }
             $q.all(promiseArray);
         });
+        $location.path(view);
     };
 
     //Framework speichern und die ausgewählte Klassifizierung mit dem Framework in FrameworkEvaluation speichern
-    $scope.saveFrame=function (name, description) {
+    $scope.saveFrame=function (name, description, view) {
         var e = document.getElementById("classisFrame");
         var classi = e.options[e.selectedIndex].value;
         sessionStorage.setItem('classiFrame', classi);
@@ -272,16 +277,18 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
                 sessionStorage.setItem('feva', feva);
             });
         });
+        $location.path(view);
     };
 
     //Klassifizierung speichern
-    $scope.saveClassi=function (name, description) {
+    $scope.saveClassi=function (name, description, view) {
         data={name:name,
             description:description};
         $http.post('http://localhost:8080/classi',data).then(function (response) {
             var classi = response.data._links.self.href;
             sessionStorage.setItem('classi', classi);
         });
+        $location.path(view);
     };
 
     //Funktionen für Antwortmöglichkeiten hinzufügen bzw. löschen

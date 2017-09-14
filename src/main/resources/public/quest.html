@@ -28,7 +28,7 @@
                     <label>Anforderung</label>
                     <select id="reqs" ng-model="require" ng-options="r.content for r in req track by r._links.self.href"></select>
                 </li>
-                <p><button class="myButton" ng-click="saveQuest(question)" onclick="window.location.href='#!main'" style="vertical-align:middle"><span>speichern</span></button></p>
+                <p><button class="myButton" ng-click="saveQuest(question, 'main')" style="vertical-align:middle"><span>speichern</span></button></p>
             </ul>
         </form>
     </div>
