@@ -72,6 +72,10 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         });
     };
 
+    $scope.clearSessionStorage=function () {
+        sessionStorage.clear();
+    };
+
     var questi = [];
 
     //Fragen mit den zugehörigen Antwortmöglichkeiten anzeigen
@@ -169,7 +173,6 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
                 $rootScope.resultEva = response.data;
                 sessionStorage.setItem('result',response.data);
-                //sessionStorage.clear();
             });
         });
         $location.path(view);
@@ -219,9 +222,6 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             metric: metric};
         $http.post('http://localhost:8080/quest',data);
         document.getElementById("frage").value = "";
-        if(view=='main'){
-            sessionStorage.clear();
-        }
         $location.path(view);
         };
 
@@ -235,7 +235,6 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
               require:req,
               metric: metric};
         $http.post('http://localhost:8080/quest',data);
-        sessionStorage.clear();
         $location.path(view);
     };
 
@@ -259,7 +258,6 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             }
             $q.all(promiseArray);
         });
-        sessionStorage.clear();
         $location.path(view);
     };
 
