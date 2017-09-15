@@ -14,7 +14,7 @@
 <div id="example1">
     <h1>Microservice Framework Evaluation Method</h1>
         <div ng-controller="Controller">
-            <div ng-init="getCats();getFramework();getFrames();window.location.reload();">
+            <div ng-init="getCats();getFramework();getFrames();update()">
          <div class="containerRadar">
                 <div class="itemRadar">
                     <div id="radar">
@@ -31,29 +31,34 @@
                         </label>
                     </div>
                     <br>
-                    <button class="myButton" ng-click="compare()" style="vertical-align:middle"><span>Vergleichen</span></button>
-                    <p>test: {{test}}</p>
+                    <button id="update" class="myButton" ng-click="compare()" style="vertical-align:middle"><span>Vergleichen</span></button>
                 </div>
                 <script>
                     //Diagramm
                     var w = 500,
                         h = 500;
                     var colorscale = d3.scale.category10();
-                    //Legend titles
+                    //Data
                     var results = sessionStorage.getItem('result');
                     results = results.split(",");
-                    var LegendOptions = ['{{framework}}'];
-                    //Data
-                    var d = [
-                        [
-                            {axis:"{{catego[0].category}}",value:results[0]},
-                            {axis:"{{catego[1].category}}",value:results[1]},
-                            {axis:"{{catego[2].category}}",value:results[2]},
-                            {axis:"{{catego[3].category}}",value:results[3]},
-                            {axis:"{{catego[4].category}}",value:results[4]},
-                            {axis:"{{catego[5].category}}",value:results[5]}
-                        ]
-                    ];
+                    var d = [];
+                    for(var i = 0; i < (results.length/6); i++) {
+                        d.push([
+                            {axis:"{{catego[0].category}}",value:results[i*6+0]},
+                            {axis:"{{catego[1].category}}",value:results[i*6+1]},
+                            {axis:"{{catego[2].category}}",value:results[i*6+2]},
+                            {axis:"{{catego[3].category}}",value:results[i*6+3]},
+                            {axis:"{{catego[4].category}}",value:results[i*6+4]},
+                            {axis:"{{catego[5].category}}",value:results[i*6+5]}
+                        ]);
+                    }
+                    //Legend titles
+                    var frameworks = sessionStorage.getItem('frameworks');
+                    frameworks = frameworks.split(",");
+                    var LegendOptions = [];
+                    for (var j = 0; j < frameworks.length; j++) {
+                        LegendOptions.push(frameworks[j]);
+                    }
                     //Options for the Radar chart, other than default
                     var mycfg = {
                         w: w,

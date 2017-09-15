@@ -44,6 +44,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
 
     $scope.compare=function () {
         var promiseArray = [];
+        var getFrame = [];
         var toCheck = document.getElementsByName('framework');
         var toCalculate = [];
         for(var i = 0; i < toCheck.length; i++) {
@@ -57,9 +58,21 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             var classiID = sessionStorage.getItem("classiFrame");
             classiID = classiID.substring(classiID.length-1);
             promiseArray.push($http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID));
+            getFrame.push($http.get(toCalculate[j].value));
         }
         $q.all(promiseArray).then(function (responseArray) {
-           $scope.test = responseArray;
+           var results = [];
+           for(var i = 0; i < responseArray.length; i++) {
+               results.push(responseArray[i].data);
+           }
+           sessionStorage.setItem('result',results);
+           $q.all(getFrame).then(function (responseArray2) {
+               var frameworks = [];
+               for(var j = 0; j < responseArray2.length; j++) {
+                   frameworks.push(responseArray2[j].data.nameFW);
+               }
+               sessionStorage.setItem('frameworks', frameworks);
+           })
         });
     };
 
@@ -84,7 +97,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
 
     $scope.getFramework=function () {
         $http.get(sessionStorage.getItem('frame')).then(function (response) {
-            $scope.framework = response.data.nameFW;
+            sessionStorage.setItem('frameworks', response.data.nameFW);
         });
     };
 
