@@ -177,65 +177,62 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont, view) {
-        var e = document.getElementById("classis");
-        var classi = e.options[e.selectedIndex].value;
-        var e2 = document.getElementById("prio");
-        var prio = e2.options[e2.selectedIndex].value;
-        var e3 = document.getElementById("category");
-        var cat = e3.options[e3.selectedIndex].value;
-        data={content:cont,
-        classi:classi,
-        category:cat,
-        priority:prio};
-        $http.post('http://localhost:8080/req',data).then(function (response) {
-            var req = response.data._links.self.href;
-            sessionStorage.setItem('req',req);
-        });
-        $location.path(view);
-    };
-
-    //Anforderung ohne extra Angabe der Klassifizierung hinzufügen
-    $scope.saveClassiReq=function (content, view) {
-        var classi = sessionStorage.getItem('classi');
-        var e2 = document.getElementById("prio");
-        var prio = e2.options[e2.selectedIndex].value;
-        var e3 = document.getElementById("category");
-        var cat = e3.options[e3.selectedIndex].value;
-        data={content:content,classi:classi, category:cat ,priority:prio};
-        $http.post('http://localhost:8080/req',data).then(function (response) {
-            var req = response.data._links.self.href;
-            sessionStorage.setItem('req',req);
-        });
-        $location.path(view);
-    };
-
-    //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
-    $scope.saveClassiQuest=function (question,view) {
-        var e = document.getElementById("metrics");
-        var metric = e.options[e.selectedIndex].value;
-        var req = sessionStorage.getItem('req');
-        data={question:question,
-            require:req,
-            metric: metric};
-        $http.post('http://localhost:8080/quest',data);
-        document.getElementById("frage").value = "";
-        if(view=='main'){
-            sessionStorage.clear();
+        var classi;
+        if(sessionStorage.getItem('classi')==null){
+            var e = document.getElementById("classis");
+            classi = e.options[e.selectedIndex].value;
+        }else{
+            classi = sessionStorage.getItem('classi');
         }
+        var e2 = document.getElementById("prio");
+        var prio = e2.options[e2.selectedIndex].value;
+        var e3 = document.getElementById("category");
+        var cat = e3.options[e3.selectedIndex].value;
+        data={content:cont, classi:classi, category:cat, priority:prio};
+        $http.post('http://localhost:8080/req',data).then(function (response) {
+            var req = response.data._links.self.href;
+            sessionStorage.setItem('req',req);
+        });
         $location.path(view);
-        };
+    };
+
+    // //Frage mit zugehöriger Metrik ohne extra Angabe der Anforderung speichern
+    // $scope.saveClassiQuest=function (question,view) {
+    //     var e = document.getElementById("metrics");
+    //     var metric = e.options[e.selectedIndex].value;
+    //     var req = sessionStorage.getItem('req');
+    //     data={question:question,
+    //         require:req,
+    //         metric: metric};
+    //     $http.post('http://localhost:8080/quest',data);
+    //     document.getElementById("frage").value = "";
+    //     if(view=='main'){
+    //         sessionStorage.clear();
+    //     }
+    //     $location.path(view);
+    //     };
 
     //Frage mit zugehöriger Metrik und Anforderung speichern
     $scope.saveQuest=function (question, view) {
+        var req;
+        console.log("Sessionstornull");
+        console.log(sessionStorage.getItem('req'));
+        if (sessionStorage.getItem('req')==null) {
+
+            console.log("Sessionstornull");
+            var e2 = document.getElementById("reqs");
+            req = e2.options[e2.selectedIndex].value;
+        }else {
+            req = sessionStorage.getItem('req');
+        }
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
-        var e2 = document.getElementById("reqs");
-        var req = e2.options[e2.selectedIndex].value;
-        data={question:question,
-              require:req,
-              metric: metric};
+        data={question:question, require:req, metric: metric};
         $http.post('http://localhost:8080/quest',data);
-        sessionStorage.clear();
+        // if (view=='main'){
+        //     console.log("main");
+        //     sessionStorage.clear();
+        // }
         $location.path(view);
     };
 
@@ -259,7 +256,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
             }
             $q.all(promiseArray);
         });
-        sessionStorage.clear();
+       // sessionStorage.clear();
         $location.path(view);
     };
 
