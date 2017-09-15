@@ -16,4 +16,6 @@ public interface RepoFrameworkEvaluation extends CrudRepository<FrameworkEvaluat
 
     FrameworkEvaluation findByFrameworkInAndClassificationIn(Framework framework, Classification classification);
 
+    List<FrameworkEvaluation> findByClassification(Classification classification);
+
 }
