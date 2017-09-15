@@ -14,6 +14,16 @@ h2 {
     color: darkblue;
     text-shadow: rgba(0, 0, 0, 0.5) -1px 0, rgba(0, 0, 0, 0.3) 0 -1px, rgba(255, 255, 255, 0.5) 2px 2px, rgba(0, 0, 0, 0.3) -1px -2px;
 }
+.containerRadar {
+    display: flex;
+    width:100%;
+    height:800px;
+}
+.itemRadar {
+    width:700px;
+    height:700px;
+    margin: 20px;
+}
 .containerHeader {
     background-image: url(image/headerL.jpg);
     min-height: 200px;

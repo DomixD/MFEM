@@ -6,4 +6,6 @@ public interface IMFEMService {
 
     List<Double> getResult (int frameID, int classiID);
 
+    List<Integer> getFrames (int frameID);
+
 }

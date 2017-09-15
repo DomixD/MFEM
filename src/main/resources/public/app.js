@@ -42,9 +42,62 @@ mfem.config(function($routeProvider) {
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
 
+    $scope.compare=function () {
+        var promiseArray = [];
+        var getFrame = [];
+        var toCheck = document.getElementsByName('framework');
+        var toCalculate = [];
+        for(var i = 0; i < toCheck.length; i++) {
+            if (toCheck[i].checked) {
+                toCalculate.push(toCheck[i]);
+            }
+        }
+        for(var j = 0; j < toCalculate.length; j++) {
+            var frameID = toCalculate[j].value;
+            frameID = frameID.substring(frameID.length-1);
+            var classiID = sessionStorage.getItem("classiFrame");
+            classiID = classiID.substring(classiID.length-1);
+            promiseArray.push($http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID));
+            getFrame.push($http.get(toCalculate[j].value));
+        }
+        $q.all(promiseArray).then(function (responseArray) {
+           var results = [];
+           for(var i = 0; i < responseArray.length; i++) {
+               results.push(responseArray[i].data);
+           }
+           sessionStorage.setItem('result',results);
+           $q.all(getFrame).then(function (responseArray2) {
+               var frameworks = [];
+               for(var j = 0; j < responseArray2.length; j++) {
+                   frameworks.push(responseArray2[j].data.nameFW);
+               }
+               sessionStorage.setItem('frameworks', frameworks);
+           })
+        });
+    };
+
+    $scope.getFrames=function () {
+        var classiID = sessionStorage.getItem("classiFrame");
+        classiID = classiID.substring(classiID.length-1);
+        $http.get('http://localhost:8080/getFrames/'+classiID).then(function (response) {
+            var frames = response.data;
+            var promiseArray = [];
+            for (var i = 0; i < frames.length; i++) {
+                promiseArray.push($http.get('http://localhost:8080/frame/'+frames[i]))
+            }
+            $q.all(promiseArray).then(function (responseArray) {
+                var fw = [];
+                for(var j = 0; j < responseArray.length; j++) {
+                    fw.push(responseArray[j].data);
+                }
+                $scope.frameworks = fw;
+            })
+        })
+    };
+
     $scope.getFramework=function () {
         $http.get(sessionStorage.getItem('frame')).then(function (response) {
-            $scope.framework = response.data.nameFW;
+            sessionStorage.setItem('frameworks', response.data.nameFW);
         });
     };
 

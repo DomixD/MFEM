@@ -61,6 +61,15 @@ public class MFEMServiceImpl implements IMFEMService{
 		return result;
 	}
 
-
+	@Override
+	public List<Integer> getFrames(int classiID) {
+		Classification classi = repoClassification.findOne(classiID);
+		List<FrameworkEvaluation> list = repoframeworkEvaluation.findByClassification(classi);
+		List<Integer> result = new ArrayList<>();
+		for(FrameworkEvaluation feva : list) {
+			result.add(feva.getFramework().getId());
+		}
+		return result;
+	}
 
 }
