@@ -1,8 +1,6 @@
 package muenchen.praxis.mfem.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,5 +21,14 @@ public class FEvaResult implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "AnswerID")
     private Answer answer;
+
+    public FEvaResult() {}
+
+    public FEvaResult(int id, FrameworkEvaluation frameworkEvaluation, Question question, Answer answer) {
+        this.id = id;
+        this.frameworkEvaluation = frameworkEvaluation;
+        this.question = question;
+        this.answer = answer;
+    }
 
 }

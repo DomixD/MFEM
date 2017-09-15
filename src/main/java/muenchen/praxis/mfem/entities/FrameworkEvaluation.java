@@ -1,8 +1,6 @@
 package muenchen.praxis.mfem.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,5 +19,13 @@ public class FrameworkEvaluation implements Serializable{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ClassificationID")
     private Classification classification;
+
+    public FrameworkEvaluation() {}
+
+    public FrameworkEvaluation(int id, Framework framework, Classification classification) {
+        this.id = id;
+        this.framework = framework;
+        this.classification = classification;
+    }
 
 }

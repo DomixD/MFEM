@@ -1,8 +1,6 @@
 package muenchen.praxis.mfem.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,5 +15,13 @@ public class Framework implements Serializable {
     private int id;
     private String nameFW;
     private String descriptionFW;
+
+    public Framework() {}
+
+    public Framework(int id, String nameFW, String descriptionFW) {
+        this.id = id;
+        this.nameFW = nameFW;
+        this.descriptionFW = descriptionFW;
+    }
 
 }
