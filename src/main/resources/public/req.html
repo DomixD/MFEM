@@ -37,7 +37,7 @@
                     <select id="category" ng-model="cate" ng-options="cat.category for cat in catego track by cat._links.self.href"> </select>
                 </li>
                 <li>
-                    <div ng-controller="Controller"><button ng-click="saveReq(content, 'questReq')" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div>
+                    <button ng-click="saveReq(content, 'questReq')" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button>
                 </li>
             </ul>
         </form>

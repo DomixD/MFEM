@@ -7,10 +7,8 @@
     <script src="app.js"></script>
     <link rel="stylesheet" href="layout.css">
 </head>
-<!--<header id="home-button">-->
-    <!--<img src="image/headerL.jpg">-->
-    <!--</header>-->
 <body>
+<div ng-controller="Controller">
 <div id="example1">
     <div class="containerHeader">
         <div class="itemHeader">
@@ -22,16 +20,17 @@
     </div>
     <div class="containerBody">
         <div class="item">
-            <p><button onclick="window.location.href='#!frame';window.location.reload();" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
-            <p><button onclick="window.location.href='#!classi';window.location.reload();" class="button" style="vertical-align:middle"><span>Klassifizierung hinzuf&uumlgen</span></button></p>
-            <p><button onclick="window.location.href='#!req';window.location.reload();" class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
-            <p><button onclick="window.location.href='#!quest';window.location.reload();" class="button" style="vertical-align:middle"><span>Frage hinzuf&uumlgen</span></button></p>
-            <p><button onclick="window.location.href='#!metric';window.location.reload();" class="button" style="vertical-align:middle"><span>Metrik hinzuf&uumlgen</span></button></p>
+            <p><button ng-click= "clearSessionStorage()" onclick="window.location.href='#!frame';window.location.reload();" class="myButton" style="vertical-align:middle"><span>Evaluation</span></button></p>
+            <p><button ng-click= "clearSessionStorage()" onclick="window.location.href='#!classi';window.location.reload();" class="button" style="vertical-align:middle"><span>Klassifizierung hinzuf&uumlgen</span></button></p>
+            <p><button ng-click= "clearSessionStorage()" onclick="window.location.href='#!req';window.location.reload();" class="button" style="vertical-align:middle"><span>Anforderung hinzuf&uumlgen</span></button></p>
+            <p><button ng-click= "clearSessionStorage()" onclick="window.location.href='#!quest';window.location.reload();" class="button" style="vertical-align:middle"><span>Frage hinzuf&uumlgen</span></button></p>
+            <p><button ng-click= "clearSessionStorage()" onclick="window.location.href='#!metric';window.location.reload();" class="button" style="vertical-align:middle"><span>Metrik hinzuf&uumlgen</span></button></p>
         </div>
         <div class="itemContent">
            <div ng-view></div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
