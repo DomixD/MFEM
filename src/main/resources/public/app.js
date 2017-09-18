@@ -37,8 +37,8 @@ mfem.config(function($routeProvider) {
         .when("/result", {
             templateUrl : "result.html"
         })
-        .when("/showEva", {
-            templateUrl : "showEva.html"
+        .when("/showFrames", {
+            templateUrl : "showFrames.html"
         })
         .when("/evaAfterNewQuest", {
             templateUrl : "evaAfterNewQuest.html"
