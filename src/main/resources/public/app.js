@@ -36,7 +36,13 @@ mfem.config(function($routeProvider) {
         })
         .when("/result", {
             templateUrl : "result.html"
-        });
+        })
+        .when("/showEva", {
+            templateUrl : "showEva.html"
+        })
+        .when("/evaAfterNewQuest", {
+            templateUrl : "evaAfterNewQuest.html"
+    });
 });
 
 
@@ -230,6 +236,10 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         });
         $location.path(view);
     };
+
+    $scope.newEva=function (view) {
+        $location.path(view);
+    }
 
     //Anforderung mit zugehöriger Klassifizierung hinzufügen
     $scope.saveReq=function (cont, view) {
