@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@ActiveProfiles("local")
 public class RepoFEvaResultTest {
     @Autowired
     private RepoFEvaResult repoFEvaResult;
@@ -31,23 +30,50 @@ public class RepoFEvaResultTest {
     private RepoQuestion repoQuestion;
     @Autowired
     private RepoAnswer repoAnswer;
+    @Autowired
+    private RepoCategory repoCategory;
+    @Autowired
+    private RepoMetric repoMetric;
+    @Autowired
+    private RepoRequirement repoRequirement;
 
-    private Framework framework = new Framework(1, "Framework1", "Beschreibung1");
-    private Classification classification;
-    private FrameworkEvaluation feva;
+    private Category category;
+    private Requirement requirement;
+    private List<Requirement> reqList = new ArrayList<>();
     private Question question;
+    private Metric metric;
+    private List<Question> questList = new ArrayList<>();
+    private List<Answer> answerList = new ArrayList<>();
     private Answer answer;
+    private Classification classification;
+    private Framework framework;
+    private FrameworkEvaluation feva;
     private FEvaResult fevaResult;
 
     @Before
     public void setUp() {
-        repoFramework.save(framework);
-        classification = repoClassification.findOne(1);
+        repoFEvaResult.deleteAll();
+        answer = new Answer(1, "Antwort", 1.0, metric);
+        answerList.add(answer);
+        metric = new Metric(1, "Metrik", answerList);
+        question = new Question(1, "Frage1", metric, requirement);
+        questList.add(question);
+        requirement = new Requirement(1, "Anforderung1", questList, classification, category, Priority.A);
+        reqList.add(requirement);
+        category = new Category(1, "Kategorie1", reqList);
+        repoCategory.save(category);
+        category = new Category(2, "Kategorie2", reqList);
+        classification = new Classification(1, "Klassi", "Beschreibung", reqList);
+        framework = new Framework(1, "Framework1", "Beschreibung");
         feva = new FrameworkEvaluation(1, framework, classification);
+        repoAnswer.save(answer);
+        repoMetric.save(metric);
+        repoQuestion.save(question);
+        repoRequirement.save(requirement);
+        repoCategory.save(category);
+        repoClassification.save(classification);
+        repoFramework.save(framework);
         repoFrameworkEvaluation.save(feva);
-
-        question = repoQuestion.findOne(1);
-        answer = repoAnswer.findOne(1);
     }
 
 

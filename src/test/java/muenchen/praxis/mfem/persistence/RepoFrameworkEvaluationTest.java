@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-//@ActiveProfiles("local")
 @Transactional
 public class RepoFrameworkEvaluationTest {
 
