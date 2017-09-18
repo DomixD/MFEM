@@ -1,6 +1,7 @@
 package muenchen.praxis.mfem.persistence;
 
 import muenchen.praxis.mfem.entities.*;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,11 +42,11 @@ public class RepoFrameworkEvaluationTest {
 
     private Category category;
     private Requirement requirement;
-    private List<Requirement> reqList = new ArrayList<>();
+    private List<Requirement> reqList;
     private Question question;
     private Metric metric;
-    private List<Question> questList = new ArrayList<>();
-    private List<Answer> answerList = new ArrayList<>();
+    private List<Question> questList;
+    private List<Answer> answerList;
     private Answer answer;
     private Classification classification;
     private Framework framework;
@@ -53,7 +54,9 @@ public class RepoFrameworkEvaluationTest {
 
     @Before
     public void setUp() {
-        repoFrameworkEvaluation.deleteAll();
+        reqList = new ArrayList<>();
+        questList = new ArrayList<>();
+        answerList = new ArrayList<>();
         answer = new Answer(1, "Antwort", 1.0, metric);
         answerList.add(answer);
         metric = new Metric(1, "Metrik", answerList);
@@ -73,6 +76,18 @@ public class RepoFrameworkEvaluationTest {
         repoCategory.save(category);
         repoClassification.save(classification);
         repoFramework.save(framework);
+    }
+
+    @After
+    public void cleanUp() {
+        repoFrameworkEvaluation.deleteAll();
+        repoFramework.deleteAll();
+        repoClassification.deleteAll();
+        repoAnswer.deleteAll();
+        repoQuestion.deleteAll();
+        repoRequirement.deleteAll();
+        repoCategory.deleteAll();
+        repoMetric.deleteAll();
     }
 
     @Test

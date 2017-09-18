@@ -2,6 +2,7 @@ package muenchen.praxis.mfem.resource;
 
 import muenchen.praxis.mfem.services.IMFEMService;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,17 @@ public class MFEMResourceTest {
     @MockBean
     private IMFEMService service;
 
-    private List<Double> resultsList = new ArrayList<>();
+    private static List<Double> resultsList = new ArrayList<>();
+    private static List<Integer> resultsList2 = new ArrayList<>();
 
-    @Before
-    public void setup() {
+    @BeforeClass
+    public static void setUp() {
         resultsList.add(1.2);
         resultsList.add(0.8);
         resultsList.add(1.5);
+        resultsList2.add(1);
+        resultsList2.add(3);
+        resultsList2.add(4);
     }
 
     @Test
@@ -46,5 +51,14 @@ public class MFEMResourceTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(200, result.getResponse().getStatus());
         assertEquals("[1.2,0.8,1.5]", result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void testGetFrames () throws Exception {
+        when(service.getFrames(1)).thenReturn(resultsList2);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/getFrames/1").accept(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals(200, result.getResponse().getStatus());
+        assertEquals("[1,3,4]", result.getResponse().getContentAsString());
     }
 }
