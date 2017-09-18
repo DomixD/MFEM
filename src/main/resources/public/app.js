@@ -40,7 +40,7 @@ mfem.config(function($routeProvider) {
 });
 
 
-mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
+mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location, $window) {
     $scope.compare=function () {
         var promiseArray = [];
         var getFrame = [];
@@ -357,6 +357,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         else {
             var e = document.getElementById("classisFrame");
             sessionStorage.setItem('classiFrame',e.options[e.selectedIndex].value);
+            $window.open('compare.html', 'newwindow');
         }
     };
 
