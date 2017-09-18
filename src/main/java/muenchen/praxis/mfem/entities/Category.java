@@ -22,4 +22,12 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Requirement> requirementList;
 
+    public Category () {}
+
+    public Category (int id, String category, List<Requirement> requirementList) {
+        this.id = id;
+        this.category = category;
+        this.requirementList = requirementList;
+    }
+
 }

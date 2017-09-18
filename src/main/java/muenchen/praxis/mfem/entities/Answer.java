@@ -22,4 +22,13 @@ public class Answer implements Serializable {
     @ManyToOne
     private Metric metri;
 
+    public Answer () {}
+
+    public Answer(int id, String content, double value, Metric metri) {
+        this.id = id;
+        this.content = content;
+        this.value = value;
+        this.metri = metri;
+    }
+
 }

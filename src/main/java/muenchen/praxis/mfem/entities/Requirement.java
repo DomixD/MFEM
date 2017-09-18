@@ -27,4 +27,15 @@ public class Requirement implements Serializable{
 	private Category category;
 	private Priority priority;
 
+	public Requirement() {}
+
+	public Requirement(int id, String content, List<Question> questionList, Classification classi, Category category, Priority priority) {
+		this.id = id;
+		this.content = content;
+		this.questionList = questionList;
+		this.classi = classi;
+		this.category = category;
+		this.priority = priority;
+	}
+
 }

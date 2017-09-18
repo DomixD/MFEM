@@ -24,4 +24,13 @@ public class Question implements Serializable {
     @ManyToOne
     private Requirement require;
 
+    public Question () {}
+
+    public Question (int id, String question, Metric metric, Requirement requirement) {
+        this. id = id;
+        this.question = question;
+        this.metric = metric;
+        this.require = requirement;
+    }
+
 }
