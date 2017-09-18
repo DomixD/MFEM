@@ -83,6 +83,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
     };
 
     $scope.getFrames=function () {
+        console.log("#######"+sessionStorage.getItem("classiFrame"));
         var classiID = sessionStorage.getItem("classiFrame");
         classiID = classiID.substring(classiID.length-1);
         $http.get('http://localhost:8080/getFrames/'+classiID).then(function (response) {
@@ -277,9 +278,15 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
         data={question:question, require:req, metric: metric};
-        $http.post('http://localhost:8080/quest',data);
-        document.getElementById("frage").value = "";
-        $location.path(view);
+        $http.post('http://localhost:8080/quest',data).then(function (response) {
+            $http.get(req+"/classi").then(function (respone) {
+                var classi = respone.data._links.self.href;
+                sessionStorage.setItem('classiFrame', classi);
+                console.log("#########"+respone.data._links.self.href);
+                document.getElementById("frage").value = "";
+                $location.path(view);
+            })
+        });
     };
 
     //Metrik mit Antwortmöglichkeiten speichern
