@@ -9,6 +9,7 @@
 </head>
 <body>
     <div ng-controller="Controller">
+        <div ng-init="getFrames()">
         <br>
         <h2>Erneute Evaluation:</h2>
         <div class="container1">
@@ -17,11 +18,11 @@
                     <li>
                         <label>Frameworks:</label>
                     </li>
-                    <li>
                         <div ng-repeat="frame in frameworks">
+                            <li>
                             <label id="frame"  name="framework" value="{{frame._links.self.href}}">{{frame.nameFW}}</label>
+                            </li>
                         </div>
-                    </li>
                     <li>
                         <p><button class="myButton" ng-click="newEva('evaAfterNewQuest')" style="vertical-align:middle"><span>jetzt evaluieren >></span></button></p>
                         <p><button onclick="window.location.href='#!main'"; class="myButton"  style="vertical-align:middle"><span>später evaluieren</span></button></p>
@@ -29,6 +30,7 @@
                 </ul>
             </form>
         </div>
+    </div>
     </div>
 </body>
 </html>

@@ -247,6 +247,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         if(sessionStorage.getItem('classi')==null){
             var e = document.getElementById("classis");
             classi = e.options[e.selectedIndex].value;
+            sessionStorage.setItem('classiFrame',classi);
         }else{
             classi = sessionStorage.getItem('classi');
         }
