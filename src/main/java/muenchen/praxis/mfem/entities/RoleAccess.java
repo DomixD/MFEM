@@ -9,13 +9,12 @@ import java.io.Serializable;
 
 @Data
 @Entity
-public class User implements Serializable {
+public class RoleAccess implements Serializable {
 
-    @GeneratedValue
     @Id
+    @GeneratedValue
     private int id;
-    private String username;
-    private String password;
     private String role;
-
+    private boolean readAccess;
+    private boolean writeAccess;
 }
