@@ -19,4 +19,14 @@ public class RoleAccess implements Serializable {
     private String role;
     private boolean readAccess;
     private boolean writeAccess;
+
+    public RoleAccess() {}
+
+    public RoleAccess(int id, String role, boolean readAccess, boolean writeAccess) {
+        this.id = id;
+        this.role = role;
+        this.readAccess = readAccess;
+        this.writeAccess = writeAccess;
+    }
+
 }

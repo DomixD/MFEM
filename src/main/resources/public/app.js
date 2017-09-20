@@ -41,6 +41,19 @@ mfem.config(function($routeProvider) {
 
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location, $window) {
+
+    $scope.authenticate=function () {
+        console.log('get');
+        $http.get('http://localhost:8080/authenticate').then(function (response) {
+            console.log(response);
+            var result = response.data;
+            console.log('result: '+result);
+            if(result == 0) {
+                console.log('if');
+            }
+        });
+    };
+
     $scope.compare=function () {
         var promiseArray = [];
         var getFrame = [];
@@ -110,11 +123,6 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
                 });
             })
         });
-        /*
-        sessionStorage.setItem('frameworks','TestFW');
-        var testRes = [1,1,1,1,1,1];
-        sessionStorage.setItem('result',testRes);
-        */
     };
 
     $scope.getFrames=function () {

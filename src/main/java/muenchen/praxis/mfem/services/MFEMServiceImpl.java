@@ -79,6 +79,20 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 		return result;
 	}
 
+	@Override
+	public Integer checkUser() {
+		System.out.println("1");
+		int result = 1;
+		System.out.println("2");
+		if (!Authentication.hasPermission(Authentication.AccessType.WRITE_ACCESS)) {
+			System.out.println("3");
+			result = 0;
+		}
+		System.out.println("4");
+		System.out.println(result);
+		return result;
+	}
+
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

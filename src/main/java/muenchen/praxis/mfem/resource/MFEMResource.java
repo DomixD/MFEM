@@ -31,4 +31,9 @@ public class MFEMResource {
 		return new ResponseEntity<List<Integer>>(service.getFrames(classiId),HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value="/authenticate", produces = MediaType.APPLICATION_JSON)
+	public ResponseEntity<?> authenticate() {
+		return new ResponseEntity<Integer>(service.checkUser(), HttpStatus.OK);
+	}
+
 }
