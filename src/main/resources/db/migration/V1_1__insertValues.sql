@@ -106,3 +106,9 @@ insert into question (questionid, question, metricid, require_requirementid) val
 insert into question (questionid, question, metricid, require_requirementid) values (26, 'Frage3.5.1', 1, 17);
 
 insert into question (questionid, question, metricid, require_requirementid) values (27, 'Frage3.6.1', 1, 18);
+
+insert into user (userid , username ,password, role ) values (1, 'user', 'userPw', 'USER');
+insert into user (userid , username ,password, role ) values (2, 'admin', 'admin', 'ADMIN');
+
+insert into  role_access (role_accessid, role, read_access, write_access) values (1, 'USER', 1, 0);
+insert into  role_access (role_accessid, role, read_access, write_access) values (2, 'ADMIN', 1, 1);
