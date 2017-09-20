@@ -31,7 +31,8 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(authenticationEntryPoint)
-                .and().csrf().disable();
+                .and().csrf().disable()
+                .headers().frameOptions().disable();
 
 //        http.addFilterAfter(new CustomFilter(),
 //                BasicAuthenticationFilter.class);
