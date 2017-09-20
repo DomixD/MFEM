@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 @RepositoryRestResource(path = "user")
 public interface RepoUser extends CrudRepository<User, Integer> {
+    User findByUsername (String username);
 }
