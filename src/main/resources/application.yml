@@ -10,7 +10,7 @@ logging:
 
 
 spring:
-    profiles: local
+    profiles: local, test
     #DB
     datasource:
         url: jdbc:h2:mem:testdb
@@ -29,5 +29,4 @@ flyway:
   baseline-on-migrate: true
   enabled: true
   locations: classpath:/db/migration
-
 

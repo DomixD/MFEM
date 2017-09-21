@@ -3,12 +3,8 @@ package muenchen.praxis.mfem.services;
 import muenchen.praxis.mfem.entities.*;
 import muenchen.praxis.mfem.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,6 +12,8 @@ import java.util.List;
 
 @Service
 public class MFEMServiceImpl implements IMFEMService {
+
+	protected RestTemplate restTemplate;
 
 	@Autowired
 	private RepoFrameworkEvaluation repoframeworkEvaluation;
@@ -27,6 +25,11 @@ public class MFEMServiceImpl implements IMFEMService {
 	private RepoFEvaResult repoFEvaResult;
 	@Autowired
 	private RepoCategory repoCategory;
+
+	/*
+	public MFEMServiceImpl(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}*/
 
 	@Override
 	public List<Double> getResult(int frameID, int classiID) {
