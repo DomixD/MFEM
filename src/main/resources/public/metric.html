@@ -12,24 +12,28 @@
     <br>
     <h2>Neue Metrik</h2>
     <div class="container1">
-        <form>
-            <ul class="flex-outer">
-                <li>
-                    <label>Beschreibung</label>
-                    <input type="text" id="Name" name="Name" ng-model="description">
-                </li>
-                <fieldset  data-ng-repeat="choice in choices">
-                    <label>Antwortmöglichkeit {{choice.id}}: </label>
-                    <input type="text" ng-model="choice.name" id = "{{choice.id}}" name="answers">
-                    <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
-                </fieldset>
-                <button class="addfields" ng-click="addNewChoice()">weitere Antwortmöglichkeit</button>
+        <div ng-init="authenticate()">
+            <div ng-show="permission">
+                <form>
+                    <ul class="flex-outer">
+                        <li>
+                            <label>Beschreibung</label>
+                            <input type="text" id="Name" name="Name" ng-model="description">
+                        </li>
+                        <fieldset  data-ng-repeat="choice in choices">
+                            <label>Antwortmöglichkeit {{choice.id}}: </label>
+                            <input type="text" ng-model="choice.name" id = "{{choice.id}}" name="answers">
+                            <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+                        </fieldset>
+                        <button class="addfields" ng-click="addNewChoice()">weitere Antwortmöglichkeit</button>
 
-                <li>
-                    <p><div ng-controller="Controller"><button class="myButton" ng-click="saveMetric(description, 'main')" style="vertical-align:middle"><span>speichern</span></button></div></p>
-                </li>
-            </ul>
-        </form>
+                        <li>
+                            <p><div ng-controller="Controller"><button class="myButton" ng-click="saveMetric(description, 'main')" style="vertical-align:middle"><span>speichern</span></button></div></p>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>

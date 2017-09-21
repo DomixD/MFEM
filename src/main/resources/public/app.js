@@ -40,7 +40,13 @@ mfem.config(function($routeProvider) {
 });
 
 
-mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location) {
+mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location, $window) {
+
+    $scope.authenticate=function () {
+        $http.get('http://localhost:8080/authenticate').then(function (response) {
+             $scope.permission = response.data;
+        });
+    };
 
     $scope.compare=function () {
         var promiseArray = [];
@@ -76,6 +82,43 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
         });
     };
 
+    $scope.compareFrames=function () {
+        var classi = sessionStorage.getItem('classiFrame');
+        var classiID = classi.substring(classi.length-1);
+        $http.get('http://localhost:8080/getFrames/'+classiID).then(function (response) {
+            var frames = response.data;
+            var promiseArray = [];
+            for (var i = 0; i < frames.length; i++) {
+                promiseArray.push($http.get('http://localhost:8080/frame/'+frames[i]))
+            }
+            $q.all(promiseArray).then(function (responseArray) {
+                var fw = [];
+                for(var j = 0; j < responseArray.length; j++) {
+                    fw.push(responseArray[j].data);
+                }
+                $scope.frameworks = fw;
+                var promise = [];
+                for(var k = 0; k < fw.length; k++) {
+                    var frameID = fw[k]._links.self.href;
+                    frameID = frameID.substring(frameID.length-1);
+                    promise.push($http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID));
+                }
+                $q.all(promise).then(function (responseArray2) {
+                    var results = [];
+                    for(var i = 0; i < responseArray2.length; i++) {
+                        results.push(responseArray2[i].data);
+                    }
+                    sessionStorage.setItem('result',results);
+                    var frameworks = [];
+                    for (var l = 0; l < fw.length; l++) {
+                        frameworks.push(fw[l].nameFW);
+                    }
+                    sessionStorage.setItem('frameworks', frameworks);
+                });
+            })
+        });
+    };
+
     $scope.getFrames=function () {
         var classiID = sessionStorage.getItem("classiFrame");
         classiID = classiID.substring(classiID.length-1);
@@ -92,7 +135,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
                 }
                 $scope.frameworks = fw;
             })
-        })
+        });
     };
 
     $scope.getFramework=function () {
@@ -296,21 +339,28 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location)
 
     //Framework speichern und die ausgewählte Klassifizierung mit dem Framework in FrameworkEvaluation speichern
     $scope.saveFrame=function (name, description, view) {
-        var e = document.getElementById("classisFrame");
-        var classi = e.options[e.selectedIndex].value;
-        sessionStorage.setItem('classiFrame', classi);
-        data={nameFW:name,
-              descriptionFW:description};
-        $http.post('http://localhost:8080/frame',data).then(function (response) {
-            var frame = response.data._links.self.href;
-            sessionStorage.setItem('frame',frame);
-            data={framework:frame, classification: classi};
-            $http.post('http://localhost:8080/feva', data).then(function (response) {
-                var feva = response.data._links.self.href;
-                sessionStorage.setItem('feva', feva);
+        if (view == 'checkQuest') {
+            var e = document.getElementById("classisFrame");
+            var classi = e.options[e.selectedIndex].value;
+            sessionStorage.setItem('classiFrame', classi);
+            data={nameFW:name,
+                descriptionFW:description};
+            $http.post('http://localhost:8080/frame',data).then(function (response) {
+                var frame = response.data._links.self.href;
+                sessionStorage.setItem('frame',frame);
+                data={framework:frame, classification: classi};
+                $http.post('http://localhost:8080/feva', data).then(function (response) {
+                    var feva = response.data._links.self.href;
+                    sessionStorage.setItem('feva', feva);
+                });
             });
-        });
-        $location.path(view);
+            $location.path(view);
+        }
+        else {
+            var e = document.getElementById("classisFrame");
+            sessionStorage.setItem('classiFrame',e.options[e.selectedIndex].value);
+            $window.open('compare.html', 'newwindow');
+        }
     };
 
     //Klassifizierung speichern
