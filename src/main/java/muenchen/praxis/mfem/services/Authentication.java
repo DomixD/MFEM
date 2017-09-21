@@ -25,8 +25,6 @@ import java.util.HashMap;
 public class Authentication extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private EntryPoint authenticationEntryPoint;
-    @Autowired
     private RepoUser repoUser;
     @Autowired
     private MFEMServiceImpl custom;
