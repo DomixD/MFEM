@@ -53,7 +53,8 @@ public class Authentication extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/quest/**", "/answer/**", "/cat/**", "/classi/**" ,"/metric/**", "/req/**").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/quest/**", "/answer/**", "/cat/**", "/classi/**" ,"/metric/**", "/req/**", "/user/**","/roles/**").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/**", "/roles/**").hasAuthority("ADMIN");
         http.authorizeRequests().anyRequest().fullyAuthenticated();
         http.httpBasic();
         http.csrf().disable();
