@@ -9,7 +9,8 @@
 </head>
 <body>
 <div ng-controller="Controller">
-    <div ng-init="getReqs();getMetrics()">
+    <div ng-init="getReqs();getMetrics();authenticate()">
+        <div ng-show="permission">
         <br>
         <h2>Neue Frage</h2>
     </table>
@@ -32,6 +33,7 @@
             </ul>
         </form>
     </div>
+        </div>
 </div>
 </div>
 </body>
