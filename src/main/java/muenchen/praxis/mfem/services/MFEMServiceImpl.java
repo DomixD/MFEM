@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
+public class MFEMServiceImpl implements IMFEMService {
 
 	@Autowired
 	private RepoFrameworkEvaluation repoframeworkEvaluation;
@@ -27,8 +27,6 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 	private RepoFEvaResult repoFEvaResult;
 	@Autowired
 	private RepoCategory repoCategory;
-	@Autowired
-	private RepoUser repoUser;
 
 	@Override
 	public List<Double> getResult(int frameID, int classiID) {
@@ -88,16 +86,4 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 		return result;
 	}
 
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = repoUser.findByUsername(username);
-		if (user == null) {
-			return null;
-		}
-		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole());
-		String password = user.getPassword();
-		Authentication.setUserID(user.getId());
-		return new org.springframework.security.core.userdetails.User(username, password, auth);
-	}
 }

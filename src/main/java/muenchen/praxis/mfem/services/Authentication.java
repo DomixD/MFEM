@@ -27,7 +27,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
     @Autowired
     private RepoUser repoUser;
     @Autowired
-    private MFEMServiceImpl custom;
+    private CustomUserDetailsService custom;
 
     @Autowired
     RepoRoleAccess repoRoleAccess;
