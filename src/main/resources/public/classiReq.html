@@ -9,36 +9,37 @@
 </head>
 <body>
 <div ng-controller="Controller">
-    <div ng-init="getCats()">
+    <div ng-init="getCats();authenticate()">
+        <div ng-show="permission">
         <br>
         <h2>Neue Anforderung</h2>
-
-    <div class="container1">
-        <form>
-            <ul class="flex-outer">
-                <li>
-                    <label>Anforderung:</label>
-                    <input type="text" id="Name" name="Name" ng-model="content">
-                </li>
-                <li>
-                    <label>Priorität:</label>
-                    <select id="prio" name="prio">
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                    </select>
-                </li>
-                <li>
-                    <label>Kategorie:</label>
-                    <select id="category" ng-model="cate" ng-options="cat.category for cat in catego track by cat._links.self.href"></select>
-                </li>
-                <li>
-                    <p><div ng-controller="Controller"><button ng-click="saveReq(content, 'classiQuest')" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div></p>
-                </li>
-            </ul>
-        </form>
+        <div class="container1">
+            <form>
+                <ul class="flex-outer">
+                    <li>
+                        <label>Anforderung:</label>
+                        <input type="text" id="Name" name="Name" ng-model="content">
+                    </li>
+                    <li>
+                        <label>Priorität:</label>
+                        <select id="prio" name="prio">
+                            <option>A</option>
+                            <option>B</option>
+                            <option>C</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label>Kategorie:</label>
+                        <select id="category" ng-model="cate" ng-options="cat.category for cat in catego track by cat._links.self.href"></select>
+                    </li>
+                    <li>
+                        <p><div ng-controller="Controller"><button ng-click="saveReq(content, 'classiQuest')" class="myButton" style="vertical-align:middle"><span>Weiter zu Fragen >></span></button></div></p>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        </div>
     </div>
-</div>
 </div>
 </body>
 </html>

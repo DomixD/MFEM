@@ -9,25 +9,28 @@
 </head>
 <body>
 <div ng-controller="Controller">
+    <div ng-init="authenticate()">
+        <div ng-show="permission">
         <br>
         <h2>Neue Klassifizierung</h2>
-
-    <div class="container1">
-        <form>
-            <ul class="flex-outer">
-                <li>
-                    <label>Name der Klassifizierung:</label>
-                    <input type="text" id="Name" name="Name" ng-model="name">
-                </li>
-                <li>
-                    <label>Beschreibung der Klassifizierung</label>
-                    <input type="text" id="Beschr" name="Beschr" ng-model="description">
-                </li>
-                <li>
-                    <button class="myButton" ng-click="saveClassi(name, description, 'classiReq') " style="vertical-align:middle"><span>Anforderungen hinzuf&uumlgen >></span></button>
-                </li>
-            </ul>
-        </form>
+            <div class="container1">
+                <form>
+                    <ul class="flex-outer">
+                        <li>
+                            <label>Name der Klassifizierung:</label>
+                            <input type="text" id="Name" name="Name" ng-model="name">
+                        </li>
+                        <li>
+                            <label>Beschreibung der Klassifizierung</label>
+                            <input type="text" id="Beschr" name="Beschr" ng-model="description">
+                        </li>
+                        <li>
+                            <button class="myButton" ng-click="saveClassi(name, description, 'classiReq') " style="vertical-align:middle"><span>Anforderungen hinzuf&uumlgen >></span></button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>

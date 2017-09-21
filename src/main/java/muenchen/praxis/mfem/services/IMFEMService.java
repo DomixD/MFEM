@@ -8,4 +8,6 @@ public interface IMFEMService {
 
     List<Integer> getFrames (int frameID);
 
+    Integer checkUser();
+
 }
