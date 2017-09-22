@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -49,6 +50,31 @@ public class MFEMServiceImplTest {
         expected.add(0.5);
         expected.add(0.0);
         assertThat(result, is(equalTo(expected)));
+    }
+
+    @Test
+    public void testGetFrames() {
+        this.server.expect(requestTo("http://localhost:8080/getFrames/1")).andRespond(withSuccess());
+        List<Integer> result = this.service.getFrames(1);
+        List<Integer> expected = new ArrayList<>();
+        expected.add(1);
+        assertThat(result, is(equalTo(expected)));
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void testCheckUserAdmin() {
+        this.server.expect(requestTo("http://localhost:8080/authenticate")).andRespond(withSuccess());
+        Integer result = this.service.checkUser();
+        assertThat(result, is(equalTo(1)));
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER")
+    public void testCheckUserUser() {
+        this.server.expect(requestTo("http://localhost:8080/authenticate")).andRespond(withSuccess());
+        Integer result = this.service.checkUser();
+        assertThat(result, is(equalTo(0)));
     }
 
 }
