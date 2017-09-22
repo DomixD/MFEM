@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -46,7 +45,7 @@ public class RepoFEvaResultTest {
 
 
     @Test
-    public void testfindByFrameworkEvaluation() {
+    public void testFindByFrameworkEvaluation() {
         assertEquals(0, repoFEvaResult.findByFrameworkEvaluation(feva).size());
         FEvaResult fevaResult = new FEvaResult(7, feva, question, answer);
         repoFEvaResult.save(fevaResult);
