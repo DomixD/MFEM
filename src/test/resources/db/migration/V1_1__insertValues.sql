@@ -33,7 +33,9 @@ insert into question (questionid, question, metricid, require_requirementid) val
 
 -- Beispiel Evaluation
 insert into framework (frameworkid, descriptionfw, namefw) values (1, 'Beschreibung1','Framework1');
+insert into framework (frameworkid, descriptionfw, namefw) values (2, 'Beschreibung2','Framework2');
 insert into framework_evaluation (framework_evaluationid, classificationid, frameworkid) values (1, 1, 1);
+insert into framework_evaluation (framework_evaluationid, classificationid, frameworkid) values (2, 1, 2);
 insert into feva_result (feva_resultid, framework_evaluationid, questionid, answerid) values (1, 1, 1, 1);
 insert into feva_result (feva_resultid, framework_evaluationid, questionid, answerid) values (2, 1, 2, 2);
 insert into feva_result (feva_resultid, framework_evaluationid, questionid, answerid) values (3, 1, 3, 3);
