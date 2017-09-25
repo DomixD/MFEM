@@ -82,9 +82,9 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 	@Override
 	public Integer checkUser() {
 		int result = 1;
-		if (!Authentication.hasPermission(Authentication.AccessType.WRITE_ACCESS)) {
+		//if (!Authentication.hasPermission(Authentication.AccessType.WRITE_ACCESS)) {
 			result = 0;
-		}
+		//}
 		return result;
 	}
 

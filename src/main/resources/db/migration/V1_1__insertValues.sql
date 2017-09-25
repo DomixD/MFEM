@@ -110,5 +110,5 @@ insert into question (questionid, question, metricid, require_requirementid) val
 insert into user (userid , username ,password, role ) values (1, 'user', 'userPw', 'USER');
 insert into user (userid , username ,password, role ) values (2, 'admin', 'admin', 'ADMIN');
 
-insert into  role_access (role_accessid, role, read_access, write_access) values (1, 'USER', 1, 0);
-insert into  role_access (role_accessid, role, read_access, write_access) values (2, 'ADMIN', 1, 1);
+insert into  role_access (role_accessid, role, read_access, create_classi, create_req, create_quest, create_metric, evaluation, admin_access, create_category) values (1, 'USER', 1, 0, 0, 0, 0, 1, 0, 0);
+insert into  role_access (role_accessid, role, read_access, create_classi, create_req, create_quest, create_metric, evaluation, admin_access, create_category) values (2, 'ADMIN', 1, 1, 1, 1, 1, 1, 1, 1);
