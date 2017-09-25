@@ -38,7 +38,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
 //    }
 
     public enum AccessType {
-        READ_ACCESS, WRITE_ACCESS;
+        READ_ACCESS, CREATE_CLASSI, CREATE_REQ, CREATE_QUEST, CREATE_METRIC, CREATE_CAT, EVALUATION, ADMIN_ACCESS;
     }
 
     private static HashMap<String, RoleAccess> roleMapping = new HashMap<>();
@@ -58,7 +58,6 @@ public class Authentication extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
 
-
         // initialize the role permission mapping
         repoRoleAccess.findAll().forEach(role -> {
             roleMapping.put(role.getRole(), role);
@@ -73,8 +72,8 @@ public class Authentication extends WebSecurityConfigurerAdapter {
             switch (accessType) {
                 case READ_ACCESS:
                     return role.isReadAccess();
-                case WRITE_ACCESS:
-                    return role.isWriteAccess();
+                //case WRITE_ACCESS:
+                    //return role.isWriteAccess();
             }
             return false;
         });
