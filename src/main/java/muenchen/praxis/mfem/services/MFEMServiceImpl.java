@@ -2,6 +2,8 @@ package muenchen.praxis.mfem.services;
 
 import muenchen.praxis.mfem.entities.*;
 import muenchen.praxis.mfem.persistence.*;
+import muenchen.praxis.mfem.security.AccessType;
+import muenchen.praxis.mfem.security.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -82,7 +84,7 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 	@Override
 	public Integer checkUser() {
 		int result = 1;
-		//if (!Authentication.hasPermission(Authentication.AccessType.WRITE_ACCESS)) {
+		//if (!Authentication.hasPermission(AccessType.READ_ACCESS)) {
 			result = 0;
 		//}
 		return result;

@@ -1,8 +1,9 @@
-package muenchen.praxis.mfem.services;
+package muenchen.praxis.mfem.security;
 
 import muenchen.praxis.mfem.entities.RoleAccess;
 import muenchen.praxis.mfem.persistence.RepoRoleAccess;
 import muenchen.praxis.mfem.persistence.RepoUser;
+import muenchen.praxis.mfem.services.MFEMServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,10 +37,6 @@ public class Authentication extends WebSecurityConfigurerAdapter {
 //    public BCryptPasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
-
-    public enum AccessType {
-        READ_ACCESS, CREATE_CLASSI, CREATE_REQ, CREATE_QUEST, CREATE_METRIC, CREATE_CAT, EVALUATION, ADMIN_ACCESS;
-    }
 
     private static HashMap<String, RoleAccess> roleMapping = new HashMap<>();
     private static int userID;
