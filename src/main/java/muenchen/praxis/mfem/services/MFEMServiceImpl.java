@@ -85,7 +85,7 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 	public Integer checkUser() {
 		int result = 1;
 		//if (!Authentication.hasPermission(AccessType.READ_ACCESS)) {
-			result = 0;
+		//	result = 0;
 		//}
 		return result;
 	}
