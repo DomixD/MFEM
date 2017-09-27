@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(path = "quest")
+@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
 public interface RepoQuestion extends CrudRepository<Question, Integer> {
 
     @Override
-    @PreAuthorize("hasPermission('question','CREATE_QUEST')")
+    @PreAuthorize("@SecurityService.hasPermission('CREATE_QUEST')")
     Question save(Question question);
 
 }
