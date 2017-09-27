@@ -14,7 +14,7 @@ public class MFEMPermissionEvaluator implements PermissionEvaluator {
             return false;
         }
         System.out.println("hasPermission2");
-        AccessType accessType = (AccessType) permission;
+        AccessType accessType = AccessType.valueOf(permission.toString());
         System.out.println(accessType);
 
         return muenchen.praxis.mfem.security.Authentication.hasPermission(AccessType.CREATE_QUEST);
