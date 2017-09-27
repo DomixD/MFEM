@@ -57,9 +57,10 @@ public class Authentication extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(HttpMethod.POST,  "/answer/**", "/cat/**", "/classi/**" ,"/metric/**", "/req/**", "/user/**","/roles/**").hasAuthority("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/**", "/roles/**").hasAuthority("ADMIN");
+        //http.authorizeRequests().antMatchers(HttpMethod.POST,  "/answer/**", "/cat/**", "/classi/**" ,"/metric/**", "/req/**", "/user/**","/roles/**").hasAuthority("ADMIN");
+        //http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/**", "/roles/**").hasAuthority("ADMIN");
         http.authorizeRequests().anyRequest().fullyAuthenticated();
+
         http.httpBasic();
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -71,7 +72,6 @@ public class Authentication extends WebSecurityConfigurerAdapter {
     }
 
     public static boolean hasPermission(AccessType accessType) {
-        System.out.println("Auth1################");
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return userDetails.getAuthorities().stream().anyMatch(auth -> {
@@ -108,7 +108,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
 
 
 
-
+/*
     @Configuration
     @EnableGlobalMethodSecurity(prePostEnabled = true)
     public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
@@ -121,7 +121,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
             return expressionHandler;
         }
     }
-
+*/
 
 
 
