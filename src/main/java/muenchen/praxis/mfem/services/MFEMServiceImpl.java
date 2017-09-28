@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -97,8 +99,9 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 		if (user == null) {
 			return null;
 		}
-		//List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoleList().toString());
-		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN");
+		System.out.println(user.getRoleList());
+		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoleList().toString());
+		System.out.println("AUTH: "+auth);
 		String password = user.getPassword();
 		Authentication.setUserID(user.getId());
 		return new org.springframework.security.core.userdetails.User(username, password, auth);

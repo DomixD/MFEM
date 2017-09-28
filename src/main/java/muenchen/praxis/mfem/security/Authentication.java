@@ -2,33 +2,16 @@ package muenchen.praxis.mfem.security;
 
 import muenchen.praxis.mfem.entities.RoleAccess;
 import muenchen.praxis.mfem.persistence.RepoRoleAccess;
-import muenchen.praxis.mfem.persistence.RepoUser;
-import muenchen.praxis.mfem.services.MFEMServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -38,31 +21,15 @@ public class Authentication extends WebSecurityConfigurerAdapter {
     @Autowired
     RepoRoleAccess repoRoleAccess;
 
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
-
-
     private static HashMap<String, RoleAccess> roleMapping = new HashMap<>();
     private static int userID;
 
-    public void init(AuthenticationManagerBuilder auth) throws Exception {
-        // use our CustomUserDetailsService to authentificate user
-        //auth.userDetailsService(custom).passwordEncoder(passwordEncoder());
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //http.authorizeRequests().antMatchers(HttpMethod.POST,  "/answer/**", "/cat/**", "/classi/**" ,"/metric/**", "/req/**", "/user/**","/roles/**").hasAuthority("ADMIN");
-        //http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/**", "/roles/**").hasAuthority("ADMIN");
         http.authorizeRequests().anyRequest().fullyAuthenticated();
-
         http.httpBasic();
         http.csrf().disable();
         http.headers().frameOptions().disable();
-
         // initialize the role permission mapping
         repoRoleAccess.findAll().forEach(role -> {
             roleMapping.put(role.getRole(), role);

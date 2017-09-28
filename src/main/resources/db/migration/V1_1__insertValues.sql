@@ -107,9 +107,14 @@ insert into question (questionid, question, metricid, require_requirementid) val
 
 insert into question (questionid, question, metricid, require_requirementid) values (27, 'Frage3.6.1', 1, 18);
 
-insert into user (userid , username ,password, role ) values (1, 'user', 'userPw', 'EVALUATOR');
-insert into user (userid , username ,password, role ) values (2, 'admin', 'admin', 'ADMIN');
-insert into user (userid , username ,password, role ) values (3, 'creator', 'creator', 'CREATOR');
+insert into user (userid , username ,password) values (1, 'user', 'userPw');
+insert into user (userid , username ,password) values (2, 'admin', 'admin');
+insert into user (userid , username ,password) values (3, 'creator', 'creator');
+
+insert into user_role_list (user_userid, role_list) values (1, 'EVALUATOR');
+insert into user_role_list (user_userid, role_list) values (2, 'ADMIN');
+insert into user_role_list (user_userid, role_list) values (2, 'EVALUATOR');
+insert into user_role_list (user_userid, role_list) values (3, 'CREATOR');
 
 insert into  role_access (role_accessid, role, read_access, create_classi, create_req, create_quest, create_metric, evaluation, admin_access, create_category) values (1, 'EVALUATOR', 1, 0, 0, 0, 0, 1, 0, 0);
 insert into  role_access (role_accessid, role, read_access, create_classi, create_req, create_quest, create_metric, evaluation, admin_access, create_category) values (2, 'ADMIN', 0, 0, 0, 0, 0, 0, 1, 0);
