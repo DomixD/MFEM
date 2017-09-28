@@ -1,7 +1,6 @@
 package muenchen.praxis.mfem.persistence;
 
 import muenchen.praxis.mfem.entities.Question;
-import muenchen.praxis.mfem.security.AccessType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
