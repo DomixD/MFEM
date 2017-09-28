@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(path = "classi")
-@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
+@PreAuthorize("hasAuthority('READ_ACCESS')")
 public interface RepoClassification extends CrudRepository<Classification, Integer> {
 
     @Override
-    @PreAuthorize("@SecurityService.hasPermission('CREATE_CLASSI')")
+    @PreAuthorize("hasAuthority('CREATE_CLASSI')")
     Classification save(Classification classification);
 
 }

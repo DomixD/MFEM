@@ -11,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
@@ -93,11 +91,20 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repoUser.findByUsername(username);
+		List<RoleAccess> rolos = user.getRoleList();
+		List<String> roleString = new ArrayList<>();
+		Set<String> permissionSet = new HashSet<>();
+		for(RoleAccess rolo:rolos) {
+			roleString.add(rolo.getRole());
+			for(Permission permission:rolo.getPermissionList()){
+				permissionSet.add(permission.getPermission());
+			}
+		}
 		if (user == null) {
 			return null;
 		}
-		String role = user.getRoleList().toString().substring(1,user.getRoleList().toString().length()-1);
-		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(role);
+		String permissionString = permissionSet.toString().substring(1,permissionSet.toString().length()-1);
+		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(permissionString);
 		String password = user.getPassword();
 		Authentication.setUserID(user.getId());
 		return new org.springframework.security.core.userdetails.User(username, password, auth);

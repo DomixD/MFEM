@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(path = "req")
-@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
+@PreAuthorize("hasAuthority('READ_ACCESS')")
 public interface RepoRequirement extends CrudRepository<Requirement, Integer> {
 
     @Override
-    @PreAuthorize("@SecurityService.hasPermission('CREATE_REQ')")
+    @PreAuthorize("hasAuthority('CREATE_REQ')")
     Requirement save(Requirement requirement);
 
 }

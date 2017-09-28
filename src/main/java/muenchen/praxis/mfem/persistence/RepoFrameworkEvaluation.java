@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RepositoryRestResource(path = "feva")
-@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
+@PreAuthorize("hasAuthority('READ_ACCESS')")
 public interface RepoFrameworkEvaluation extends CrudRepository<FrameworkEvaluation, Integer> {
 
     FrameworkEvaluation findByFrameworkInAndClassificationIn(Framework framework, Classification classification);
@@ -21,7 +21,7 @@ public interface RepoFrameworkEvaluation extends CrudRepository<FrameworkEvaluat
     List<FrameworkEvaluation> findByClassification(Classification classification);
 
     @Override
-    @PreAuthorize("@SecurityService.hasPermission('EVALUATION')")
+    @PreAuthorize("hasAuthority('EVALUATION')")
     FrameworkEvaluation save(FrameworkEvaluation frameworkEvaluation);
 
 }

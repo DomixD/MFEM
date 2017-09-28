@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(path = "metric")
-@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
+@PreAuthorize("hasAuthority('READ_ACCESS')")
 public interface RepoMetric extends CrudRepository<Metric, Integer> {
 
     @Override
-    @PreAuthorize("@SecurityService.hasPermission('CREATE_METRIC')")
+    @PreAuthorize("hasAuthority('CREATE_METRIC')")
     Metric save(Metric metric);
 
 }

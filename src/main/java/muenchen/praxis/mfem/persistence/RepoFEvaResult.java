@@ -10,13 +10,13 @@ import java.util.List;
 
 @CrossOrigin
 @RepositoryRestResource(path = "result")
-@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
+@PreAuthorize("hasAuthority('READ_ACCESS')")
 public interface RepoFEvaResult extends CrudRepository<FEvaResult, Integer> {
 
     List<FEvaResult> findByFrameworkEvaluation(FrameworkEvaluation frameworkEvaluation);
 
     @Override
-    @PreAuthorize("@SecurityService.hasPermission('EVALUATION')")
+    @PreAuthorize("hasAuthority('EVALUATION')")
     FEvaResult save(FEvaResult fEvaResult);
 
 }

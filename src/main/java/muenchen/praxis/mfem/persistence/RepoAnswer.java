@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(path = "answer")
-@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
+@PreAuthorize("hasAuthority('READ_ACCESS')")
 public interface RepoAnswer extends CrudRepository<Answer, Integer> {
 
     @Override
-    @PreAuthorize("@SecurityService.hasPermission('CREATE_METRIC')")
+    @PreAuthorize("hasAuthority('CREATE_METRIC')")
     Answer save(Answer answer);
 
 }

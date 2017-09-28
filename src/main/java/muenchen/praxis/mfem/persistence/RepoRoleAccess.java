@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(path = "roles")
-//@PreAuthorize("@SecurityService.hasPermission('ADMIN_ACCESS')") //wirft Fehler
+//@PreAuthorize("hasAuthority('ADMIN_ACCESS')") //wirft Fehler
 public interface RepoRoleAccess extends CrudRepository<RoleAccess, Integer> {
 }

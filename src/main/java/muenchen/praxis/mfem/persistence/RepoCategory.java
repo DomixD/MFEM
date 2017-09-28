@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
 @RepositoryRestResource(path = "cat")
-@PreAuthorize("@SecurityService.hasPermission('READ_ACCESS')")
+@PreAuthorize("hasAuthority('READ_ACCESS')")
 public interface RepoCategory extends CrudRepository<Category, Integer>{
 
     @Override
-    @PreAuthorize("@SecurityService.hasPermission('CREATE_CAT')")
+    @PreAuthorize("hasAuthority('CREATE_CAT')")
     Category save(Category category);
 
 }

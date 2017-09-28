@@ -117,7 +117,6 @@ insert into role_access (role_accessid, role) values (3, 'CREATOR');
 
 insert into user_role_list (user_userid, role_list_role_accessid) values (1, 1);
 insert into user_role_list (user_userid, role_list_role_accessid) values (2, 2);
-insert into user_role_list (user_userid, role_list_role_accessid) values (2, 1);
 insert into user_role_list (user_userid, role_list_role_accessid) values (3, 3);
 
 insert into permission (permissionid, permission) values (1,'READ_ACCESS');
