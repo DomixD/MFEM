@@ -16,13 +16,14 @@ public class User implements Serializable {
     private int id;
     private String username;
     private String password;
+
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roleList;
+    private List<RoleAccess> roleList;
 
 
     public User() {}
 
-    public User(int id, String username, String password, List<String> roleList) {
+    public User(int id, String username, String password, List<RoleAccess> roleList) {
         this.id = id;
         this.username = username;
         this.password = password;

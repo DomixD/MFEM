@@ -40,24 +40,24 @@ public class Authentication extends WebSecurityConfigurerAdapter {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getAuthorities().stream().anyMatch(auth -> {
             RoleAccess role = roleMapping.get(auth.getAuthority());
-            switch (accessType) {
-                case READ_ACCESS:
-                    return role.isReadAccess();
-                case CREATE_CLASSI:
-                    return role.isCreateClassi();
-                case CREATE_REQ:
-                    return role.isCreateReq();
-                case CREATE_QUEST:
-                    return role.isCreateQuest();
-                case CREATE_METRIC:
-                    return role.isCreateMetric();
-                case CREATE_CAT:
-                    return role.isCreateCategory();
-                case EVALUATION:
-                    return role.isEvaluation();
-                case ADMIN_ACCESS:
-                    return role.isAdminAccess();
-            }
+//            switch (accessType) {
+//                case READ_ACCESS:
+//                    return role.isReadAccess();
+//                case CREATE_CLASSI:
+//                    return role.isCreateClassi();
+//                case CREATE_REQ:
+//                    return role.isCreateReq();
+//                case CREATE_QUEST:
+//                    return role.isCreateQuest();
+//                case CREATE_METRIC:
+//                    return role.isCreateMetric();
+//                case CREATE_CAT:
+//                    return role.isCreateCategory();
+//                case EVALUATION:
+//                    return role.isEvaluation();
+//                case ADMIN_ACCESS:
+//                    return role.isAdminAccess();
+//            }
             return false;
         });
     }
