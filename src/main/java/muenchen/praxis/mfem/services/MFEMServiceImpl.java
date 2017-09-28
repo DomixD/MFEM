@@ -2,7 +2,6 @@ package muenchen.praxis.mfem.services;
 
 import muenchen.praxis.mfem.entities.*;
 import muenchen.praxis.mfem.persistence.*;
-import muenchen.praxis.mfem.security.AccessType;
 import muenchen.praxis.mfem.security.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -99,9 +96,8 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 		if (user == null) {
 			return null;
 		}
-		System.out.println(user.getRoleList());
-		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoleList().toString());
-		System.out.println("AUTH: "+auth);
+		String role = user.getRoleList().toString().substring(1,user.getRoleList().toString().length()-1);
+		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(role);
 		String password = user.getPassword();
 		Authentication.setUserID(user.getId());
 		return new org.springframework.security.core.userdetails.User(username, password, auth);
