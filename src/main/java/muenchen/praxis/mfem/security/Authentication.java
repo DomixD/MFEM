@@ -19,23 +19,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class Authentication extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private RepoUser repoUser;
-    @Autowired
-    private MFEMServiceImpl custom;
 
     @Autowired
     RepoRoleAccess repoRoleAccess;
@@ -73,7 +71,6 @@ public class Authentication extends WebSecurityConfigurerAdapter {
 
     public static boolean hasPermission(AccessType accessType) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         return userDetails.getAuthorities().stream().anyMatch(auth -> {
             RoleAccess role = roleMapping.get(auth.getAuthority());
             switch (accessType) {
@@ -105,26 +102,5 @@ public class Authentication extends WebSecurityConfigurerAdapter {
     public static void setUserID(int userId) {
         userID = userId;
     }
-
-
-
-/*
-    @Configuration
-    @EnableGlobalMethodSecurity(prePostEnabled = true)
-    public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
-
-        @Override
-        protected MethodSecurityExpressionHandler createExpressionHandler() {
-            DefaultMethodSecurityExpressionHandler expressionHandler =
-                    new DefaultMethodSecurityExpressionHandler();
-            expressionHandler.setPermissionEvaluator(new MFEMPermissionEvaluator());
-            return expressionHandler;
-        }
-    }
-*/
-
-
-
-
 
 }

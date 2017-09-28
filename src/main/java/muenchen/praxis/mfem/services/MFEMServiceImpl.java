@@ -97,7 +97,8 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 		if (user == null) {
 			return null;
 		}
-		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole());
+		//List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoleList().toString());
+		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN");
 		String password = user.getPassword();
 		Authentication.setUserID(user.getId());
 		return new org.springframework.security.core.userdetails.User(username, password, auth);
