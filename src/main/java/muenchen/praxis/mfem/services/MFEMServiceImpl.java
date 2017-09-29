@@ -2,16 +2,20 @@ package muenchen.praxis.mfem.services;
 
 import muenchen.praxis.mfem.entities.*;
 import muenchen.praxis.mfem.persistence.*;
+import muenchen.praxis.mfem.security.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class MFEMServiceImpl implements IMFEMService {
+public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 
 	protected RestTemplate restTemplate;
 
@@ -25,11 +29,9 @@ public class MFEMServiceImpl implements IMFEMService {
 	private RepoFEvaResult repoFEvaResult;
 	@Autowired
 	private RepoCategory repoCategory;
+	@Autowired
+	private RepoUser repoUser;
 
-	/*
-	public MFEMServiceImpl(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-	}*/
 
 	@Override
 	public List<Double> getResult(int frameID, int classiID) {
@@ -83,10 +85,29 @@ public class MFEMServiceImpl implements IMFEMService {
 	@Override
 	public Integer checkUser() {
 		int result = 1;
-		if (!Authentication.hasPermission(Authentication.AccessType.WRITE_ACCESS)) {
-			result = 0;
-		}
+		//if (!Authentication.hasPermission(AccessType.READ_ACCESS)) {
+		//	result = 0;
+		//}
 		return result;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = repoUser.findByUsername(username);
+		if (user == null) {
+			return null;
+		}
+		List<RoleAccess> rolos = user.getRoleList();
+		Set<String> permissionSet = new HashSet<>();
+		for(RoleAccess rolo:rolos) {
+			for(Permission permission:rolo.getPermissionList()){
+				permissionSet.add(permission.getPermission());
+			}
+		}
+		List<GrantedAuthority> auth = AuthorityUtils.createAuthorityList(permissionSet.toArray(new String[permissionSet.size()]));
+		String password = user.getPassword();
+		Authentication.setUserID(user.getId());
+		return new org.springframework.security.core.userdetails.User(username, password, auth);
 	}
 
 }

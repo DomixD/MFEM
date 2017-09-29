@@ -38,12 +38,13 @@ mfem.config(function($routeProvider) {
             templateUrl : "result.html"
         });
 });
-
+         var HOST = "http://localhost:8080";
+         //var HOST = "http://mfem-app.herokuapp.com";
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location, $window) {
 
     $scope.authenticate=function () {
-        $http.get('http://localhost:8080/authenticate').then(function (response) {
+        $http.get(HOST + "/authenticate").then(function (response) {
              $scope.permission = response.data;
         });
     };
@@ -63,7 +64,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
             frameID = frameID.substring(frameID.length-1);
             var classiID = sessionStorage.getItem("classiFrame");
             classiID = classiID.substring(classiID.length-1);
-            promiseArray.push($http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID));
+            promiseArray.push($http.get(HOST+ "/getRes/" + frameID + "/" + classiID));
             getFrame.push($http.get(toCalculate[j].value));
         }
         $q.all(promiseArray).then(function (responseArray) {
@@ -85,11 +86,11 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
     $scope.compareFrames=function () {
         var classi = sessionStorage.getItem('classiFrame');
         var classiID = classi.substring(classi.length-1);
-        $http.get('http://localhost:8080/getFrames/'+classiID).then(function (response) {
+        $http.get(HOST + "/getFrames/" + classiID).then(function (response) {
             var frames = response.data;
             var promiseArray = [];
             for (var i = 0; i < frames.length; i++) {
-                promiseArray.push($http.get('http://localhost:8080/frame/'+frames[i]))
+                promiseArray.push($http.get(HOST+ "/frame/" + frames[i]))
             }
             $q.all(promiseArray).then(function (responseArray) {
                 var fw = [];
@@ -101,7 +102,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
                 for(var k = 0; k < fw.length; k++) {
                     var frameID = fw[k]._links.self.href;
                     frameID = frameID.substring(frameID.length-1);
-                    promise.push($http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID));
+                    promise.push($http.get(HOST + "/getRes/" + frameID + "/" + classiID));
                 }
                 $q.all(promise).then(function (responseArray2) {
                     var results = [];
@@ -122,11 +123,11 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
     $scope.getFrames=function () {
         var classiID = sessionStorage.getItem("classiFrame");
         classiID = classiID.substring(classiID.length-1);
-        $http.get('http://localhost:8080/getFrames/'+classiID).then(function (response) {
+        $http.get(HOST + "/getFrames/" + classiID).then(function (response) {
             var frames = response.data;
             var promiseArray = [];
             for (var i = 0; i < frames.length; i++) {
-                promiseArray.push($http.get('http://localhost:8080/frame/'+frames[i]))
+                promiseArray.push($http.get(HOST + "/frame/" + frames[i]))
             }
             $q.all(promiseArray).then(function (responseArray) {
                 var fw = [];
@@ -145,25 +146,25 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
     };
 
     $scope.getReqs=function () {
-        $http.get('http://localhost:8080/req').then(function(response) {
+        $http.get(HOST + "/req").then(function(response) {
             $scope.req = response.data._embedded.requirements;
         });
     };
 
     $scope.getMetrics=function () {
-        $http.get('http://localhost:8080/metric').then(function(response){
+        $http.get(HOST + "/metric").then(function(response){
             $scope.metrics = response.data._embedded.metrics;
         });
     };
 
     $scope.getClassis=function () {
-        $http.get('http://localhost:8080/classi').then(function(response){
+        $http.get(HOST + "/classi").then(function(response){
             $scope.classis = response.data._embedded.classifications;
         });
     };
 
     $scope.getCats=function () {
-        $http.get('http://localhost:8080/cat').then(function(response){
+        $http.get(HOST + "/cat").then(function(response){
             $scope.catego = response.data._embedded.categories;
         });
     };
@@ -259,14 +260,14 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
                         answer: chosenAnswers[answerIndex[m]],
                         question: questLink[m]
                     };
-                    promiseArray.push($http.post('http://localhost:8080/result', data));
+                    promiseArray.push($http.post(HOST + "/result" , data));
                 }
         $q.all(promiseArray).then(function (resArray) {
             var frameID = sessionStorage.getItem("frame");
             frameID = frameID.substring(frameID.length-1);
             var classiID = sessionStorage.getItem("classiFrame");
             classiID = classiID.substring(classiID.length-1);
-            $http.get("http://localhost:8080/getRes/" + frameID + "/" + classiID).then(function (response) {
+            $http.get(HOST + "/getRes/" + frameID + "/" + classiID).then(function (response) {
                 $rootScope.resultEva = response.data;
                 sessionStorage.setItem('result',response.data);
             });
@@ -288,7 +289,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
         var e3 = document.getElementById("category");
         var cat = e3.options[e3.selectedIndex].value;
         data={content:cont, classi:classi, category:cat, priority:prio};
-        $http.post('http://localhost:8080/req',data).then(function (response) {
+        $http.post(HOST + "/req", data).then(function (response) {
             var req = response.data._links.self.href;
             sessionStorage.setItem('req',req);
         });
@@ -309,7 +310,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
         var e = document.getElementById("metrics");
         var metric = e.options[e.selectedIndex].value;
         data={question:question, require:req, metric: metric};
-        $http.post('http://localhost:8080/quest',data);
+        $http.post(HOST + "/quest", data);
         document.getElementById("frage").value = "";
         $location.path(view);
     };
@@ -323,14 +324,14 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
             answers.push(ans[i].value)
         }
         data4={description:description};
-        $http.post('http://localhost:8080/metric',data4).then(function (response) {
+        $http.post(HOST + "/metric", data4).then(function (response) {
             var factor = 1/(answers.length-1);
             var xy = 1+factor;
             var metric = response.data._links.self.href;
             for(var j = 0; j<answers.length; j++) {
                 xy= xy-factor;
                 data ={content: answers[j], value: xy, metri: metric};
-                promiseArray.push($http.post('http://localhost:8080/answer', data));
+                promiseArray.push($http.post(HOST + "/answer", data));
             }
             $q.all(promiseArray);
         });
@@ -345,11 +346,11 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
             sessionStorage.setItem('classiFrame', classi);
             data={nameFW:name,
                 descriptionFW:description};
-            $http.post('http://localhost:8080/frame',data).then(function (response) {
+            $http.post(HOST + "/frame", data).then(function (response) {
                 var frame = response.data._links.self.href;
                 sessionStorage.setItem('frame',frame);
                 data={framework:frame, classification: classi};
-                $http.post('http://localhost:8080/feva', data).then(function (response) {
+                $http.post(HOST + "/feva", data).then(function (response) {
                     var feva = response.data._links.self.href;
                     sessionStorage.setItem('feva', feva);
                 });
@@ -367,7 +368,7 @@ mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location,
     $scope.saveClassi=function (name, description, view) {
         data={name:name,
             description:description};
-        $http.post('http://localhost:8080/classi',data).then(function (response) {
+        $http.post(HOST + "/classi", data).then(function (response) {
             var classi = response.data._links.self.href;
             sessionStorage.setItem('classi', classi);
         });

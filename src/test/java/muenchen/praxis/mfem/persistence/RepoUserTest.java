@@ -25,7 +25,7 @@ public class RepoUserTest {
 
     @Before
     public void setup() {
-        user = new User(1,"testuser","test123","ADMIN");
+        //user = new User(1,"testuser","test123","ADMIN");
     }
 
     @Test
