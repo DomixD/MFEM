@@ -2,11 +2,9 @@ package muenchen.praxis.mfem.entities;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,15 +16,18 @@ public class User implements Serializable {
     private int id;
     private String username;
     private String password;
-    private String role;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<RoleAccess> roleList;
+
 
     public User() {}
 
-    public User(int id, String username, String password, String role) {
+    public User(int id, String username, String password, List<RoleAccess> roleList) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.roleList = roleList;
     }
 
 }

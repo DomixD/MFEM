@@ -107,8 +107,36 @@ insert into question (questionid, question, metricid, require_requirementid) val
 
 insert into question (questionid, question, metricid, require_requirementid) values (27, 'Frage3.6.1', 1, 18);
 
-insert into user (userid , username ,password, role ) values (1, 'user', 'userPw', 'USER');
-insert into user (userid , username ,password, role ) values (2, 'admin', 'admin', 'ADMIN');
+insert into user (userid , username ,password) values (1, 'user', 'userPw');
+insert into user (userid , username ,password) values (2, 'admin', 'admin');
+insert into user (userid , username ,password) values (3, 'creator', 'creator');
 
-insert into  role_access (role_accessid, role, read_access, write_access) values (1, 'USER', 1, 0);
-insert into  role_access (role_accessid, role, read_access, write_access) values (2, 'ADMIN', 1, 1);
+insert into role_access (role_accessid, role) values (1, 'EVALUATOR');
+insert into role_access (role_accessid, role) values (2, 'ADMIN');
+insert into role_access (role_accessid, role) values (3, 'CREATOR');
+
+insert into user_role_list (user_userid, role_list_role_accessid) values (1, 1);
+insert into user_role_list (user_userid, role_list_role_accessid) values (2, 2);
+insert into user_role_list (user_userid, role_list_role_accessid) values (3, 3);
+
+insert into permission (permissionid, permission) values (1,'READ_ACCESS');
+insert into permission (permissionid, permission) values (2,'CREATE_CLASSI');
+insert into permission (permissionid, permission) values (3,'CREATE_REQ');
+insert into permission (permissionid, permission) values (4,'CREATE_QUEST');
+insert into permission (permissionid, permission) values (5,'CREATE_METRIC');
+insert into permission (permissionid, permission) values (6,'CREATE_CAT');
+insert into permission (permissionid, permission) values (7,'EVALUATION');
+insert into permission (permissionid, permission) values (8,'ADMIN_ACCESS');
+
+-- Evaluator
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (1,1);
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (1,7);
+-- Admin
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (2,8);
+-- Creator
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (3,1);
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (3,2);
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (3,3);
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (3,4);
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (3,5);
+insert into role_access_permission_list (role_access_role_accessid, permission_list_permissionid) values (3,7);
