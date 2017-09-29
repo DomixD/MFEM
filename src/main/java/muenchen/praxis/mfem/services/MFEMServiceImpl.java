@@ -91,20 +91,17 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repoUser.findByUsername(username);
+		if (user == null) {
+			return null;
+		}
 		List<RoleAccess> rolos = user.getRoleList();
-		List<String> roleString = new ArrayList<>();
 		Set<String> permissionSet = new HashSet<>();
 		for(RoleAccess rolo:rolos) {
-			roleString.add(rolo.getRole());
 			for(Permission permission:rolo.getPermissionList()){
 				permissionSet.add(permission.getPermission());
 			}
 		}
-		if (user == null) {
-			return null;
-		}
-		String permissionString = permissionSet.toString().substring(1,permissionSet.toString().length()-1);
-		List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(permissionString);
+		List<GrantedAuthority> auth = AuthorityUtils.createAuthorityList(permissionSet.toArray(new String[permissionSet.size()]));
 		String password = user.getPassword();
 		Authentication.setUserID(user.getId());
 		return new org.springframework.security.core.userdetails.User(username, password, auth);
