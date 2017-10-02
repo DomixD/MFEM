@@ -1,55 +1,60 @@
 package muenchen.praxis.mfem.persistence;
 
-import muenchen.praxis.mfem.entities.*;
-import org.junit.BeforeClass;
+import muenchen.praxis.mfem.MfemApplicationTests;
+import muenchen.praxis.mfem.entities.Classification;
+import muenchen.praxis.mfem.entities.Framework;
+import muenchen.praxis.mfem.entities.FrameworkEvaluation;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
-@ActiveProfiles("test")
-public class RepoFrameworkEvaluationTest {
+public class RepoFrameworkEvaluationTest extends MfemApplicationTests{
 
     @Autowired
     private RepoFrameworkEvaluation repoFrameworkEvaluation;
     @Autowired
+    private RepoFramework repoFramework;
+    @Autowired
     private RepoClassification repoClassification;
 
+    private Classification classification;
 
-    private static Framework framework;
+    @Before
+    public void setUp() {
+        super.setUpDatabase();
+        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("READ_ACCESS");
+        Authentication authentication = new UsernamePasswordAuthenticationToken("test", "test", authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("Final: "+repoFramework.findAll());
+        System.out.println("Final: "+repoFrameworkEvaluation.findAll());
+        System.out.println("Final: "+repoClassification.findAll());
+        classification = repoClassification.findOne(1);
+    }
 
-    @BeforeClass
-    public static void setUp() {
-        framework = new Framework(2, "TestBeschreibung", "TestFramework");
+    @After
+    public void cleanUp() {
+        super.cleanUpDatabase();
     }
 
     @Test
     public void testFindByFrameworkInAndClassificationIn() {
-        Classification classification = repoClassification.findOne(1);
-        assertNull(repoFrameworkEvaluation.findByFrameworkInAndClassificationIn(framework, classification));
-        FrameworkEvaluation feva = new FrameworkEvaluation(2, framework, classification);
-        repoFrameworkEvaluation.save(feva);
-        assertEquals(feva.toString(), repoFrameworkEvaluation.findByFrameworkInAndClassificationIn(framework, classification).toString());
+        Framework framework = repoFramework.findOne(1);
+        FrameworkEvaluation frameworkEvaluation = new FrameworkEvaluation(1, framework, classification);
+        assertEquals(frameworkEvaluation.getId(), repoFrameworkEvaluation.findByFrameworkInAndClassificationIn(framework, classification).getId());
     }
 
     @Test
     public void testFindByClassification() {
-        Classification classification = new Classification(2, "TestKlassifikation", "TestBeschreibung", new ArrayList<>());
-        assertEquals(0, repoFrameworkEvaluation.findByClassification(classification).size());
-        FrameworkEvaluation feva = new FrameworkEvaluation(2, framework, classification);
-        repoFrameworkEvaluation.save(feva);
-        List<FrameworkEvaluation> expect = new ArrayList<>();
-        expect.add(feva);
-        assertEquals(expect.size(), repoFrameworkEvaluation.findByClassification(classification).size());
-        assertEquals(expect, repoFrameworkEvaluation.findByClassification(classification));
+        assertEquals(1, repoFrameworkEvaluation.findByClassification(classification).size());
     }
 }

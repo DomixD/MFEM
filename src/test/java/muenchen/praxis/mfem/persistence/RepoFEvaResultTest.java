@@ -1,36 +1,41 @@
-
 package muenchen.praxis.mfem.persistence;
 
 import muenchen.praxis.mfem.MfemApplicationTests;
-import muenchen.praxis.mfem.entities.*;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-
-import java.util.ArrayList;
-
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.Collection;
 import static org.junit.Assert.*;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest
-//@ActiveProfiles("test")
 public class RepoFEvaResultTest extends MfemApplicationTests{
+
+    @Autowired
+    private RepoFEvaResult repoFEvaResult;
+    @Autowired
+    private RepoFrameworkEvaluation repoFrameworkEvaluation;
+
+    @Before
+    public void setUp() {
+        super.setUpDatabase();
+        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("READ_ACCESS");
+        Authentication authentication = new UsernamePasswordAuthenticationToken("test", "test", authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @After
+    public void cleanUp() {
+        super.cleanUpDatabase();
+    }
 
     @Test
     public void testFindByFrameworkEvaluation() {
-        /*
-        assertEquals(0, repoFEvaResult.findByFrameworkEvaluation(feva).size());
-        FEvaResult fevaResult = new FEvaResult(7, feva, question, answer);
-        repoFEvaResult.save(fevaResult);
-        assertEquals(1, repoFEvaResult.findByFrameworkEvaluation(feva).size());
-        assertEquals(fevaResult.toString(), repoFEvaResult.findByFrameworkEvaluation(feva).get(0).toString());
-        */
+        assertEquals(6, repoFEvaResult.findByFrameworkEvaluation(repoFrameworkEvaluation.findOne(1)).size());
     }
 
 }
