@@ -1,77 +1,63 @@
 package muenchen.praxis.mfem.services;
 
-import muenchen.praxis.mfem.RestConfig;
+import muenchen.praxis.mfem.MfemApplicationTests;
+import muenchen.praxis.mfem.entities.*;
+import muenchen.praxis.mfem.persistence.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.client.MockRestServiceServer;
-import org.springframework.web.client.RestTemplate;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = RestConfig.class)
-@ActiveProfiles("test")
-public class MFEMServiceImplTest {
+public class MFEMServiceImplTest extends MfemApplicationTests{
 
-    @Autowired
-    private IMFEMService service;
+    @Mock
+    private RepoCategory repoCategory;
+    @Mock
+    private RepoFramework repoFramework;
+    @Mock
+    private RepoClassification repoClassification;
+    @Mock
+    private RepoFrameworkEvaluation repoFrameworkEvaluation;
+    @Mock
+    private RepoFEvaResult repoFEvaResult;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
-    private MockRestServiceServer server;
-
-    private List<Double> expectedList = new ArrayList<>(Arrays.asList(1.0, 0.5, 0.0, 1.0, 0.5, 0.0));
+    @InjectMocks
+    private IMFEMService service = new MFEMServiceImpl();;
 
     @Before
     public void setUp() {
-        this.server = MockRestServiceServer.createServer(restTemplate);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void testGetResult() {
-        this.server.expect(requestTo("http://localhost:8080/getRes/1/1")).andRespond(withSuccess());
-        List<Double> result = this.service.getResult(1,1);
-        assertThat(result, is(equalTo(expectedList)));
+        super.setUpGetRes();
+        when(repoCategory.findAll()).thenReturn(super.getCategories());
+        when(repoFramework.findOne(anyInt())).thenReturn(super.getFramework());
+        when(repoClassification.findOne(anyInt())).thenReturn(super.getClassification());
+        when(repoFrameworkEvaluation.findByFrameworkInAndClassificationIn(any(Framework.class), any(Classification.class))).thenReturn(super.getFrameworkEvaluation());
+        when(repoFEvaResult.findByFrameworkEvaluation(any(FrameworkEvaluation.class))).thenReturn(super.getResults());
+        List<Double> result = service.getResult(1, 1);
+        assertEquals(new ArrayList<Double>(Arrays.asList(1.0, 0.5, 0.0, 1.0, 0.5, 0.0)), result);
     }
 
     @Test
     public void testGetFrames() {
-        this.server.expect(requestTo("http://localhost:8080/getFrames/1")).andRespond(withSuccess());
-        List<Integer> result = this.service.getFrames(1);
-        List<Integer> expected = new ArrayList<>();
-        expected.add(1);
-        expected.add(2);
-        assertThat(result, is(equalTo(expected)));
-    }
-
-    @Test
-    @WithMockUser(authorities = "ADMIN")
-    public void testCheckUserAdmin() {
-        this.server.expect(requestTo("http://localhost:8080/authenticate")).andRespond(withSuccess());
-        Integer result = this.service.checkUser();
-        assertThat(result, is(equalTo(1)));
-    }
-
-    @Test
-    @WithMockUser(authorities = "USER")
-    public void testCheckUserUser() {
-        this.server.expect(requestTo("http://localhost:8080/authenticate")).andRespond(withSuccess());
-        Integer result = this.service.checkUser();
-        assertThat(result, is(equalTo(0)));
+        super.setUpGetFrames();
+        when(repoClassification.findOne(anyInt())).thenReturn(super.getClassification());
+        when(repoFrameworkEvaluation.findByClassification(any(Classification.class))).thenReturn(super.getFrameworkEvaluations());
+        List<Integer> result = service.getFrames(1);
+        assertEquals(new ArrayList<Integer>(Arrays.asList(1, 2, 3)), result);
     }
 
 }
