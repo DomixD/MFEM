@@ -12,13 +12,13 @@ public class FEvaResult implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FEvaResultID")
     private int id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "FrameworkEvaluationID")
     private FrameworkEvaluation frameworkEvaluation;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "QuestionID")
     private Question question;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "AnswerID")
     private Answer answer;
 

@@ -10,7 +10,7 @@ logging:
 
 
 spring:
-    profiles: local, test
+    profiles: local
     #DB
     datasource:
         url: jdbc:h2:mem:testdb
