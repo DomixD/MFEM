@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.core.MediaType;
@@ -19,11 +20,13 @@ public class MFEMResource {
 	private IMFEMService service;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getRes/{frameId}/{classiId}", produces = MediaType.APPLICATION_JSON)
+	@PreAuthorize("hasAuthority('EVALUATION')")
 	public ResponseEntity<?> getResult (@PathVariable("frameId") int frameId, @PathVariable("classiId") int classiId) {
 		return new ResponseEntity<List<Double>>((service.getResult(frameId, classiId)), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getFrames/{classiId}", produces = MediaType.APPLICATION_JSON)
+	@PreAuthorize("hasAuthority('EVALUATION')")
 	public ResponseEntity<?> getFrames (@PathVariable("classiId") int classiId) {
 		return new ResponseEntity<List<Integer>>(service.getFrames(classiId),HttpStatus.OK);
 	}
