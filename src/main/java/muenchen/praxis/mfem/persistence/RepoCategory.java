@@ -15,4 +15,8 @@ public interface RepoCategory extends CrudRepository<Category, Integer>{
     @PreAuthorize("hasAuthority('CREATE_CAT')")
     Category save(Category category);
 
+    @Override
+    @PreAuthorize("hasAuthority('CREATE_CAT')")
+    void deleteAll();
+
 }

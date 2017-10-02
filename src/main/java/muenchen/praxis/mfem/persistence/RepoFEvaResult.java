@@ -19,4 +19,8 @@ public interface RepoFEvaResult extends CrudRepository<FEvaResult, Integer> {
     @PreAuthorize("hasAuthority('EVALUATION')")
     FEvaResult save(FEvaResult fEvaResult);
 
+    @Override
+    @PreAuthorize("hasAuthority('EVALUATION')")
+    void deleteAll();
+
 }

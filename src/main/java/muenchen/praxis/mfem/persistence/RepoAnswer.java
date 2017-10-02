@@ -15,4 +15,8 @@ public interface RepoAnswer extends CrudRepository<Answer, Integer> {
     @PreAuthorize("hasAuthority('CREATE_METRIC')")
     Answer save(Answer answer);
 
+    @Override
+    @PreAuthorize("hasAuthority('CREATE_METRIC')")
+    void deleteAll();
+
 }

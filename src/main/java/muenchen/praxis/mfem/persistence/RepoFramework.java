@@ -15,4 +15,8 @@ public interface RepoFramework extends CrudRepository<Framework, Integer> {
     @PreAuthorize("hasAuthority('EVALUATION')")
     Framework save(Framework framework);
 
+    @Override
+    @PreAuthorize("hasAuthority('EVALUATION')")
+    void deleteAll();
+
 }

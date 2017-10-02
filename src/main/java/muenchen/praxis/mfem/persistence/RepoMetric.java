@@ -15,4 +15,8 @@ public interface RepoMetric extends CrudRepository<Metric, Integer> {
     @PreAuthorize("hasAuthority('CREATE_METRIC')")
     Metric save(Metric metric);
 
+    @Override
+    @PreAuthorize("hasAuthority('CREATE_METRIC')")
+    void deleteAll();
+
 }
