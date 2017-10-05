@@ -1,6 +1,5 @@
 package muenchen.praxis.mfem.entities;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,14 +12,23 @@ public class FEvaResult implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FEvaResultID")
     private int id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "FrameworkEvaluationID")
     private FrameworkEvaluation frameworkEvaluation;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "QuestionID")
     private Question question;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "AnswerID")
     private Answer answer;
+
+    public FEvaResult() {}
+
+    public FEvaResult(int id, FrameworkEvaluation frameworkEvaluation, Question question, Answer answer) {
+        this.id = id;
+        this.frameworkEvaluation = frameworkEvaluation;
+        this.question = question;
+        this.answer = answer;
+    }
 
 }

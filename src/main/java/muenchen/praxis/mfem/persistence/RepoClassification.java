@@ -15,4 +15,8 @@ public interface RepoClassification extends CrudRepository<Classification, Integ
     @PreAuthorize("hasAuthority('CREATE_CLASSI')")
     Classification save(Classification classification);
 
+    @Override
+    @PreAuthorize("hasAuthority('CREATE_CLASSI')")
+    void deleteAll();
+
 }

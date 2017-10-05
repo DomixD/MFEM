@@ -22,4 +22,8 @@ public interface RepoUser extends CrudRepository<User, Integer> {
     @PreAuthorize("hasAuthority('ADMIN_ACCESS')")
     void delete(User user);
 
+    @Override
+    @PreAuthorize("hasAuthority('ADMIN_ACCESS')")
+    void deleteAll();
+
 }

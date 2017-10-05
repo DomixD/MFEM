@@ -29,6 +29,7 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 	@Autowired
 	private RepoUser repoUser;
 
+
 	@Override
 	public List<Double> getResult(int frameID, int classiID) {
 		List<Double> result = new ArrayList<>();
@@ -87,7 +88,6 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 		return result;
 	}
 
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repoUser.findByUsername(username);
@@ -106,4 +106,5 @@ public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
 		Authentication.setUserID(user.getId());
 		return new org.springframework.security.core.userdetails.User(username, password, auth);
 	}
+
 }

@@ -15,4 +15,8 @@ public interface RepoRequirement extends CrudRepository<Requirement, Integer> {
     @PreAuthorize("hasAuthority('CREATE_REQ')")
     Requirement save(Requirement requirement);
 
+    @Override
+    @PreAuthorize("hasAuthority('CREATE_REQ')")
+    void deleteAll();
+
 }

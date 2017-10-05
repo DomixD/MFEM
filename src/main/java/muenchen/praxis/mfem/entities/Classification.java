@@ -17,7 +17,16 @@ public class Classification {
     private int id;
     private String name;
     private String description;
-    @OneToMany(mappedBy="classi", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+    @OneToMany(mappedBy="classi", cascade = {/*CascadeType.PERSIST, */CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private List<Requirement> requirementList;
+
+    public Classification() {}
+
+    public Classification(int id, String name, String description, List<Requirement> requirementList) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.requirementList = requirementList;
+    }
 
 }

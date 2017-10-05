@@ -21,9 +21,10 @@ public class RoleAccess implements Serializable {
 
     public RoleAccess() {}
 
-    public RoleAccess(int id, String role ) {
+    public RoleAccess(int id, String role, List<Permission> permissionList) {
         this.id = id;
         this.role = role;
+        this.permissionList = permissionList;
     }
 
 }

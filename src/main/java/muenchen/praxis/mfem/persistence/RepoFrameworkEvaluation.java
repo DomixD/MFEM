@@ -23,4 +23,8 @@ public interface RepoFrameworkEvaluation extends CrudRepository<FrameworkEvaluat
     @PreAuthorize("hasAuthority('EVALUATION')")
     FrameworkEvaluation save(FrameworkEvaluation frameworkEvaluation);
 
+    @Override
+    @PreAuthorize("hasAuthority('EVALUATION')")
+    void deleteAll();
+
 }

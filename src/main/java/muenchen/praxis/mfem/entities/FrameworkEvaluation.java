@@ -13,11 +13,19 @@ public class FrameworkEvaluation implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FrameworkEvaluationID")
     private int id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "FrameworkID")
     private Framework framework;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "ClassificationID")
     private Classification classification;
+
+    public FrameworkEvaluation() {}
+
+    public FrameworkEvaluation(int id, Framework framework, Classification classification) {
+        this.id = id;
+        this.framework = framework;
+        this.classification = classification;
+    }
 
 }

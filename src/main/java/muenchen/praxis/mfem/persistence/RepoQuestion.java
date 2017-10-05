@@ -15,4 +15,8 @@ public interface RepoQuestion extends CrudRepository<Question, Integer> {
     @PreAuthorize("hasAuthority('CREATE_QUEST')")
     Question save(Question question);
 
+    @Override
+    @PreAuthorize("hasAuthority('CREATE_QUEST')")
+    void deleteAll();
+
 }
