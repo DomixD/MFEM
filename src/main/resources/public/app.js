@@ -38,8 +38,8 @@ mfem.config(function($routeProvider) {
             templateUrl : "result.html"
         });
 });
-         var HOST = "http://localhost:8080";
-         //var HOST = "http://mfem-app.herokuapp.com";
+         //var HOST = "http://localhost:8080";
+         var HOST = "http://mfem-app.herokuapp.com";
 
 mfem.controller('Controller', function($scope, $http, $q, $rootScope, $location, $window) {
 
