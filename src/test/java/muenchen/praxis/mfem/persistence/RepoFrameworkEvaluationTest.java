@@ -35,9 +35,6 @@ public class RepoFrameworkEvaluationTest extends MfemApplicationTests{
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("READ_ACCESS");
         Authentication authentication = new UsernamePasswordAuthenticationToken("test", "test", authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println("Final: "+repoFramework.findAll());
-        System.out.println("Final: "+repoFrameworkEvaluation.findAll());
-        System.out.println("Final: "+repoClassification.findAll());
         classification = repoClassification.findOne(1);
     }
 
