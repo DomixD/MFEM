@@ -5,7 +5,6 @@ import muenchen.praxis.mfem.entities.*;
 import muenchen.praxis.mfem.persistence.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

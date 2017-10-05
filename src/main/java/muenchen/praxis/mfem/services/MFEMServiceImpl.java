@@ -10,14 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
 @Service
 public class MFEMServiceImpl implements IMFEMService, UserDetailsService {
-
-	protected RestTemplate restTemplate;
 
 	@Autowired
 	private RepoFrameworkEvaluation repoframeworkEvaluation;
